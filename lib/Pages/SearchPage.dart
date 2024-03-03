@@ -172,7 +172,8 @@ class AllEmployeeState extends State<AllEmployee> {
                                   borderRadius: BorderRadius.circular(15.0),
                                   child: CachedNetworkImage(
                                     imageUrl:
-                                        filteredEmployees[index].photo!.path,
+                                        filteredEmployees[index].photo?.path ??
+                                            "",
                                     width: 50.w,
                                     height: 50.h,
                                     fit: BoxFit.cover,
@@ -280,7 +281,7 @@ class AllEmployeeState extends State<AllEmployee> {
                                         int.parse(employees[index].autoRent) +
                                         int.parse(employees[index].advance)))
                                 .toString(),
-                            image: employees[index].photo!.path,
+                            image: employees[index].photo?.path ?? "",
                             ontap: () {
                               edit(employees[index]);
                             },

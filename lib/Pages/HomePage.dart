@@ -14,21 +14,31 @@ class HomePage extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(
-                top: 40.h, left: 30.w, right: 30.w, bottom: 30.h),
-            child: Column(
-              children: [
-                Text(
-                  'JSI \nEmployee Management',
-                  style: TextStyle(
-                      color: fontColor,
-                      fontSize: 35.sp,
-                      fontFamily: fontFamily,
-                      fontWeight: FontWeight.w400),
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                    top: 40.h, left: 30.w, right: 10.w, bottom: 30.h),
+                child: Column(
+                  children: [
+                    Text(
+                      'JSI \nEmployee \nManagement',
+                      style: TextStyle(
+                          color: fontColor,
+                          fontSize: 35.sp,
+                          fontFamily: fontFamily,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              CircleAvatar(
+                radius: 50, // Adjust the radius to your preference
+                backgroundColor: Colors
+                    .transparent, // Assuming your background color is already set
+                backgroundImage: AssetImage("assets/logo.jpeg"),
+              ),
+            ],
           ),
           Expanded(
             child: Container(

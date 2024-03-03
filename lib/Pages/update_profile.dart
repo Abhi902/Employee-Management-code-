@@ -795,7 +795,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                         rate: _rateController.text,
                         attendance: _attendanceController.text,
                         presentEmployee: widget.employeeDetails);
-                    // Navigator.pop(context);
+                    Navigator.pop(context);
                   }
                 },
                 child: Text(

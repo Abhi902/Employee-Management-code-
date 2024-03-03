@@ -110,11 +110,12 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
                         text: employees[index].name,
                         service: employees[index].category,
                         amount: employees[index].amount,
-                        image: employees[index].photo!.path,
+                        image: employees[index].photo?.path ?? "",
                         ontap: () async {
                           log(employees[index].uid.toString());
                           await FirebaseService.deleteEmployee(
                               employees[index].uid.toString());
+                          Navigator.pop(context);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Employee deleted'),
