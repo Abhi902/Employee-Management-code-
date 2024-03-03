@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1003358302870",
+    "firebase_url": "https://employee-management-9450e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "employee-management-9450e",
+    "storage_bucket": "employee-management-9450e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003358302870:android:957f83429c4a7a1d8e08b7",
+        "android_client_info": {
+          "package_name": "com.example.CompanyDatabase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD32jAtN_HUW2wZMuHnoLsO5kEHWSkdhqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
