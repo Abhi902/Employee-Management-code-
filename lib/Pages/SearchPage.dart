@@ -274,9 +274,11 @@ class AllEmployeeState extends State<AllEmployee> {
                           child: ServiceContainer(
                             text: employees[index].name,
                             service: employees[index].category,
-                            amount: (int.parse(employees[index].amount) -
+                            amount: ((int.parse(employees[index].attendance) *
+                                        int.parse(employees[index].rate)) -
                                     (int.parse(employees[index].kharcha) +
-                                        int.parse(employees[index].autoRent)))
+                                        int.parse(employees[index].autoRent) +
+                                        int.parse(employees[index].advance)))
                                 .toString(),
                             image: employees[index].photo!.path,
                             ontap: () {

@@ -73,6 +73,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
     _amountController.text = ((int.parse(widget.employeeDetails.rate) *
                 int.parse(widget.employeeDetails.attendance)) -
             ((int.parse(widget.employeeDetails.kharcha) +
+                int.parse(widget.employeeDetails.advance) +
                 int.parse(widget.employeeDetails.autoRent))))
         .toString();
     _autoRentController.text = widget.employeeDetails.autoRent;

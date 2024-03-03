@@ -58,6 +58,13 @@ class FirebaseService {
                 employee.uid = key;
                 print('Employee UID: ${employee.uid}');
                 employees.add(employee);
+              } else {
+                CommonFormModel employee = CommonFormModel.fromJson(
+                  Map<String, dynamic>.from(monthlyData[entryMonths.first]),
+                );
+                employee.uid = key;
+                print('Employee UID: ${employee.uid}');
+                employees.add(employee);
               }
             }
           });
