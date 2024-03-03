@@ -70,8 +70,10 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
     _rateController.text = widget.employeeDetails.rate;
     _advanceController.text = widget.employeeDetails.advance;
     _kharchaController.text = widget.employeeDetails.kharcha;
-    _amountController.text = (int.parse(widget.employeeDetails.rate) *
-            int.parse(widget.employeeDetails.attendance))
+    _amountController.text = ((int.parse(widget.employeeDetails.rate) *
+                int.parse(widget.employeeDetails.attendance)) -
+            ((int.parse(widget.employeeDetails.kharcha) +
+                int.parse(widget.employeeDetails.autoRent))))
         .toString();
     _autoRentController.text = widget.employeeDetails.autoRent;
     _selectedCategory.text = widget.employeeDetails.category;
@@ -471,11 +473,28 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                   TextFormField(
                     enabled: false,
                     controller: _amountController,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 18.sp,
+                      fontFamily: fontFamily,
+                      color: _amountController.text.startsWith('-')
+                          ? Colors.red
+                          : Colors.green,
+                    ),
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                     ],
                     decoration: InputDecoration(
+                      prefix: Text(
+                        '₹',
+                        style: TextStyle(
+                          color: _amountController.text.startsWith('-')
+                              ? Colors.red
+                              : Colors.green,
+                          fontSize: 18.sp,
+                        ),
+                      ),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       hintText: 'Amount',
                       hintStyle: TextStyle(
@@ -535,6 +554,14 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             FilteringTextInputFormatter.digitsOnly,
                           ],
                           decoration: InputDecoration(
+                            prefix: Text(
+                              '₹',
+                              style: TextStyle(
+                                color:
+                                    Colors.black, // Adjust the color as needed
+                                fontSize: 18.sp,
+                              ),
+                            ),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: 'Rate',
                             hintStyle: TextStyle(
@@ -612,6 +639,14 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             FilteringTextInputFormatter.digitsOnly,
                           ],
                           decoration: InputDecoration(
+                            prefix: Text(
+                              '₹',
+                              style: TextStyle(
+                                color:
+                                    Colors.black, // Adjust the color as needed
+                                fontSize: 18.sp,
+                              ),
+                            ),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: 'Kharcha',
                             hintStyle: TextStyle(
@@ -689,6 +724,14 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             FilteringTextInputFormatter.digitsOnly,
                           ],
                           decoration: InputDecoration(
+                            prefix: Text(
+                              '₹',
+                              style: TextStyle(
+                                color:
+                                    Colors.black, // Adjust the color as needed
+                                fontSize: 18.sp,
+                              ),
+                            ),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: 'Auto Rent',
                             hintStyle: TextStyle(

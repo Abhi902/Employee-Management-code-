@@ -141,22 +141,22 @@ class AllEmployeeState extends State<AllEmployee> {
                       style: TextStyle(
                         color: fontColorBlack,
                         fontWeight: FontWeight.w700,
-                        fontSize: 18,
+                        fontSize: 18.sp,
                         fontFamily: fontFamily,
                       ),
                     ),
                   ),
                   Container(
-                    height: 200,
-                    width: 340,
+                    height: 200.h,
+                    width: 340.w,
                     color: Colors.white,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: filteredEmployees.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
-                          height: 100,
-                          width: 150,
+                          height: 100.h,
+                          width: 150.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15.0),
                             color: Colors.black,
@@ -173,8 +173,8 @@ class AllEmployeeState extends State<AllEmployee> {
                                   child: CachedNetworkImage(
                                     imageUrl:
                                         filteredEmployees[index].photo!.path,
-                                    width: 50,
-                                    height: 50,
+                                    width: 50.w,
+                                    height: 50.h,
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) => Icon(
                                       Icons.person,
@@ -197,7 +197,7 @@ class AllEmployeeState extends State<AllEmployee> {
                                     Text(
                                       filteredEmployees[index].category,
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 18.sp,
                                         fontWeight: FontWeight.bold,
                                         color: fontColorBlack,
                                       ),
@@ -205,7 +205,7 @@ class AllEmployeeState extends State<AllEmployee> {
                                     Text(
                                       filteredEmployees[index].name,
                                       style: TextStyle(
-                                        fontSize: 12,
+                                        fontSize: 12.sp,
                                         fontWeight: FontWeight.bold,
                                         color: fontColorBlack,
                                       ),
@@ -222,81 +222,73 @@ class AllEmployeeState extends State<AllEmployee> {
                   ),
                 ],
               ),
-            Divider(
-              height: 30,
-            ),
-            SizedBox(
-              width: 360,
-              height: 750,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Text(
-                      "All Employee",
-                      style: TextStyle(
-                        color: fontColor,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18,
-                        fontFamily: fontFamily,
-                      ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Text(
+                    "All Employee",
+                    style: TextStyle(
+                      color: fontColorBlack,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                      fontFamily: fontFamily,
                     ),
                   ),
-                  Expanded(
-                    child: StreamBuilder<List<CommonFormModel>>(
-                      stream: FirebaseService.getAllEmployeesStream(),
-                      builder: (context,
-                          AsyncSnapshot<List<CommonFormModel>> snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
-                          log(snapshot.error.toString());
-                          return Center(
-                              child: Text('Error: ${snapshot.error}'));
-                        } else if (!snapshot.hasData ||
-                            snapshot.data!.isEmpty) {
-                          return Center(
-                              child: Text(
-                            'No data available',
-                            style: TextStyle(
-                              color: fontColorBlack,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18,
-                              fontFamily: fontFamily,
-                            ),
-                          ));
-                        }
+                ),
+                StreamBuilder<List<CommonFormModel>>(
+                  stream: FirebaseService.getAllEmployeesStream(),
+                  builder:
+                      (context, AsyncSnapshot<List<CommonFormModel>> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      log(snapshot.error.toString());
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return Center(
+                          child: Text(
+                        'No data available',
+                        style: TextStyle(
+                          color: fontColorBlack,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18,
+                          fontFamily: fontFamily,
+                        ),
+                      ));
+                    }
 
-                        log(snapshot.data.toString());
+                    log(snapshot.data.toString());
 
-                        employees = snapshot.data!;
+                    employees = snapshot.data!;
 
-                        return ListView.builder(
-                          itemCount: employees.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ServiceContainer(
-                                text: employees[index].name,
-                                service: employees[index].category,
-                                amount: employees[index].amount,
-                                image: employees[index].photo!.path,
-                                ontap: () {
-                                  edit(employees[index]);
-                                },
-                              ),
-                            );
-                          },
+                    return ListView.builder(
+                      padding: EdgeInsets.all(0),
+                      itemCount: employees.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ServiceContainer(
+                            text: employees[index].name,
+                            service: employees[index].category,
+                            amount: (int.parse(employees[index].amount) -
+                                    (int.parse(employees[index].kharcha) +
+                                        int.parse(employees[index].autoRent)))
+                                .toString(),
+                            image: employees[index].photo!.path,
+                            ontap: () {
+                              edit(employees[index]);
+                            },
+                          ),
                         );
                       },
-                    ),
-                  ),
-                ],
-              ),
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),

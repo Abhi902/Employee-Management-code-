@@ -87,7 +87,7 @@ class ServiceContainer extends StatelessWidget {
                   Text(
                     "₹ $amount",
                     style: TextStyle(
-                      color: AppColors.mainColor,
+                      color: amount.startsWith('-') ? Colors.red : Colors.green,
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
                       fontFamily: fontFamily,
