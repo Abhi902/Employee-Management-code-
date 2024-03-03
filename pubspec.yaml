@@ -28,7 +28,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   google_fonts: null
   google_nav_bar: ^5.0.6
-  image_picker: ^1.0.5
+  image_picker: ^1.0.7
   intl: ^0.19.0
   provider: ^6.1.1
 
@@ -65,7 +65,5 @@ flutter:
     - family: Anta
       fonts:
         - asset: fonts/Anta-Regular.ttf
-    
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

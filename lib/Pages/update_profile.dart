@@ -793,8 +793,8 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                         kharcha: _kharchaController.text,
                         autoRent: _autoRentController.text,
                         rate: _rateController.text,
-                        attendance: _attendanceController.text);
-
+                        attendance: _attendanceController.text,
+                        presentEmployee: widget.employeeDetails);
                     // Navigator.pop(context);
                   }
                 },

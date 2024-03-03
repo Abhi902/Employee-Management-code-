@@ -1,8 +1,10 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:CompanyDatabase/Models/Employee.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -155,14 +157,15 @@ class FirebaseService {
     }
   }
 
-  static Future<void> updateEmployee({
-    required String documentId,
-    String? advance,
-    String? kharcha,
-    String? autoRent,
-    String? rate,
-    String? attendance, // New field
-  }) async {
+  static Future<void> updateEmployee(
+      {required String documentId,
+      String? advance,
+      String? kharcha,
+      String? autoRent,
+      String? rate,
+      String? attendance,
+      CommonFormModel? presentEmployee // New field
+      }) async {
     try {
       // DateTime nowTime = DateTime.now();
 
@@ -223,6 +226,59 @@ class FirebaseService {
         await currentMonthReference.update(updateFields);
       } else {
         // Create the current month node if it doesn't exist
+        final Map<String, dynamic> updateFields = {};
+
+        updateFields['category'] = presentEmployee!.category;
+        updateFields['name'] = presentEmployee.name;
+        // updateFields['photo'] = presentEmployee.photo;
+        presentEmployee.reference.isNotEmpty
+            ? updateFields['reference'] = presentEmployee.reference
+            // ignore: unnecessary_statements
+            : null;
+
+        if (advance != null) {
+          updateFields['advance'] = advance;
+          //  updateFields['lastUpdateAdvance'] = now;
+        } else {
+          updateFields['advance'] = presentEmployee.advance;
+        }
+
+        if (kharcha != null) {
+          updateFields['kharcha'] = kharcha;
+          //   updateFields['lastUpdateKharcha'] = now;
+        } else {
+          updateFields['kharcha'] = presentEmployee.kharcha;
+        }
+
+        if (autoRent != null) {
+          updateFields['autoRent'] = autoRent;
+          //  updateFields['lastUpdateAutoRent'] = now;
+        } else {
+          updateFields['autoRent'] = presentEmployee.autoRent;
+        }
+
+        if (rate != null) {
+          updateFields['rate'] = rate;
+          updateFields['amount'] = (int.parse(rate) *
+                  int.parse(attendance ?? presentEmployee.attendance))
+              .toString();
+          //  updateFields['lastUpdateRate'] = now;
+        } else {
+          updateFields['amount'] = (int.parse(presentEmployee.rate) *
+                  int.parse(attendance ?? presentEmployee.attendance))
+              .toString();
+          updateFields['rate'] = presentEmployee.rate;
+        }
+
+        if (attendance != null) {
+          updateFields['attendance'] = attendance;
+          //  updateFields['lastUpdateAttendance'] = now;
+        } else {
+          updateFields['attendance'] = presentEmployee.attendance;
+        }
+        updateFields["createdAt"] = ServerValue.timestamp;
+
+        // updateFields['category'] = presentEmployee.category;
         await currentMonthReference.set(updateFields);
       }
     } catch (e) {
