@@ -78,7 +78,7 @@ class HomePage extends StatelessWidget {
                             );
                           },
                           child: Container(
-                            width: 130.w,
+                            width: 140.w,
                             height: 170.h,
                             decoration: BoxDecoration(
                               color: Color(0xffe0f2fc),
@@ -94,7 +94,8 @@ class HomePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10.h),
                                 Text(
-                                  'Create',
+                                  'Add \nEmployee',
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: fontColorBlack,
                                     fontFamily: fontFamily,
@@ -114,7 +115,7 @@ class HomePage extends StatelessWidget {
                                     builder: (context) => AllEmployee()));
                           },
                           child: Container(
-                            width: 130.w,
+                            width: 140.w,
                             height: 170.h,
                             decoration: BoxDecoration(
                               color: Color(0xffe5e1fc),
@@ -130,7 +131,8 @@ class HomePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10.h),
                                 Text(
-                                  'View All',
+                                  'View \nEmployees',
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: fontColorBlack,
                                     fontFamily: fontFamily,
@@ -158,7 +160,7 @@ class HomePage extends StatelessWidget {
                             );
                           },
                           child: Container(
-                            width: 130.w,
+                            width: 140.w,
                             height: 170.h,
                             decoration: BoxDecoration(
                               color: Color(0xfffcf0e2),
@@ -174,7 +176,8 @@ class HomePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10.h),
                                 Text(
-                                  'Delete',
+                                  'Remove \nEmployees',
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: fontColorBlack,
                                     fontFamily: fontFamily,
@@ -207,7 +210,7 @@ class HomePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10.h),
                                 Text(
-                                  'Excel',
+                                  'Export To Excel',
                                   style: TextStyle(
                                     color: fontColorBlack,
                                     fontFamily: fontFamily,
