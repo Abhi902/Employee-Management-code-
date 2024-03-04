@@ -70,11 +70,11 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
     _rateController.text = widget.employeeDetails.rate;
     _advanceController.text = widget.employeeDetails.advance;
     _kharchaController.text = widget.employeeDetails.kharcha;
-    _amountController.text = ((int.parse(widget.employeeDetails.rate) *
-                int.parse(widget.employeeDetails.attendance)) -
-            ((int.parse(widget.employeeDetails.kharcha) +
-                int.parse(widget.employeeDetails.advance) +
-                int.parse(widget.employeeDetails.autoRent))))
+    _amountController.text = ((double.parse(widget.employeeDetails.rate) *
+                double.parse(widget.employeeDetails.attendance)) -
+            ((double.parse(widget.employeeDetails.kharcha) +
+                double.parse(widget.employeeDetails.advance) +
+                double.parse(widget.employeeDetails.autoRent))))
         .toString();
     _autoRentController.text = widget.employeeDetails.autoRent;
     _selectedCategory.text = widget.employeeDetails.category;

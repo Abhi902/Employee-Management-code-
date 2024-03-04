@@ -30,18 +30,20 @@ class EmployeeFormState extends State<EmployeeForm> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _referenceController = TextEditingController();
-  TextEditingController _attendanceController = TextEditingController();
-  TextEditingController _rateController = TextEditingController();
-  TextEditingController _advanceController = TextEditingController();
-  TextEditingController _kharchaController = TextEditingController();
-  TextEditingController _amountController = TextEditingController();
+  TextEditingController _attendanceController =
+      TextEditingController(text: '0');
+  TextEditingController _rateController = TextEditingController(text: '0');
+  TextEditingController _advanceController = TextEditingController(text: '0');
+  TextEditingController _kharchaController = TextEditingController(text: '0');
+  TextEditingController _amountController = TextEditingController(text: '0');
+  TextEditingController _autoRentController = TextEditingController(text: "0");
+
   bool _isLoading = false;
   Future<void> indicatorToggle() async {
     _isLoading = !_isLoading;
     setState(() {});
   }
 
-  TextEditingController _autoRentController = TextEditingController();
   XFile? _imageFile;
   String? selectedCategory;
 
@@ -63,6 +65,17 @@ class EmployeeFormState extends State<EmployeeForm> {
         _imageFile = pickedFile;
       });
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    TextEditingController _attendanceController = TextEditingController();
+    TextEditingController _rateController = TextEditingController();
+    TextEditingController _advanceController = TextEditingController();
+    TextEditingController _kharchaController = TextEditingController();
+    TextEditingController _amountController = TextEditingController();
   }
 
   @override

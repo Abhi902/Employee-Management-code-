@@ -26,13 +26,13 @@ class ServiceContainer extends StatelessWidget {
     return GestureDetector(
       onTap: ontap,
       child: Container(
-        height: 160.h,
+        height: 120.h,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(26.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(18.0),
+          padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
               Container(
