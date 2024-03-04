@@ -112,16 +112,46 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
                         amount: employees[index].amount,
                         image: employees[index].photo?.path ?? "",
                         ontap: () async {
-                          log(employees[index].uid.toString());
-                          await FirebaseService.deleteEmployee(
-                              employees[index].uid.toString());
-                          Navigator.pop(context);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Employee deleted'),
-                              duration: Duration(seconds: 2),
-                            ),
+                          // Show confirmation dialog
+                          final confirmDelete = await showDialog<bool>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Confirm Deletion'),
+                                content: const Text(
+                                    'Are you sure you want to delete this employee?'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(false),
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(true),
+                                    child: const Text('Delete'),
+                                  ),
+                                ],
+                              );
+                            },
                           );
+
+                          // If deletion is confirmed
+                          if (confirmDelete == true) {
+                            log(employees[index].uid.toString());
+                            await FirebaseService.deleteEmployee(
+                                employees[index].uid.toString());
+
+                            // Optionally, refresh the list of employees or show a success message
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Employee deleted'),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                            Navigator.pop(context);
+                          }
                         },
                       ),
                     );

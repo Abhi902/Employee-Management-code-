@@ -26,7 +26,7 @@ class ServiceContainer extends StatelessWidget {
     return GestureDetector(
       onTap: ontap,
       child: Container(
-        height: 180.h,
+        height: 160.h,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(26.0),
@@ -36,8 +36,8 @@ class ServiceContainer extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 120.w,
-                height: double.infinity,
+                width: 100.w,
+                height: 120.h,
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(22.0),
@@ -62,7 +62,7 @@ class ServiceContainer extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 16.w),
+              SizedBox(width: 36.w),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -96,11 +96,6 @@ class ServiceContainer extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              const Icon(
-                Icons.star,
-                size: 13,
-                color: Colors.white, // Set the base color of the icon
-              ),
             ],
           ),
         ),

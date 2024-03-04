@@ -417,9 +417,11 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                         child: TextFormField(
                           enabled: _isAttendanceEditing,
                           controller: _attendanceController,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^(\d+)?\.?\d{0,2}'))
                           ],
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,

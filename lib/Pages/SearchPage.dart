@@ -89,13 +89,11 @@ class AllEmployeeState extends State<AllEmployee> {
         title: Text(
           "Employee Database",
           textAlign: TextAlign.left,
-          style: GoogleFonts.josefinSans(
-            textStyle: TextStyle(
-              fontSize: 23.sp,
-              color: fontColor,
-              decorationThickness: 5,
-              fontFamily: fontFamily,
-            ),
+          style: TextStyle(
+            fontSize: 23.sp,
+            color: fontColor,
+            decorationThickness: 5,
+            fontFamily: fontFamily,
           ),
         ),
       ),
