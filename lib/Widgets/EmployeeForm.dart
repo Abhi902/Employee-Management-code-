@@ -103,7 +103,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                                     decorationThickness: 10)),
                           ),
                           CircleAvatar(
-                            radius: 100, // Adjust the radius as needed
+                            radius: 80, // Adjust the radius as needed
                             backgroundColor:
                                 Colors.white, // Set a transparent background
                             backgroundImage: _imageFile != null
@@ -285,6 +285,14 @@ class EmployeeFormState extends State<EmployeeForm> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18.sp,
+                            fontFamily: fontFamily,
+                            color: _amountController.text.startsWith('-')
+                                ? Colors.red
+                                : Colors.green,
+                          ),
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: 'Rate',
@@ -293,6 +301,15 @@ class EmployeeFormState extends State<EmployeeForm> {
                               fontSize: 16.sp,
                               color: hintColor,
                               fontFamily: fontFamily,
+                            ),
+                            prefix: Text(
+                              '₹',
+                              style: TextStyle(
+                                color: _amountController.text.startsWith('-')
+                                    ? Colors.red
+                                    : Colors.green,
+                                fontSize: 18.sp,
+                              ),
                             ),
                             labelStyle: TextStyle(
                               fontWeight: FontWeight.w900,
@@ -313,6 +330,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                               return 'Please enter a rate';
                             }
                             return null;
+                          },
+                          onChanged: (value) {
+                            if (_advanceController.text.isNotEmpty &&
+                                _amountController.text.isNotEmpty &&
+                                _rateController.text.isNotEmpty &&
+                                _kharchaController.text.isNotEmpty &&
+                                _autoRentController.text.isNotEmpty) {
+                              _amountController.text = ((int.parse(
+                                              _attendanceController.text) *
+                                          int.parse(_rateController.text)) -
+                                      (int.parse(_advanceController.text) +
+                                          int.parse(_kharchaController.text) +
+                                          int.parse(_autoRentController.text)))
+                                  .toString();
+                            } else {
+                              _amountController.text = "0";
+                            }
+                            setState(() {});
                           },
                         ),
                       ],
@@ -362,6 +397,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
+                          onChanged: (value) {
+                            if (_advanceController.text.isNotEmpty &&
+                                _amountController.text.isNotEmpty &&
+                                _rateController.text.isNotEmpty &&
+                                _kharchaController.text.isNotEmpty &&
+                                _autoRentController.text.isNotEmpty) {
+                              _amountController.text = ((int.parse(
+                                              _attendanceController.text) *
+                                          int.parse(_rateController.text)) -
+                                      (int.parse(_advanceController.text) +
+                                          int.parse(_kharchaController.text) +
+                                          int.parse(_autoRentController.text)))
+                                  .toString();
+                            } else {
+                              _amountController.text = "0";
+                            }
+                            setState(() {});
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter attendance';
@@ -393,14 +446,32 @@ class EmployeeFormState extends State<EmployeeForm> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18.sp,
+                            fontFamily: fontFamily,
+                            color: _amountController.text.startsWith('-')
+                                ? Colors.red
+                                : Colors.green,
+                          ),
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: 'Amount',
+                            enabled: false,
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16.sp,
                               color: hintColor,
                               fontFamily: fontFamily,
+                            ),
+                            prefix: Text(
+                              '₹',
+                              style: TextStyle(
+                                color: _amountController.text.startsWith('-')
+                                    ? Colors.red
+                                    : Colors.green,
+                                fontSize: 18.sp,
+                              ),
                             ),
                             labelStyle: TextStyle(
                               fontWeight: FontWeight.w900,
@@ -447,6 +518,14 @@ class EmployeeFormState extends State<EmployeeForm> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18.sp,
+                            fontFamily: fontFamily,
+                            color: _amountController.text.startsWith('-')
+                                ? Colors.red
+                                : Colors.green,
+                          ),
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: 'Advance',
@@ -455,6 +534,15 @@ class EmployeeFormState extends State<EmployeeForm> {
                               fontSize: 16.sp,
                               color: hintColor,
                               fontFamily: fontFamily,
+                            ),
+                            prefix: Text(
+                              '₹',
+                              style: TextStyle(
+                                color: _advanceController.text.startsWith('-')
+                                    ? Colors.red
+                                    : Colors.green,
+                                fontSize: 18.sp,
+                              ),
                             ),
                             labelStyle: TextStyle(
                               fontWeight: FontWeight.w900,
@@ -475,6 +563,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                               return 'Please enter an advance';
                             }
                             return null;
+                          },
+                          onChanged: (value) {
+                            if (_advanceController.text.isNotEmpty &&
+                                _amountController.text.isNotEmpty &&
+                                _rateController.text.isNotEmpty &&
+                                _kharchaController.text.isNotEmpty &&
+                                _autoRentController.text.isNotEmpty) {
+                              _amountController.text = ((int.parse(
+                                              _attendanceController.text) *
+                                          int.parse(_rateController.text)) -
+                                      (int.parse(_advanceController.text) +
+                                          int.parse(_kharchaController.text) +
+                                          int.parse(_autoRentController.text)))
+                                  .toString();
+                            } else {
+                              _amountController.text = "0";
+                            }
+                            setState(() {});
                           },
                         ),
                       ],
@@ -501,6 +607,14 @@ class EmployeeFormState extends State<EmployeeForm> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18.sp,
+                            fontFamily: fontFamily,
+                            color: _amountController.text.startsWith('-')
+                                ? Colors.red
+                                : Colors.green,
+                          ),
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: 'Kharcha',
@@ -509,6 +623,15 @@ class EmployeeFormState extends State<EmployeeForm> {
                               fontSize: 16.sp,
                               color: hintColor,
                               fontFamily: fontFamily,
+                            ),
+                            prefix: Text(
+                              '₹',
+                              style: TextStyle(
+                                color: _kharchaController.text.startsWith('-')
+                                    ? Colors.red
+                                    : Colors.green,
+                                fontSize: 18.sp,
+                              ),
                             ),
                             labelStyle: TextStyle(
                               fontWeight: FontWeight.w900,
@@ -529,6 +652,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                               return 'Please enter a Kharcha';
                             }
                             return null;
+                          },
+                          onChanged: (value) {
+                            if (_advanceController.text.isNotEmpty &&
+                                _amountController.text.isNotEmpty &&
+                                _rateController.text.isNotEmpty &&
+                                _kharchaController.text.isNotEmpty &&
+                                _autoRentController.text.isNotEmpty) {
+                              _amountController.text = ((int.parse(
+                                              _attendanceController.text) *
+                                          int.parse(_rateController.text)) -
+                                      (int.parse(_advanceController.text) +
+                                          int.parse(_kharchaController.text) +
+                                          int.parse(_autoRentController.text)))
+                                  .toString();
+                            } else {
+                              _amountController.text = "0";
+                            }
+                            setState(() {});
                           },
                         ),
                       ],
@@ -555,6 +696,14 @@ class EmployeeFormState extends State<EmployeeForm> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18.sp,
+                            fontFamily: fontFamily,
+                            color: _amountController.text.startsWith('-')
+                                ? Colors.red
+                                : Colors.green,
+                          ),
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: 'Auto Rent',
@@ -563,6 +712,15 @@ class EmployeeFormState extends State<EmployeeForm> {
                               fontSize: 16.sp,
                               color: hintColor,
                               fontFamily: fontFamily,
+                            ),
+                            prefix: Text(
+                              '₹',
+                              style: TextStyle(
+                                color: _autoRentController.text.startsWith('-')
+                                    ? Colors.red
+                                    : Colors.green,
+                                fontSize: 18.sp,
+                              ),
                             ),
                             labelStyle: TextStyle(
                               fontWeight: FontWeight.w900,
@@ -583,6 +741,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                               return 'Please enter a balance';
                             }
                             return null;
+                          },
+                          onChanged: (value) {
+                            if (_advanceController.text.isNotEmpty &&
+                                _amountController.text.isNotEmpty &&
+                                _rateController.text.isNotEmpty &&
+                                _kharchaController.text.isNotEmpty &&
+                                _autoRentController.text.isNotEmpty) {
+                              _amountController.text = ((int.parse(
+                                              _attendanceController.text) *
+                                          int.parse(_rateController.text)) -
+                                      (int.parse(_advanceController.text) +
+                                          int.parse(_kharchaController.text) +
+                                          int.parse(_autoRentController.text)))
+                                  .toString();
+                            } else {
+                              _amountController.text = "0";
+                            }
+                            setState(() {});
                           },
                         ),
                       ],

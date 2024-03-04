@@ -126,8 +126,8 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                       height: 20.h,
                     ),
                     Container(
-                      width: 230.w,
-                      height: 230.h,
+                      width: 200.w,
+                      height: 200.h,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(1000.0),
