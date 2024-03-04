@@ -337,12 +337,14 @@ class EmployeeFormState extends State<EmployeeForm> {
                                 _rateController.text.isNotEmpty &&
                                 _kharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
-                              _amountController.text = ((int.parse(
+                              _amountController.text = ((double.parse(
                                               _attendanceController.text) *
-                                          int.parse(_rateController.text)) -
-                                      (int.parse(_advanceController.text) +
-                                          int.parse(_kharchaController.text) +
-                                          int.parse(_autoRentController.text)))
+                                          double.parse(_rateController.text)) -
+                                      (double.parse(_advanceController.text) +
+                                          double.parse(
+                                              _kharchaController.text) +
+                                          double.parse(
+                                              _autoRentController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
@@ -370,9 +372,11 @@ class EmployeeFormState extends State<EmployeeForm> {
                         ),
                         TextFormField(
                           controller: _attendanceController,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^(\d+)?\.?\d{0,2}'))
                           ],
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -403,12 +407,14 @@ class EmployeeFormState extends State<EmployeeForm> {
                                 _rateController.text.isNotEmpty &&
                                 _kharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
-                              _amountController.text = ((int.parse(
+                              _amountController.text = ((double.parse(
                                               _attendanceController.text) *
-                                          int.parse(_rateController.text)) -
-                                      (int.parse(_advanceController.text) +
-                                          int.parse(_kharchaController.text) +
-                                          int.parse(_autoRentController.text)))
+                                          double.parse(_rateController.text)) -
+                                      (double.parse(_advanceController.text) +
+                                          double.parse(
+                                              _kharchaController.text) +
+                                          double.parse(
+                                              _autoRentController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
@@ -570,12 +576,14 @@ class EmployeeFormState extends State<EmployeeForm> {
                                 _rateController.text.isNotEmpty &&
                                 _kharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
-                              _amountController.text = ((int.parse(
+                              _amountController.text = ((double.parse(
                                               _attendanceController.text) *
-                                          int.parse(_rateController.text)) -
-                                      (int.parse(_advanceController.text) +
-                                          int.parse(_kharchaController.text) +
-                                          int.parse(_autoRentController.text)))
+                                          double.parse(_rateController.text)) -
+                                      (double.parse(_advanceController.text) +
+                                          double.parse(
+                                              _kharchaController.text) +
+                                          double.parse(
+                                              _autoRentController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
@@ -659,12 +667,14 @@ class EmployeeFormState extends State<EmployeeForm> {
                                 _rateController.text.isNotEmpty &&
                                 _kharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
-                              _amountController.text = ((int.parse(
+                              _amountController.text = ((double.parse(
                                               _attendanceController.text) *
-                                          int.parse(_rateController.text)) -
-                                      (int.parse(_advanceController.text) +
-                                          int.parse(_kharchaController.text) +
-                                          int.parse(_autoRentController.text)))
+                                          double.parse(_rateController.text)) -
+                                      (double.parse(_advanceController.text) +
+                                          double.parse(
+                                              _kharchaController.text) +
+                                          double.parse(
+                                              _autoRentController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
@@ -748,12 +758,14 @@ class EmployeeFormState extends State<EmployeeForm> {
                                 _rateController.text.isNotEmpty &&
                                 _kharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
-                              _amountController.text = ((int.parse(
+                              _amountController.text = ((double.parse(
                                               _attendanceController.text) *
-                                          int.parse(_rateController.text)) -
-                                      (int.parse(_advanceController.text) +
-                                          int.parse(_kharchaController.text) +
-                                          int.parse(_autoRentController.text)))
+                                          double.parse(_rateController.text)) -
+                                      (double.parse(_advanceController.text) +
+                                          double.parse(
+                                              _kharchaController.text) +
+                                          double.parse(
+                                              _autoRentController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
