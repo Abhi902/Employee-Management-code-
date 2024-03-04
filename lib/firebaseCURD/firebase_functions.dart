@@ -162,6 +162,7 @@ class FirebaseService {
       String? advance,
       String? kharcha,
       String? autoRent,
+      String? amount,
       String? rate,
       String? attendance,
       CommonFormModel? presentEmployee // New field
@@ -223,6 +224,7 @@ class FirebaseService {
       log("current month snapshot ${currentMonthSnapshot.snapshot.exists.toString()}");
       if (currentMonthSnapshot.snapshot.exists) {
         // Update the existing fields under the current month
+        updateFields['amount'] = amount;
         await currentMonthReference.update(updateFields);
       } else {
         // Create the current month node if it doesn't exist
@@ -259,16 +261,13 @@ class FirebaseService {
 
         if (rate != null) {
           updateFields['rate'] = rate;
-          updateFields['amount'] = (int.parse(rate) *
-                  int.parse(attendance ?? presentEmployee.attendance))
-              .toString();
+
           //  updateFields['lastUpdateRate'] = now;
         } else {
-          updateFields['amount'] = (int.parse(presentEmployee.rate) *
-                  int.parse(attendance ?? presentEmployee.attendance))
-              .toString();
           updateFields['rate'] = presentEmployee.rate;
         }
+
+        updateFields['amount'] = amount;
 
         if (attendance != null) {
           updateFields['attendance'] = attendance;

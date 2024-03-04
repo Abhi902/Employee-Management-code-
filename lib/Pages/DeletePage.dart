@@ -109,12 +109,7 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
                       child: ServiceContainer(
                         text: employees[index].name,
                         service: employees[index].category,
-                        amount: ((int.parse(employees[index].attendance) *
-                                    int.parse(employees[index].rate)) -
-                                (int.parse(employees[index].kharcha) +
-                                    int.parse(employees[index].autoRent) +
-                                    int.parse(employees[index].advance)))
-                            .toString(),
+                        amount: employees[index].amount,
                         image: employees[index].photo?.path ?? "",
                         ontap: () async {
                           log(employees[index].uid.toString());

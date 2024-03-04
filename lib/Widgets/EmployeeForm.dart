@@ -96,11 +96,15 @@ class EmployeeFormState extends State<EmployeeForm> {
                         children: [
                           Text(
                             'Photo',
-                            style: GoogleFonts.josefinSans(
-                                textStyle: TextStyle(
-                                    fontSize: 20.sp,
-                                    color: fontColor,
-                                    decorationThickness: 10)),
+                            style: TextStyle(
+                              fontSize: 20.sp,
+                              color: fontColorBlack,
+                              fontFamily: fontFamily,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.sp,
                           ),
                           CircleAvatar(
                             radius: 80, // Adjust the radius as needed

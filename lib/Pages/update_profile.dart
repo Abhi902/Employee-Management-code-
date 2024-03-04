@@ -113,21 +113,19 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                   children: [
                     Text(
                       'Photo',
-                      style: GoogleFonts.josefinSans(
-                        textStyle: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          decorationThickness: 10,
-                        ),
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        color: fontColorBlack,
+                        fontFamily: fontFamily,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     SizedBox(
-                      height: 20.h,
+                      height: 10.sp,
                     ),
                     Container(
-                      width: 200.w,
-                      height: 200.h,
+                      width: 180.w,
+                      height: 180.h,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(1000.0),
@@ -157,8 +155,6 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -351,6 +347,26 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
+                          onChanged: (value) {
+                            if (_advanceController.text.isNotEmpty &&
+                                _amountController.text.isNotEmpty &&
+                                _rateController.text.isNotEmpty &&
+                                _kharchaController.text.isNotEmpty &&
+                                _autoRentController.text.isNotEmpty) {
+                              _amountController.text = ((double.parse(
+                                              _attendanceController.text) *
+                                          double.parse(_rateController.text)) -
+                                      (double.parse(_advanceController.text) +
+                                          double.parse(
+                                              _kharchaController.text) +
+                                          double.parse(
+                                              _autoRentController.text)))
+                                  .toString();
+                            } else {
+                              _amountController.text = "0";
+                            }
+                            setState(() {});
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter a rate';
@@ -433,6 +449,26 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                               return 'Please enter a Attendance';
                             }
                             return null;
+                          },
+                          onChanged: (value) {
+                            if (_advanceController.text.isNotEmpty &&
+                                _amountController.text.isNotEmpty &&
+                                _rateController.text.isNotEmpty &&
+                                _kharchaController.text.isNotEmpty &&
+                                _autoRentController.text.isNotEmpty) {
+                              _amountController.text = ((double.parse(
+                                              _attendanceController.text) *
+                                          double.parse(_rateController.text)) -
+                                      (double.parse(_advanceController.text) +
+                                          double.parse(
+                                              _kharchaController.text) +
+                                          double.parse(
+                                              _autoRentController.text)))
+                                  .toString();
+                            } else {
+                              _amountController.text = "0";
+                            }
+                            setState(() {});
                           },
                         ),
                       ),
@@ -585,6 +621,26 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
+                          onChanged: (value) {
+                            if (_advanceController.text.isNotEmpty &&
+                                _amountController.text.isNotEmpty &&
+                                _rateController.text.isNotEmpty &&
+                                _kharchaController.text.isNotEmpty &&
+                                _autoRentController.text.isNotEmpty) {
+                              _amountController.text = ((double.parse(
+                                              _attendanceController.text) *
+                                          double.parse(_rateController.text)) -
+                                      (double.parse(_advanceController.text) +
+                                          double.parse(
+                                              _kharchaController.text) +
+                                          double.parse(
+                                              _autoRentController.text)))
+                                  .toString();
+                            } else {
+                              _amountController.text = "0";
+                            }
+                            setState(() {});
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter a Advance';
@@ -676,6 +732,26 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             }
                             return null;
                           },
+                          onChanged: (value) {
+                            if (_advanceController.text.isNotEmpty &&
+                                _amountController.text.isNotEmpty &&
+                                _rateController.text.isNotEmpty &&
+                                _kharchaController.text.isNotEmpty &&
+                                _autoRentController.text.isNotEmpty) {
+                              _amountController.text = ((double.parse(
+                                              _attendanceController.text) *
+                                          double.parse(_rateController.text)) -
+                                      (double.parse(_advanceController.text) +
+                                          double.parse(
+                                              _kharchaController.text) +
+                                          double.parse(
+                                              _autoRentController.text)))
+                                  .toString();
+                            } else {
+                              _amountController.text = "0";
+                            }
+                            setState(() {});
+                          },
                         ),
                       ),
                       SizedBox(
@@ -755,6 +831,26 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
+                          onChanged: (value) {
+                            if (_advanceController.text.isNotEmpty &&
+                                _amountController.text.isNotEmpty &&
+                                _rateController.text.isNotEmpty &&
+                                _kharchaController.text.isNotEmpty &&
+                                _autoRentController.text.isNotEmpty) {
+                              _amountController.text = ((double.parse(
+                                              _attendanceController.text) *
+                                          double.parse(_rateController.text)) -
+                                      (double.parse(_advanceController.text) +
+                                          double.parse(
+                                              _kharchaController.text) +
+                                          double.parse(
+                                              _autoRentController.text)))
+                                  .toString();
+                            } else {
+                              _amountController.text = "0";
+                            }
+                            setState(() {});
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter a Kharcha';
@@ -793,6 +889,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                         kharcha: _kharchaController.text,
                         autoRent: _autoRentController.text,
                         rate: _rateController.text,
+                        amount: _amountController.text,
                         attendance: _attendanceController.text,
                         presentEmployee: widget.employeeDetails);
                     Navigator.pop(context);
@@ -801,7 +898,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                 child: Text(
                   'Update',
                   style: TextStyle(
-                    fontSize: 23.sp,
+                    fontSize: 20.sp,
                     color: fontColor,
                     decorationThickness: 5,
                     fontFamily: fontFamily,
