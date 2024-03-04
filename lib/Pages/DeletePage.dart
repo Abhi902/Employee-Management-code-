@@ -150,7 +150,6 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
                                 duration: Duration(seconds: 2),
                               ),
                             );
-                            Navigator.pop(context);
                           }
                         },
                       ),
