@@ -147,6 +147,7 @@ class FirebaseService {
           'kharcha': employee.kharcha,
           'autoRent': employee.autoRent,
           'createdAt': ServerValue.timestamp,
+          'lastUpdatedPerson': employee.lastUpdatedPerson,
         },
       );
 
@@ -165,6 +166,7 @@ class FirebaseService {
       String? amount,
       String? rate,
       String? attendance,
+      String? lastUpdatedPerson,
       CommonFormModel? presentEmployee // New field
       }) async {
     try {
@@ -217,7 +219,9 @@ class FirebaseService {
         updateFields['attendance'] = attendance;
         updateFields['lastUpdateAttendance'] = now;
       }
+
       updateFields['amount'] = amount;
+      updateFields['lastUpdatedPerson'] = lastUpdatedPerson;
 
       // Check if the current month node already exists
       final DatabaseEvent currentMonthSnapshot =
@@ -271,7 +275,7 @@ class FirebaseService {
         } else {
           updateFields['attendance'] = presentEmployee.attendance;
         }
-
+        updateFields['lastUpdatedPerson'] = lastUpdatedPerson;
         updateFields['lastUpdateAdvance'] = now;
         updateFields['lastUpdateAutoRent'] = now;
         updateFields['lastUpdateKharcha'] = now;

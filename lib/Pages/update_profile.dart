@@ -87,6 +87,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
     _autoRentController.text = widget.employeeDetails.autoRent;
     _selectedCategory.text = widget.employeeDetails.category;
     _imageFile = widget.employeeDetails.photo?.path;
+    selectedCategory = widget.employeeDetails.lastUpdatedPerson;
     setState(() {});
   }
 
@@ -166,6 +167,40 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Last Updated By:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15.sp,
+                          color: Colors.grey[600],
+                          fontFamily: fontFamily,
+                        ),
+                      ),
+                      SizedBox(width: 20.sp),
+                      DropdownButton<String>(
+                        value: selectedCategory,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedCategory = newValue!;
+                          });
+                        },
+                        items: <String>[
+                          'Abhishek',
+                          'Kushvender',
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Text(
                     "Name",
                     style: TextStyle(
@@ -977,6 +1012,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                 widget.employeeDetails.attendance
                             ? _attendanceController.text
                             : null,
+                        lastUpdatedPerson: selectedCategory,
                         presentEmployee: widget.employeeDetails);
                     Navigator.pop(context);
                   }

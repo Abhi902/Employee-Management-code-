@@ -2,6 +2,7 @@ import 'package:image_picker/image_picker.dart';
 
 class CommonFormModel {
   String? uid;
+  String? lastUpdatedPerson;
   String name;
   XFile? photo;
   String category;
@@ -37,12 +38,14 @@ class CommonFormModel {
     this.lastUpdateRate,
     this.lastUpdateAttendance,
     this.uid,
+    this.lastUpdatedPerson,
   });
 
   CommonFormModel.fromJson(Map<String, dynamic> json)
       : name = json['name'] ?? '',
         photo = json['photo'] != null ? XFile(json['photo'] as String) : null,
         category = json['category'] ?? '',
+        lastUpdatedPerson = json['lastUpdatedPerson'] ?? '',
         reference = json['reference'] ?? '',
         rate = json['rate'] ?? '',
         attendance = json['attendance'] ?? '',
@@ -92,6 +95,7 @@ class CommonFormModel {
       'lastUpdateAutoRent': lastUpdateAutoRent?.millisecondsSinceEpoch,
       'lastUpdateRate': lastUpdateRate?.millisecondsSinceEpoch,
       'uid': uid,
+      "lastUpdatedPerson": lastUpdatedPerson,
       'lastUpdateAttendance': lastUpdateAttendance?.microsecondsSinceEpoch
     };
   }

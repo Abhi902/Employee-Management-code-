@@ -46,6 +46,7 @@ class EmployeeFormState extends State<EmployeeForm> {
 
   XFile? _imageFile;
   String? selectedCategory;
+  String? selectedPerson;
 
   Future<void> _takePicture() async {
     final ImagePicker _picker = ImagePicker();
@@ -221,6 +222,40 @@ class EmployeeFormState extends State<EmployeeForm> {
                             'Cutting',
                             'Polish Mister',
                             'Polish Helper'
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20.sp,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Manager:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15.sp,
+                            color: Colors.grey[600],
+                            fontFamily: fontFamily,
+                          ),
+                        ),
+                        SizedBox(width: 20.sp),
+                        DropdownButton<String>(
+                          value: selectedPerson,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedPerson = newValue!;
+                            });
+                          },
+                          items: <String>[
+                            'Abhishek',
+                            'Kushvender',
                           ].map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -818,6 +853,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             kharcha: kharcha,
                             autoRent: autoRent,
                             createdAt: DateTime.now(),
+                            lastUpdatedPerson: selectedPerson,
                           );
                           indicatorToggle();
                           FirebaseService firebaseService = FirebaseService();
