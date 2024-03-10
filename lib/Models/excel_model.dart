@@ -84,16 +84,16 @@ class ExcelModel {
     {
       excelDataRows = reports.map<ExcelDataRow>((ExcelModel dataRow) {
         return ExcelDataRow(cells: <ExcelDataCell>[
-          ExcelDataCell(columnHeader: '', value: dataRow.name),
-          ExcelDataCell(columnHeader: '', value: dataRow.amount),
-          ExcelDataCell(columnHeader: '', value: dataRow.advance),
           ExcelDataCell(columnHeader: '', value: dataRow.uid),
-          ExcelDataCell(columnHeader: '', value: dataRow.kharcha),
-          ExcelDataCell(columnHeader: '', value: dataRow.attendance),
+          ExcelDataCell(columnHeader: '', value: dataRow.name),
           ExcelDataCell(columnHeader: '', value: dataRow.category),
-          ExcelDataCell(columnHeader: '', value: dataRow.rate),
-          ExcelDataCell(columnHeader: '', value: dataRow.autoRent),
           ExcelDataCell(columnHeader: '', value: dataRow.reference),
+          ExcelDataCell(columnHeader: '', value: dataRow.rate),
+          ExcelDataCell(columnHeader: '', value: dataRow.attendance),
+          ExcelDataCell(columnHeader: '', value: dataRow.advance),
+          ExcelDataCell(columnHeader: '', value: dataRow.kharcha),
+          ExcelDataCell(columnHeader: '', value: dataRow.autoRent),
+          ExcelDataCell(columnHeader: '', value: dataRow.amount),
         ]);
       }).toList();
 
@@ -130,16 +130,16 @@ class ExcelModel {
       }
       rowIndex += employee.length + 2;
 
-      sheet.getRangeByName('A4').setText('Name');
-      sheet.getRangeByName('B4').setText('Amount');
-      sheet.getRangeByName('C4').setText('Advance');
-      sheet.getRangeByName('D4').setText('User Id');
-      sheet.getRangeByName('E4').setText('kharcha');
+      sheet.getRangeByName('B4').setText('Name');
+      sheet.getRangeByName('J4').setText('Amount');
+      sheet.getRangeByName('G4').setText('Advance');
+      sheet.getRangeByName('A4').setText('User Id');
+      sheet.getRangeByName('H4').setText('kharcha');
       sheet.getRangeByName('F4').setText('Attendance');
-      sheet.getRangeByName('G4').setText('Category');
-      sheet.getRangeByName('H4').setText('Rate');
+      sheet.getRangeByName('C4').setText('Category');
+      sheet.getRangeByName('E4').setText('Rate');
       sheet.getRangeByName('I4').setText('AutoRent');
-      sheet.getRangeByName('J4').setText('Reference');
+      sheet.getRangeByName('D4').setText('Reference');
 
       // sheet.getRangeByName('A2:C2').merge();
       // sheet.getRangeByName('A2').setText('Occupied Room Checking List');

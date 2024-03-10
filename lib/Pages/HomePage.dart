@@ -323,38 +323,38 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         elevation: 0,
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.only(
-                    top: 10.h, left: 30.w, right: 10.w, bottom: 30.h),
-                child: Column(
-                  children: [
-                    Text(
-                      'JSI \nEmployee \nManagement',
-                      style: TextStyle(
-                          color: fontColor,
-                          fontSize: 35.sp,
-                          fontFamily: fontFamily,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(
+                      top: 10.h, left: 30.w, right: 10.w, bottom: 30.h),
+                  child: Column(
+                    children: [
+                      Text(
+                        'JSI \nEmployee \nManagement',
+                        style: TextStyle(
+                            color: fontColor,
+                            fontSize: 35.sp,
+                            fontFamily: fontFamily,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              CircleAvatar(
-                radius: 50, // Adjust the radius to your preference
-                backgroundColor: Colors
-                    .transparent, // Assuming your background color is already set
-                backgroundImage: AssetImage("assets/logo.jpeg"),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Container(
+                CircleAvatar(
+                  radius: 50, // Adjust the radius to your preference
+                  backgroundColor: Colors
+                      .transparent, // Assuming your background color is already set
+                  backgroundImage: AssetImage("assets/logo.jpeg"),
+                ),
+              ],
+            ),
+            Container(
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 decoration: BoxDecoration(
@@ -542,10 +542,110 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () async {
+                          final confirmDelete = await showDialog<bool>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(
+                                  'Confirm Deletion',
+                                  style: TextStyle(
+                                    color: fontColorBlack,
+                                    fontFamily: fontFamily,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.sp,
+                                  ),
+                                ),
+                                content: Text(
+                                  'Are you sure you want to Update all employee data?',
+                                  style: TextStyle(
+                                    color: fontColorBlack,
+                                    fontFamily: fontFamily,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.sp,
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(false),
+                                    child: Text(
+                                      'Cancel',
+                                      style: TextStyle(
+                                        color: fontColorBlack,
+                                        fontFamily: fontFamily,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.sp,
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(true),
+                                    child: Text(
+                                      'Update',
+                                      style: TextStyle(
+                                        color: fontColorBlack,
+                                        fontFamily: fontFamily,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.sp,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+
+                          // If deletion is confirmed
+                          if (confirmDelete == true) {
+                          } else {}
+                        },
+                        child: Container(
+                          height: 120.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(26.0),
+                            gradient: LinearGradient(
+                              colors: [Color(0xffe5e1fc), Color(0xffe5e1fc)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 10.h),
+                                Icon(
+                                  Icons.update,
+                                  color: fontColorBlack,
+                                  size: 40.sp,
+                                ),
+                                SizedBox(height: 10.h),
+                                Text(
+                                  'Update All Entries',
+                                  style: TextStyle(
+                                      color: fontColorBlack,
+                                      fontSize: 22.sp,
+                                      fontFamily: fontFamily,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 )),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

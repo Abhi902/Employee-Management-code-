@@ -19,6 +19,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EmployeeFormUpdate extends StatefulWidget {
   final CommonFormModel employeeDetails;
@@ -39,20 +40,28 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
   TextEditingController _amountController = TextEditingController();
   TextEditingController _selectedCategory = TextEditingController();
   TextEditingController _autoRentController = TextEditingController();
+  TextEditingController _managerController = TextEditingController();
   String? _imageFile;
-  String? selectedCategory;
 
   bool _isAdvanceEditing = false;
   bool _isKharchaEditing = false;
   bool _isAutoRentEditing = false;
   bool _isRateEditing = false;
   bool _isAttendanceEditing = false;
+  String? _currentUser;
   String formatDateTime(DateTime dateTime) {
     // Format DateTime object into desired format
     String formattedDateTime =
-        DateFormat('EEEE, MMMM d, yyyy - hh:mm:ss a').format(dateTime);
+        DateFormat('MMMM d, yyyy - hh:mm:ss a').format(dateTime);
 
     return formattedDateTime;
+  }
+
+  void _fetchCurrentUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _currentUser = prefs.getString('currentUser');
+    });
   }
 
   @override
@@ -87,8 +96,11 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
     _autoRentController.text = widget.employeeDetails.autoRent;
     _selectedCategory.text = widget.employeeDetails.category;
     _imageFile = widget.employeeDetails.photo?.path;
-    selectedCategory = widget.employeeDetails.lastUpdatedPerson;
+
+    _managerController.text =
+        widget.employeeDetails.lastUpdatedPerson as String;
     setState(() {});
+    _fetchCurrentUser();
   }
 
   @override
@@ -167,37 +179,6 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Last Updated By:',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15.sp,
-                          color: Colors.grey[600],
-                          fontFamily: fontFamily,
-                        ),
-                      ),
-                      SizedBox(width: 20.sp),
-                      DropdownButton<String>(
-                        value: selectedCategory,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedCategory = newValue!;
-                          });
-                        },
-                        items: <String>[
-                          'Abhishek',
-                          'Kushvender',
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ],
-                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -239,6 +220,53 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                       }
                       return null;
                     },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Last Updated by:",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w200,
+                      fontSize: 14.sp,
+                      color: Color.fromRGBO(106, 107, 112, 1),
+                      fontFamily: fontFamily,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  TextFormField(
+                    controller: _managerController,
+                    enabled: false,
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      hintText: 'Last Updated by',
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.sp,
+                        color: hintColor,
+                        fontFamily: fontFamily,
+                      ),
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 18.sp,
+                        color: fontColor,
+                        fontFamily: fontFamily,
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: fontColor,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -442,8 +470,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                       ),
                       TapTooltip(
                         message: widget.employeeDetails.lastUpdateRate != null
-                            ? formatDateTime(
-                                widget.employeeDetails.lastUpdateRate!)
+                            ? "${_managerController.text} , ${formatDateTime(widget.employeeDetails.lastUpdateRate!)}"
                             : 'Never Updated',
                         child: Icon(Icons.info_outline, size: 30),
                       ),
@@ -550,11 +577,10 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                         width: 20.w,
                       ),
                       TapTooltip(
-                        message:
-                            widget.employeeDetails.lastUpdateAttendance != null
-                                ? formatDateTime(widget.employeeDetails
-                                    .lastUpdateAttendance as DateTime)
-                                : 'Never Updated',
+                        message: widget.employeeDetails.lastUpdateAttendance !=
+                                null
+                            ? "${_managerController.text} , ${formatDateTime(widget.employeeDetails.lastUpdateAttendance!)}"
+                            : 'Never Updated',
                         child: Icon(Icons.info_outline, size: 30),
                       ),
                     ],
@@ -738,11 +764,10 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                         width: 20.w,
                       ),
                       TapTooltip(
-                        message:
-                            widget.employeeDetails.lastUpdateAdvance != null
-                                ? formatDateTime(widget.employeeDetails
-                                    .lastUpdateAdvance as DateTime)
-                                : 'Never Updated',
+                        message: widget.employeeDetails.lastUpdateAdvance !=
+                                null
+                            ? "${_managerController.text} , ${formatDateTime(widget.employeeDetails.lastUpdateAdvance!)}"
+                            : 'Never Updated',
                         child: Icon(Icons.info_outline, size: 30),
                       ),
                     ],
@@ -854,11 +879,10 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                         width: 20.w,
                       ),
                       TapTooltip(
-                        message:
-                            widget.employeeDetails.lastUpdateKharcha != null
-                                ? formatDateTime(widget.employeeDetails
-                                    .lastUpdateKharcha as DateTime)
-                                : 'Never Updated',
+                        message: widget.employeeDetails.lastUpdateKharcha !=
+                                null
+                            ? "${_managerController.text} , ${formatDateTime(widget.employeeDetails.lastUpdateKharcha!)}"
+                            : 'Never Updated',
                         child: Icon(Icons.info_outline, size: 30),
                       ),
                     ],
@@ -970,11 +994,10 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                         width: 20.w,
                       ),
                       TapTooltip(
-                        message:
-                            widget.employeeDetails.lastUpdateAutoRent != null
-                                ? formatDateTime(widget.employeeDetails
-                                    .lastUpdateAutoRent as DateTime)
-                                : 'Never Updated',
+                        message: widget.employeeDetails.lastUpdateAutoRent !=
+                                null
+                            ? "${_managerController.text} , ${formatDateTime(widget.employeeDetails.lastUpdateAutoRent!)}"
+                            : 'Never Updated',
                         child: Icon(Icons.info_outline, size: 30),
                       ),
                     ],
@@ -1012,7 +1035,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                 widget.employeeDetails.attendance
                             ? _attendanceController.text
                             : null,
-                        lastUpdatedPerson: selectedCategory,
+                        lastUpdatedPerson: _currentUser,
                         presentEmployee: widget.employeeDetails);
                     Navigator.pop(context);
                   }
