@@ -1,21 +1,13 @@
 import 'dart:developer';
-import 'dart:io';
 import 'package:CompanyDatabase/Models/Employee.dart';
 import 'package:CompanyDatabase/Models/excel_model.dart';
 import 'package:CompanyDatabase/Pages/DeletePage.dart';
-import 'package:CompanyDatabase/Pages/employee_view.dart';
 import 'package:CompanyDatabase/Pages/update_profile.dart';
-import 'package:CompanyDatabase/Widgets/navbar.dart';
 import 'package:CompanyDatabase/Widgets/service_container.dart';
 import 'package:CompanyDatabase/firebaseCURD/firebase_functions.dart';
 import 'package:CompanyDatabase/utils/contants.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'CreatePage.dart';
 
 class ExportToExcelEmployee extends StatefulWidget {
@@ -108,131 +100,6 @@ class ExportToExcelEmployeeState extends State<ExportToExcelEmployee> {
             SizedBox(
               height: 20,
             ),
-            SizedBox(
-              width: 320,
-              child: TextField(
-                controller: searchController,
-                onChanged: (query) => searchEmployees(query),
-                style: TextStyle(color: fontColor),
-                decoration: InputDecoration(
-                  hintText: "Search by name...",
-                  hintStyle: TextStyle(color: Colors.grey),
-                  filled: true,
-                  fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1.0),
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 2.0),
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            if (filteredEmployees.isNotEmpty)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Search Result",
-                      style: TextStyle(
-                        color: fontColorBlack,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18.sp,
-                        fontFamily: fontFamily,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 200.h,
-                    width: 340.w,
-                    color: Colors.white,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: filteredEmployees.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            ExcelModel.EmployeeExcel(employees);
-                          },
-                          child: Container(
-                            height: 100.h,
-                            width: 150.w,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: Colors.black,
-                            ),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  top: 0,
-                                  left: 0,
-                                  right: 0,
-                                  bottom: 0,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    child: CachedNetworkImage(
-                                      imageUrl: filteredEmployees[index]
-                                              .photo
-                                              ?.path ??
-                                          "",
-                                      width: 50.w,
-                                      height: 50.h,
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, url) => Icon(
-                                        Icons.person,
-                                        size: 50,
-                                        color: Colors.black,
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          Icon(
-                                        Icons.error,
-                                        size: 50,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        filteredEmployees[index].category,
-                                        style: TextStyle(
-                                          fontSize: 18.sp,
-                                          fontWeight: FontWeight.bold,
-                                          color: fontColorBlack,
-                                        ),
-                                      ),
-                                      Text(
-                                        filteredEmployees[index].name,
-                                        style: TextStyle(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.bold,
-                                          color: fontColorBlack,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            margin: EdgeInsets.all(8.0),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -302,6 +169,22 @@ class ExportToExcelEmployeeState extends State<ExportToExcelEmployee> {
         ),
       ),
       // bottomNavigationBar: YourBottomNavBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          if (employees.isNotEmpty) {
+            setState(() {
+              isLoading = true;
+            });
+            ExcelModel.EmployeeExcel(employees);
+            setState(() {
+              isLoading = false;
+            });
+          }
+        },
+        child: Icon(Icons.download),
+        backgroundColor: themeColor,
+      ),
+      // Optionally use bottomNavigationBar: YourBottomNavBar(),
     );
   }
 }
