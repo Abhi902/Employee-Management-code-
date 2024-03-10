@@ -1037,6 +1037,12 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             : null,
                         lastUpdatedPerson: _currentUser,
                         presentEmployee: widget.employeeDetails);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Updated Sucessfully'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
                     Navigator.pop(context);
                   }
                 },

@@ -154,9 +154,7 @@ class ExportToExcelEmployeeState extends State<ExportToExcelEmployee> {
                             service: employees[index].category,
                             amount: employees[index].amount,
                             image: employees[index].photo?.path ?? "",
-                            ontap: () {
-                              edit(employees[index]);
-                            },
+                            ontap: () {},
                           ),
                         );
                       },
