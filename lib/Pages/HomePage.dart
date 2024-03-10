@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:CompanyDatabase/Models/Employee.dart';
 import 'package:CompanyDatabase/Pages/CreatePage.dart';
 import 'package:CompanyDatabase/Pages/DeletePage.dart';
 import 'package:CompanyDatabase/Pages/SearchPage.dart';
@@ -28,6 +31,8 @@ class _HomePageState extends State<HomePage> {
 
     print(userIdentity.toString());
   }
+
+  List<CommonFormModel> employees = [];
 
   @override
   void initState() {
@@ -545,103 +550,166 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: () async {
-                          final confirmDelete = await showDialog<bool>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(
-                                  'Confirm Deletion',
-                                  style: TextStyle(
-                                    color: fontColorBlack,
-                                    fontFamily: fontFamily,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
-                                content: Text(
-                                  'Are you sure you want to Update all employee data?',
-                                  style: TextStyle(
-                                    color: fontColorBlack,
-                                    fontFamily: fontFamily,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(false),
-                                    child: Text(
-                                      'Cancel',
-                                      style: TextStyle(
-                                        color: fontColorBlack,
-                                        fontFamily: fontFamily,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(true),
-                                    child: Text(
-                                      'Update',
-                                      style: TextStyle(
-                                        color: fontColorBlack,
-                                        fontFamily: fontFamily,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+                    StreamBuilder<List<CommonFormModel>>(
+                      stream: FirebaseService.getAllEmployeesStream(),
+                      builder: (context,
+                          AsyncSnapshot<List<CommonFormModel>> snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          log(snapshot.error.toString());
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else if (!snapshot.hasData ||
+                            snapshot.data!.isEmpty) {
+                          return Center(
+                              child: Text(
+                            'No data available',
+                            style: TextStyle(
+                              color: fontColorBlack,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                              fontFamily: fontFamily,
+                            ),
+                          ));
+                        }
 
-                          // If deletion is confirmed
-                          if (confirmDelete == true) {
-                          } else {}
-                        },
-                        child: Container(
-                          height: 120.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(26.0),
-                            gradient: LinearGradient(
-                              colors: [Color(0xffe5e1fc), Color(0xffe5e1fc)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                          ),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(height: 10.h),
-                                Icon(
-                                  Icons.update,
-                                  color: fontColorBlack,
-                                  size: 40.sp,
+                        log(snapshot.data.toString());
+
+                        employees = snapshot.data!;
+
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () async {
+                              final confirmDelete = await showDialog<bool>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                      'Confirm Deletion',
+                                      style: TextStyle(
+                                        color: fontColorBlack,
+                                        fontFamily: fontFamily,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.sp,
+                                      ),
+                                    ),
+                                    content: Text(
+                                      'Are you sure you want to Update all employee data?',
+                                      style: TextStyle(
+                                        color: fontColorBlack,
+                                        fontFamily: fontFamily,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.sp,
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(false),
+                                        child: Text(
+                                          'Cancel',
+                                          style: TextStyle(
+                                            color: fontColorBlack,
+                                            fontFamily: fontFamily,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16.sp,
+                                          ),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(true),
+                                        child: Text(
+                                          'Update',
+                                          style: TextStyle(
+                                            color: fontColorBlack,
+                                            fontFamily: fontFamily,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+
+                              // If deletion is confirmed
+                              if (confirmDelete == true) {
+                                for (var employee in employees) {
+                                  await FirebaseService.updateEmployee(
+                                    documentId: employee.uid
+                                        as String, // Assuming `documentId` is a field in your model
+                                    advance: "0",
+                                    kharcha: "0",
+                                    autoRent: "0",
+                                    amount: "0",
+                                    rate: employee.rate,
+                                    attendance: "0",
+                                    lastUpdatedPerson: _currentUser,
+                                    presentEmployee:
+                                        employee, // Pass the current employee model if needed
+                                  );
+                                }
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Employee  Updated'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Employee Not Updated'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Container(
+                              height: 120.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(26.0),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xffe5e1fc),
+                                    Color(0xffe5e1fc)
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
                                 ),
-                                SizedBox(height: 10.h),
-                                Text(
-                                  'Update All Entries',
-                                  style: TextStyle(
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(height: 10.h),
+                                    Icon(
+                                      Icons.update,
                                       color: fontColorBlack,
-                                      fontSize: 22.sp,
-                                      fontFamily: fontFamily,
-                                      fontWeight: FontWeight.w400),
+                                      size: 40.sp,
+                                    ),
+                                    SizedBox(height: 10.h),
+                                    Text(
+                                      'Update All Entries',
+                                      style: TextStyle(
+                                          color: fontColorBlack,
+                                          fontSize: 22.sp,
+                                          fontFamily: fontFamily,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    )
+                        );
+                      },
+                    ),
                   ],
                 )),
           ],

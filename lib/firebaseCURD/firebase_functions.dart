@@ -145,7 +145,7 @@ class FirebaseService {
       // Create a new child node (subcollection) under the 'Monthly' node with the current month as the child name
       String currentMonth = DateFormat('MMMM').format(DateTime.now());
       DatabaseReference subcollectionReference =
-          newEmployeeReference.child('Monthly').child(currentMonth);
+          newEmployeeReference.child('Monthly').child("February");
 
       // Add data to the new subcollection
       await subcollectionReference.set(
