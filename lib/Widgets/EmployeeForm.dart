@@ -17,6 +17,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'CommonForm.dart';
 
 class EmployeeForm extends StatefulWidget {
@@ -37,11 +38,23 @@ class EmployeeFormState extends State<EmployeeForm> {
   TextEditingController _kharchaController = TextEditingController(text: '0');
   TextEditingController _amountController = TextEditingController(text: '0');
   TextEditingController _autoRentController = TextEditingController(text: "0");
+  TextEditingController _managerController = TextEditingController();
 
   bool _isLoading = false;
   Future<void> indicatorToggle() async {
     _isLoading = !_isLoading;
     setState(() {});
+  }
+
+  String? _currentUser;
+  void _fetchCurrentUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _currentUser = prefs.getString('currentUser');
+      selectedPerson = _currentUser;
+      _managerController.text = _currentUser as String;
+    });
+    log(selectedPerson.toString());
   }
 
   XFile? _imageFile;
@@ -77,6 +90,7 @@ class EmployeeFormState extends State<EmployeeForm> {
     TextEditingController _advanceController = TextEditingController();
     TextEditingController _kharchaController = TextEditingController();
     TextEditingController _amountController = TextEditingController();
+    _fetchCurrentUser();
   }
 
   @override
@@ -231,40 +245,88 @@ class EmployeeFormState extends State<EmployeeForm> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 20.sp,
-                    ),
-                    Row(
+                    SizedBox(height: 20.sp),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Manager:',
+                          "Manager",
                           style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15.sp,
-                            color: Colors.grey[600],
+                            fontWeight: FontWeight.w200,
+                            fontSize: 14.sp,
+                            color: Color.fromRGBO(106, 107, 112, 1),
                             fontFamily: fontFamily,
                           ),
                         ),
-                        SizedBox(width: 20.sp),
-                        DropdownButton<String>(
-                          value: selectedPerson,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedPerson = newValue!;
-                            });
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        TextFormField(
+                          controller: _managerController,
+                          enabled: false,
+                          decoration: InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: 'Manager',
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.sp,
+                              color: hintColor,
+                              fontFamily: fontFamily,
+                            ),
+                            labelStyle: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18.sp,
+                              color: fontColor,
+                              fontFamily: fontFamily,
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: fontColor,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a Reference';
+                            }
+                            return null;
                           },
-                          items: <String>[
-                            'Abhishek',
-                            'Kushvender',
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
                         ),
                       ],
                     ),
+                    // Row(
+                    //   children: [
+                    //     Text(
+                    //       'Manager:',
+                    //       style: TextStyle(
+                    //         fontWeight: FontWeight.w600,
+                    //         fontSize: 15.sp,
+                    //         color: Colors.grey[600],
+                    //         fontFamily: fontFamily,
+                    //       ),
+                    //     ),
+                    //     SizedBox(width: 20.sp),
+                    //     DropdownButton<String>(
+                    //       value: selectedPerson,
+                    //       onChanged: (String? newValue) {
+                    //         setState(() {
+                    //           selectedPerson = newValue!;
+                    //         });
+                    //       },
+                    //       items: <String>[
+                    //         'Abhishek',
+                    //         'Kushvender',
+                    //       ].map<DropdownMenuItem<String>>((String value) {
+                    //         return DropdownMenuItem<String>(
+                    //           value: value,
+                    //           child: Text(value),
+                    //         );
+                    //       }).toList(),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(height: 20.sp),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

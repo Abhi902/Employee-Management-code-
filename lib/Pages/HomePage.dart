@@ -2,15 +2,327 @@ import 'package:CompanyDatabase/Pages/CreatePage.dart';
 import 'package:CompanyDatabase/Pages/DeletePage.dart';
 import 'package:CompanyDatabase/Pages/SearchPage.dart';
 import 'package:CompanyDatabase/Pages/export_to_excel.dart';
+import 'package:CompanyDatabase/firebaseCURD/firebase_functions.dart';
 import 'package:CompanyDatabase/utils/contants.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String? _currentUser;
+  List<Map<String, dynamic>> userIdentity = [];
+
+  void _fetchCurrentUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _currentUser = prefs.getString('currentUser');
+    });
+    userIdentity = await FirebaseService.fetchAllUsers();
+
+    print(userIdentity.toString());
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _fetchCurrentUser();
+  }
+
   Widget build(BuildContext context) {
+    final List<String> names = [
+      'Pankaj',
+      'Shivkumar',
+      'Deep',
+      'Umesh',
+      'Krishanpal'
+    ];
+
     return Scaffold(
       backgroundColor: themeColor,
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text(
+                'Profile',
+                style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 30.sp,
+                    fontFamily: fontFamily,
+                    color: fontColor),
+              ),
+              decoration: BoxDecoration(
+                color: themeColor,
+              ),
+            ),
+            ListTile(
+              leading: Text(
+                'Pankaj',
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20.sp,
+                  fontFamily: fontFamily,
+                  color:
+                      _currentUser == 'Pankaj' ? Colors.blue : fontColorBlack,
+                ),
+              ),
+              tileColor: _currentUser == 'Pankaj'
+                  ? Colors.lightBlueAccent
+                  : Colors.transparent,
+              onTap: () async {
+                // Close the drawer
+                final String? password = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return PasswordInputDialog();
+                  },
+                );
+
+                if (password != null &&
+                    password.isNotEmpty &&
+                    password == userIdentity[0]["Pankaj"]) {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setString('currentUser', 'Pankaj');
+
+                  setState(() {
+                    _currentUser = 'Pankaj';
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Password Verified'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Password Not Verified ! Enter Again.'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+
+                Navigator.pop(context);
+              },
+            ),
+            Divider(),
+            ListTile(
+              leading: Text(
+                'Shivkumar',
+                style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 20.sp,
+                    fontFamily: fontFamily,
+                    color: fontColorBlack),
+              ),
+              tileColor: _currentUser == 'Shivkumar'
+                  ? Colors.lightBlueAccent
+                  : Colors.transparent,
+              onTap: () async {
+                // Close the drawer
+                final String? password = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return PasswordInputDialog();
+                  },
+                );
+
+                if (password != null &&
+                    password.isNotEmpty &&
+                    password == userIdentity[0]["Shivkumar"]) {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setString('currentUser', 'Shivkumar');
+
+                  setState(() {
+                    _currentUser = 'Shivkumar';
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Password Verified'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Password Not Verified ! Enter Again.'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+
+                Navigator.pop(context);
+              },
+            ),
+            Divider(),
+            ListTile(
+              title: Text(
+                'Deep',
+                style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 20.sp,
+                    fontFamily: fontFamily,
+                    color: fontColorBlack),
+              ),
+              tileColor: _currentUser == 'Deep'
+                  ? Colors.lightBlueAccent
+                  : Colors.transparent,
+              onTap: () async {
+                // Close the drawer
+                final String? password = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return PasswordInputDialog();
+                  },
+                );
+
+                if (password != null &&
+                    password.isNotEmpty &&
+                    password == userIdentity[0]["Deep"]) {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setString('currentUser', 'Deep');
+
+                  setState(() {
+                    _currentUser = 'Deep';
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Password Verified'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Password Not Verified ! Enter Again.'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+
+                Navigator.pop(context);
+              },
+            ),
+            Divider(),
+            ListTile(
+              title: Text(
+                'Umesh',
+                style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 20.sp,
+                    fontFamily: fontFamily,
+                    color: fontColorBlack),
+              ),
+              tileColor: _currentUser == 'Umesh'
+                  ? Colors.lightBlueAccent
+                  : Colors.transparent,
+              onTap: () async {
+                // Close the drawer
+                final String? password = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return PasswordInputDialog();
+                  },
+                );
+
+                if (password != null &&
+                    password.isNotEmpty &&
+                    password == userIdentity[0]["Umesh"]) {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setString('currentUser', 'Umesh');
+
+                  setState(() {
+                    _currentUser = 'Umesh';
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Password Verified'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Password Not Verified ! Enter Again.'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+
+                Navigator.pop(context);
+              },
+            ),
+            Divider(),
+            ListTile(
+              title: Text(
+                'Krishanpal',
+                style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 20.sp,
+                    fontFamily: fontFamily,
+                    color: fontColorBlack),
+              ),
+              tileColor: _currentUser == 'Krishanpal'
+                  ? Colors.lightBlueAccent
+                  : Colors.transparent,
+              onTap: () async {
+                // Close the drawer
+                final String? password = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return PasswordInputDialog();
+                  },
+                );
+
+                if (password != null &&
+                    password.isNotEmpty &&
+                    password == userIdentity[0]["Krishanpal"]) {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setString('currentUser', 'Krishanpal');
+
+                  setState(() {
+                    _currentUser = 'Krishanpal';
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Password Verified'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Password Not Verified ! Enter Again.'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+
+                Navigator.pop(context);
+              },
+            ),
+            Divider(),
+            // Add more ListTiles for other names if necessary
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        elevation: 0,
+      ),
       body: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,7 +331,7 @@ class HomePage extends StatelessWidget {
             children: [
               Container(
                 padding: EdgeInsets.only(
-                    top: 40.h, left: 30.w, right: 10.w, bottom: 30.h),
+                    top: 10.h, left: 30.w, right: 10.w, bottom: 30.h),
                 child: Column(
                   children: [
                     Text(
@@ -235,14 +547,56 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     showModalBottomSheet(
-      //         context: context, builder: (context) => addTaskScreen());
-      //   },
-      //   backgroundColor: Colors.lightBlueAccent,
-      //   child: Icon(Icons.add),
-      // ),
+    );
+  }
+}
+
+class PasswordInputDialog extends StatefulWidget {
+  @override
+  _PasswordInputDialogState createState() => _PasswordInputDialogState();
+}
+
+class _PasswordInputDialogState extends State<PasswordInputDialog> {
+  late TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Enter Password'),
+      content: TextFormField(
+        controller: _passwordController,
+        obscureText: true,
+        decoration: InputDecoration(
+          hintText: 'Password',
+        ),
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            String password = _passwordController.text;
+            Navigator.pop(context, password);
+          },
+          child: Text('Submit'),
+        ),
+      ],
     );
   }
 }

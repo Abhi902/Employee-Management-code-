@@ -103,6 +103,20 @@ class FirebaseService {
   //     },
   //   );
   // }
+  static Future<List<Map<String, dynamic>>> fetchAllUsers() async {
+    // Create an instance of Firestore
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all documents from the "Users" collection
+    QuerySnapshot querySnapshot = await firestore.collection('Users').get();
+
+    // Map each document to its data in a List<Map<String, dynamic>>
+    List<Map<String, dynamic>> users = querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+
+    return users;
+  }
 
   Future<bool> addEmployee(CommonFormModel employee) async {
     try {
