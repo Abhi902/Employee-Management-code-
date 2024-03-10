@@ -1,6 +1,7 @@
 import 'package:CompanyDatabase/Pages/CreatePage.dart';
 import 'package:CompanyDatabase/Pages/DeletePage.dart';
 import 'package:CompanyDatabase/Pages/SearchPage.dart';
+import 'package:CompanyDatabase/Pages/export_to_excel.dart';
 import 'package:CompanyDatabase/utils/contants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -191,7 +192,12 @@ class HomePage extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            // Handle 'Excel' container tap
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ExportToExcelEmployee()),
+                            );
                           },
                           child: Container(
                             width: 130.w,
