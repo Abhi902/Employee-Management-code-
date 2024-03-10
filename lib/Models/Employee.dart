@@ -17,6 +17,7 @@ class CommonFormModel {
   DateTime? lastUpdateKharcha;
   DateTime? lastUpdateAutoRent;
   DateTime? lastUpdateRate;
+  DateTime? lastUpdateAttendance;
 
   CommonFormModel({
     required this.name,
@@ -34,6 +35,7 @@ class CommonFormModel {
     this.lastUpdateKharcha,
     this.lastUpdateAutoRent,
     this.lastUpdateRate,
+    this.lastUpdateAttendance,
     this.uid,
   });
 
@@ -54,6 +56,10 @@ class CommonFormModel {
         lastUpdateAdvance = (json['lastUpdateAdvance'] != null)
             ? DateTime.fromMillisecondsSinceEpoch(
                 json['lastUpdateAdvance'] as int)
+            : null,
+        lastUpdateAttendance = (json['lastUpdateAttendance'] != null)
+            ? DateTime.fromMillisecondsSinceEpoch(
+                json['lastUpdateAttendance'] as int)
             : null,
         lastUpdateKharcha = (json['lastUpdateKharcha'] != null)
             ? DateTime.fromMillisecondsSinceEpoch(
@@ -86,6 +92,7 @@ class CommonFormModel {
       'lastUpdateAutoRent': lastUpdateAutoRent?.millisecondsSinceEpoch,
       'lastUpdateRate': lastUpdateRate?.millisecondsSinceEpoch,
       'uid': uid,
+      'lastUpdateAttendance': lastUpdateAttendance?.microsecondsSinceEpoch
     };
   }
 }

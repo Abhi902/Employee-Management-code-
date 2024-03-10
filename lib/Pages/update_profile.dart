@@ -17,6 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class EmployeeFormUpdate extends StatefulWidget {
@@ -46,6 +47,13 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
   bool _isAutoRentEditing = false;
   bool _isRateEditing = false;
   bool _isAttendanceEditing = false;
+  String formatDateTime(DateTime dateTime) {
+    // Format DateTime object into desired format
+    String formattedDateTime =
+        DateFormat('EEEE, MMMM d, yyyy - hh:mm:ss a').format(dateTime);
+
+    return formattedDateTime;
+  }
 
   @override
   void dispose() {
@@ -339,6 +347,10 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                               color: fontColor,
                               fontFamily: fontFamily,
                             ),
+                            // suffixText: formatDateTime(widget
+                            //     .employeeDetails.lastUpdateRate as DateTime),
+                            // suffixStyle: TextStyle(fontSize: 10),
+
                             border: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: fontColor,
@@ -389,6 +401,16 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             _isRateEditing = !_isRateEditing;
                           });
                         },
+                      ),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      TapTooltip(
+                        message: widget.employeeDetails.lastUpdateRate != null
+                            ? formatDateTime(
+                                widget.employeeDetails.lastUpdateRate!)
+                            : 'Never Updated',
+                        child: Icon(Icons.info_outline, size: 30),
                       ),
                     ],
                   ),
@@ -488,6 +510,17 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             _isAttendanceEditing = !_isAttendanceEditing;
                           });
                         },
+                      ),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      TapTooltip(
+                        message:
+                            widget.employeeDetails.lastUpdateAttendance != null
+                                ? formatDateTime(widget.employeeDetails
+                                    .lastUpdateAttendance as DateTime)
+                                : 'Never Updated',
+                        child: Icon(Icons.info_outline, size: 30),
                       ),
                     ],
                   ),
@@ -666,6 +699,17 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                           });
                         },
                       ),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      TapTooltip(
+                        message:
+                            widget.employeeDetails.lastUpdateAdvance != null
+                                ? formatDateTime(widget.employeeDetails
+                                    .lastUpdateAdvance as DateTime)
+                                : 'Never Updated',
+                        child: Icon(Icons.info_outline, size: 30),
+                      ),
                     ],
                   ),
                 ],
@@ -770,6 +814,17 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             _isKharchaEditing = !_isKharchaEditing;
                           });
                         },
+                      ),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      TapTooltip(
+                        message:
+                            widget.employeeDetails.lastUpdateKharcha != null
+                                ? formatDateTime(widget.employeeDetails
+                                    .lastUpdateKharcha as DateTime)
+                                : 'Never Updated',
+                        child: Icon(Icons.info_outline, size: 30),
                       ),
                     ],
                   ),
@@ -876,6 +931,17 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                           });
                         },
                       ),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      TapTooltip(
+                        message:
+                            widget.employeeDetails.lastUpdateAutoRent != null
+                                ? formatDateTime(widget.employeeDetails
+                                    .lastUpdateAutoRent as DateTime)
+                                : 'Never Updated',
+                        child: Icon(Icons.info_outline, size: 30),
+                      ),
                     ],
                   ),
                 ],
@@ -887,12 +953,30 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                     //Call the update function with the edited values
                     await FirebaseService.updateEmployee(
                         documentId: widget.employeeDetails.uid!,
-                        advance: _advanceController.text,
-                        kharcha: _kharchaController.text,
-                        autoRent: _autoRentController.text,
-                        rate: _rateController.text,
-                        amount: _amountController.text,
-                        attendance: _attendanceController.text,
+                        advance: _advanceController.text !=
+                                widget.employeeDetails.advance
+                            ? _advanceController.text
+                            : null,
+                        kharcha: _kharchaController.text !=
+                                widget.employeeDetails.kharcha
+                            ? _kharchaController.text
+                            : null,
+                        autoRent: _autoRentController.text !=
+                                widget.employeeDetails.autoRent
+                            ? _autoRentController.text
+                            : null,
+                        rate:
+                            _rateController.text != widget.employeeDetails.rate
+                                ? _rateController.text
+                                : null,
+                        amount: _amountController.text !=
+                                widget.employeeDetails.amount
+                            ? _amountController.text
+                            : null,
+                        attendance: _attendanceController.text !=
+                                widget.employeeDetails.attendance
+                            ? _attendanceController.text
+                            : null,
                         presentEmployee: widget.employeeDetails);
                     Navigator.pop(context);
                   }
@@ -915,5 +999,37 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
   }
 }
 
-
 //   Color(0xffedebe6),
+
+class TapTooltip extends StatefulWidget {
+  final String message;
+  final Widget child;
+
+  const TapTooltip({
+    Key? key,
+    required this.message,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  _TapTooltipState createState() => _TapTooltipState();
+}
+
+class _TapTooltipState extends State<TapTooltip> {
+  final GlobalKey<TooltipState> _tooltipKey = GlobalKey<TooltipState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        final dynamic tooltip = _tooltipKey.currentState;
+        tooltip?.ensureTooltipVisible();
+      },
+      child: Tooltip(
+        key: _tooltipKey,
+        message: widget.message,
+        child: widget.child,
+      ),
+    );
+  }
+}

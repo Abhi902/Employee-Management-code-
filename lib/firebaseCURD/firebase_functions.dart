@@ -170,7 +170,7 @@ class FirebaseService {
     try {
       // DateTime nowTime = DateTime.now();
 
-      // final now = DateTime.now().toString();
+      final now = ServerValue.timestamp;
 
       // Construct the path to the employee's data
       final DatabaseReference employeeDataReference = FirebaseDatabase.instance
@@ -194,28 +194,30 @@ class FirebaseService {
 
       if (advance != null) {
         updateFields['advance'] = advance;
-        //  updateFields['lastUpdateAdvance'] = now;
+        updateFields['lastUpdateAdvance'] = now;
       }
 
       if (kharcha != null) {
         updateFields['kharcha'] = kharcha;
-        //   updateFields['lastUpdateKharcha'] = now;
+        updateFields['lastUpdateKharcha'] = now;
       }
 
       if (autoRent != null) {
         updateFields['autoRent'] = autoRent;
-        //  updateFields['lastUpdateAutoRent'] = now;
+        updateFields['lastUpdateAutoRent'] = now;
       }
 
       if (rate != null) {
+        log("rate updated");
         updateFields['rate'] = rate;
-        //  updateFields['lastUpdateRate'] = now;
+        updateFields['lastUpdateRate'] = now;
       }
 
       if (attendance != null) {
         updateFields['attendance'] = attendance;
-        //  updateFields['lastUpdateAttendance'] = now;
+        updateFields['lastUpdateAttendance'] = now;
       }
+      updateFields['amount'] = amount;
 
       // Check if the current month node already exists
       final DatabaseEvent currentMonthSnapshot =
@@ -224,7 +226,7 @@ class FirebaseService {
       log("current month snapshot ${currentMonthSnapshot.snapshot.exists.toString()}");
       if (currentMonthSnapshot.snapshot.exists) {
         // Update the existing fields under the current month
-        updateFields['amount'] = amount;
+
         await currentMonthReference.update(updateFields);
       } else {
         // Create the current month node if it doesn't exist
@@ -240,29 +242,24 @@ class FirebaseService {
 
         if (advance != null) {
           updateFields['advance'] = advance;
-          //  updateFields['lastUpdateAdvance'] = now;
         } else {
           updateFields['advance'] = presentEmployee.advance;
         }
 
         if (kharcha != null) {
           updateFields['kharcha'] = kharcha;
-          //   updateFields['lastUpdateKharcha'] = now;
         } else {
           updateFields['kharcha'] = presentEmployee.kharcha;
         }
 
         if (autoRent != null) {
           updateFields['autoRent'] = autoRent;
-          //  updateFields['lastUpdateAutoRent'] = now;
         } else {
           updateFields['autoRent'] = presentEmployee.autoRent;
         }
 
         if (rate != null) {
           updateFields['rate'] = rate;
-
-          //  updateFields['lastUpdateRate'] = now;
         } else {
           updateFields['rate'] = presentEmployee.rate;
         }
@@ -271,10 +268,15 @@ class FirebaseService {
 
         if (attendance != null) {
           updateFields['attendance'] = attendance;
-          //  updateFields['lastUpdateAttendance'] = now;
         } else {
           updateFields['attendance'] = presentEmployee.attendance;
         }
+
+        updateFields['lastUpdateAdvance'] = now;
+        updateFields['lastUpdateAutoRent'] = now;
+        updateFields['lastUpdateKharcha'] = now;
+        updateFields['lastUpdateAttendance'] = now;
+        updateFields['lastUpdateRate'] = now;
         updateFields["createdAt"] = ServerValue.timestamp;
 
         // updateFields['category'] = presentEmployee.category;
