@@ -338,37 +338,6 @@ class EmployeeFormState extends State<EmployeeForm> {
                         ),
                       ],
                     ),
-                    // Row(
-                    //   children: [
-                    //     Text(
-                    //       'Manager:',
-                    //       style: TextStyle(
-                    //         fontWeight: FontWeight.w600,
-                    //         fontSize: 15.sp,
-                    //         color: Colors.grey[600],
-                    //         fontFamily: fontFamily,
-                    //       ),
-                    //     ),
-                    //     SizedBox(width: 20.sp),
-                    //     DropdownButton<String>(
-                    //       value: selectedPerson,
-                    //       onChanged: (String? newValue) {
-                    //         setState(() {
-                    //           selectedPerson = newValue!;
-                    //         });
-                    //       },
-                    //       items: <String>[
-                    //         'Abhishek',
-                    //         'Kushvender',
-                    //       ].map<DropdownMenuItem<String>>((String value) {
-                    //         return DropdownMenuItem<String>(
-                    //           value: value,
-                    //           child: Text(value),
-                    //         );
-                    //       }).toList(),
-                    //     ),
-                    //   ],
-                    // ),
                     SizedBox(height: 20.sp),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

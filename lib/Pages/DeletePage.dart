@@ -43,22 +43,22 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
       appBar: AppBar(
-        // Use your desired background color
-        iconTheme: IconThemeData(color: fontColor), // Set icon color
+        backgroundColor: themeColor,
         elevation: 0.0,
+        iconTheme: IconThemeData(color: fontColor),
         title: Text(
           "Delete Employee",
           textAlign: TextAlign.left,
           style: TextStyle(
             fontSize: 23.sp,
             color: fontColor,
-            fontFamily: fontFamily, // Set your desired text color
             decorationThickness: 5,
+            fontFamily: fontFamily,
           ),
         ),
       ),
+
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
