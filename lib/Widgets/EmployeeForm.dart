@@ -429,7 +429,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             fontWeight: FontWeight.w900,
                             fontSize: 18.sp,
                             fontFamily: fontFamily,
-                            color: _amountController.text.startsWith('-')
+                            color: _rateController.text.startsWith('-')
                                 ? Colors.red
                                 : Colors.green,
                           ),
@@ -445,7 +445,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             prefix: Text(
                               '₹',
                               style: TextStyle(
-                                color: _amountController.text.startsWith('-')
+                                color: _rateController.text.startsWith('-')
                                     ? Colors.red
                                     : Colors.green,
                                 fontSize: 18.sp,
@@ -725,7 +725,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             fontWeight: FontWeight.w900,
                             fontSize: 18.sp,
                             fontFamily: fontFamily,
-                            color: _amountController.text.startsWith('-')
+                            color: _advanceController.text.startsWith('-')
                                 ? Colors.red
                                 : Colors.green,
                           ),
@@ -835,7 +835,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             fontWeight: FontWeight.w900,
                             fontSize: 18.sp,
                             fontFamily: fontFamily,
-                            color: _amountController.text.startsWith('-')
+                            color: _kharchaController.text.startsWith('-')
                                 ? Colors.red
                                 : Colors.green,
                           ),
@@ -945,7 +945,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             fontWeight: FontWeight.w900,
                             fontSize: 18.sp,
                             fontFamily: fontFamily,
-                            color: _amountController.text.startsWith('-')
+                            color: _autoRentController.text.startsWith('-')
                                 ? Colors.red
                                 : Colors.green,
                           ),
