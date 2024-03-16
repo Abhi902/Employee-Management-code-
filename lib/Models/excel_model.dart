@@ -65,10 +65,12 @@ class ExcelModel {
 
     List<ExcelModel> reports = [];
 
+    int i = 1;
+
     for (CommonFormModel item in list) {
       ExcelModel item1 = ExcelModel(
         name: item.name,
-        uid: item.uid,
+        uid: (i + 1).toString(),
         category: item.category,
         reference: item.reference,
         advance: item.advance,
@@ -79,6 +81,7 @@ class ExcelModel {
         kharcha: item.kharcha,
       );
       reports.add(item1);
+      i++;
     }
 
     {
@@ -133,7 +136,7 @@ class ExcelModel {
       sheet.getRangeByName('B4').setText('Name');
       sheet.getRangeByName('J4').setText('Amount');
       sheet.getRangeByName('G4').setText('Advance');
-      sheet.getRangeByName('A4').setText('User Id');
+      sheet.getRangeByName('A4').setText('JSI_No');
       sheet.getRangeByName('H4').setText('kharcha');
       sheet.getRangeByName('F4').setText('Attendance');
       sheet.getRangeByName('C4').setText('Category');
