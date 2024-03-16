@@ -1,4 +1,5 @@
 import 'package:CompanyDatabase/Models/ServerUtil.dart';
+import 'package:CompanyDatabase/utils/contants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,15 +23,25 @@ class ResultsWidget extends StatelessWidget {
         content: Text('Do you wish to delete the following profile?'),
         actions: <Widget>[
           ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context, () {});
-              },
-              child: Text('No')),
+            onPressed: () {
+              Navigator.pop(context, () {});
+            },
+            child: Text('No'),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                  themeColor), // Set your desired color
+            ),
+          ),
           ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context, refresh);
-              },
-              child: Text('Yes')),
+            onPressed: () {
+              Navigator.pop(context, refresh);
+            },
+            child: Text('Yes'),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                  themeColor), // Set your desired color
+            ),
+          ),
         ],
       ),
       barrierDismissible: true,

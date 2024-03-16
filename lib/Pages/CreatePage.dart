@@ -14,6 +14,8 @@ class CreatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         toolbarHeight: 60.h,

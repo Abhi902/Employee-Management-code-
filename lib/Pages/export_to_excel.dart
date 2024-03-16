@@ -79,6 +79,8 @@ class ExportToExcelEmployeeState extends State<ExportToExcelEmployee> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+
       appBar: AppBar(
         backgroundColor: themeColor,
         elevation: 0.0,

@@ -35,7 +35,7 @@ class FirebaseService {
               (event.snapshot.value as Map<Object?, Object?>)
                   .cast<String, dynamic>();
 
-          print(employeesData);
+          log("pringing");
 
           employeesData.forEach((key, value) {
             // Assuming 'Monthly' is another Map inside each employee
@@ -77,32 +77,6 @@ class FirebaseService {
     );
   }
 
-  // static Stream<List<CommonFormModel>> getAllEmployeesStream() {
-  //   DatabaseReference employeeDataReference =
-  //       FirebaseDatabase.instance.ref().child('EmployeeData');
-
-  //   return employeeDataReference.onValue.map(
-  //     (event) {
-  //       final employees = <CommonFormModel>[];
-
-  //       if (event.snapshot.value != null) {
-  //         // Explicitly cast to Map<String, dynamic>
-  //         Map<String, dynamic>? employeesData =
-  //             (event.snapshot.value as Map<Object?, Object?>)
-  //                 .cast<String, dynamic>();
-
-  //         employeesData.forEach((key, value) {
-  //           CommonFormModel employee = CommonFormModel.fromJson(
-  //             Map<String, dynamic>.from(value),
-  //           );
-  //           employees.add(employee);
-  //         });
-  //       }
-
-  //       return employees;
-  //     },
-  //   );
-  // }
   static Future<List<Map<String, dynamic>>> fetchAllUsers() async {
     // Create an instance of Firestore
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -121,9 +95,10 @@ class FirebaseService {
   Future<bool> addEmployee(CommonFormModel employee) async {
     try {
       // Upload photo to Firebase Storage
+      String? photoFileName;
       String photoURL = '';
       if (employee.photo != null) {
-        final String photoFileName =
+        photoFileName =
             'employee_photos/${employee.name}_${DateTime.now().millisecondsSinceEpoch}.png';
         firebase_storage.UploadTask task = firebase_storage
             .FirebaseStorage.instance
@@ -145,7 +120,7 @@ class FirebaseService {
       // Create a new child node (subcollection) under the 'Monthly' node with the current month as the child name
       String currentMonth = DateFormat('MMMM').format(DateTime.now());
       DatabaseReference subcollectionReference =
-          newEmployeeReference.child('Monthly').child("February");
+          newEmployeeReference.child('Monthly').child(currentMonth);
 
       // Add data to the new subcollection
       await subcollectionReference.set(
@@ -162,6 +137,7 @@ class FirebaseService {
           'autoRent': employee.autoRent,
           'createdAt': ServerValue.timestamp,
           'lastUpdatedPerson': employee.lastUpdatedPerson,
+          'photo_location': photoFileName,
         },
       );
 
@@ -169,6 +145,21 @@ class FirebaseService {
     } catch (e) {
       print('Error adding employee: $e');
       return false;
+    }
+  }
+
+  static Future<String?> getPhotoURL(String photoFileName) async {
+    try {
+      // Construct the reference to the file in Firebase Storage using the filename
+      final ref = firebase_storage.FirebaseStorage.instance.ref(photoFileName);
+
+      // Get the download URL for the file
+      final String photoURL = await ref.getDownloadURL();
+
+      return photoURL;
+    } catch (e) {
+      print('Error fetching photo URL: $e');
+      return null;
     }
   }
 
@@ -193,6 +184,9 @@ class FirebaseService {
           .ref()
           .child('EmployeeData')
           .child(documentId);
+
+      String? photoURL =
+          await getPhotoURL(presentEmployee?.photoLocation as String);
 
       // Assuming 'Monthly' is another Map inside each employee
       final DatabaseReference monthlyReference =
@@ -244,12 +238,13 @@ class FirebaseService {
       log("current month snapshot ${currentMonthSnapshot.snapshot.exists.toString()}");
       if (currentMonthSnapshot.snapshot.exists) {
         // Update the existing fields under the current month
-
         await currentMonthReference.update(updateFields);
       } else {
         // Create the current month node if it doesn't exist
         final Map<String, dynamic> updateFields = {};
 
+        updateFields['photo'] = photoURL;
+        updateFields['photo_location'] = presentEmployee?.photoLocation;
         updateFields['category'] = presentEmployee!.category;
         updateFields['name'] = presentEmployee.name;
         // updateFields['photo'] = presentEmployee.photo;

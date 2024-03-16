@@ -327,6 +327,8 @@ class _HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         elevation: 0,
+        backgroundColor: themeColor,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -763,6 +765,10 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
             Navigator.pop(context, password);
           },
           child: Text('Submit'),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+                themeColor), // Set your desired color
+          ),
         ),
       ],
     );

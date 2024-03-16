@@ -82,6 +82,7 @@ class AllEmployeeState extends State<AllEmployee> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: themeColor,
         elevation: 0.0,

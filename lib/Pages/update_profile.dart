@@ -106,6 +106,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: themeColor,
         iconTheme: IconThemeData(color: fontColor),
@@ -1054,6 +1055,10 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                     decorationThickness: 5,
                     fontFamily: fontFamily,
                   ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      themeColor), // Set your desired color
                 ),
               ),
             ],

@@ -13,6 +13,7 @@ class CommonFormModel {
   String advance;
   String kharcha;
   String autoRent;
+  String? photoLocation;
   DateTime? createdAt;
   DateTime? lastUpdateAdvance;
   DateTime? lastUpdateKharcha;
@@ -20,29 +21,30 @@ class CommonFormModel {
   DateTime? lastUpdateRate;
   DateTime? lastUpdateAttendance;
 
-  CommonFormModel({
-    required this.name,
-    this.photo,
-    required this.category,
-    required this.reference,
-    required this.rate,
-    required this.attendance,
-    required this.amount,
-    required this.advance,
-    required this.kharcha,
-    required this.autoRent,
-    this.createdAt,
-    this.lastUpdateAdvance,
-    this.lastUpdateKharcha,
-    this.lastUpdateAutoRent,
-    this.lastUpdateRate,
-    this.lastUpdateAttendance,
-    this.uid,
-    this.lastUpdatedPerson,
-  });
+  CommonFormModel(
+      {required this.name,
+      this.photo,
+      required this.category,
+      required this.reference,
+      required this.rate,
+      required this.attendance,
+      required this.amount,
+      required this.advance,
+      required this.kharcha,
+      required this.autoRent,
+      this.createdAt,
+      this.lastUpdateAdvance,
+      this.lastUpdateKharcha,
+      this.lastUpdateAutoRent,
+      this.lastUpdateRate,
+      this.lastUpdateAttendance,
+      this.uid,
+      this.lastUpdatedPerson,
+      this.photoLocation});
 
   CommonFormModel.fromJson(Map<String, dynamic> json)
       : name = json['name'] ?? '',
+        photoLocation = json['photo_location'] ?? "",
         photo = json['photo'] != null ? XFile(json['photo'] as String) : null,
         category = json['category'] ?? '',
         lastUpdatedPerson = json['lastUpdatedPerson'] ?? '',
@@ -88,6 +90,7 @@ class CommonFormModel {
       'amount': amount,
       'advance': advance,
       'kharcha': kharcha,
+      'photo_location': photoLocation,
       'autoRent': autoRent,
       'createdAt': createdAt?.millisecondsSinceEpoch,
       'lastUpdateAdvance': lastUpdateAdvance?.millisecondsSinceEpoch,

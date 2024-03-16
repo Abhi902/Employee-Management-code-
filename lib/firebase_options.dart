@@ -54,6 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:1003358302870:android:957f83429c4a7a1d8e08b7',
     messagingSenderId: '1003358302870',
     projectId: 'employee-management-9450e',
+    databaseURL: 'https://employee-management-9450e-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'employee-management-9450e.appspot.com',
   );
 
@@ -62,6 +63,7 @@ class DefaultFirebaseOptions {
     appId: '1:1003358302870:ios:770f787f842e7b478e08b7',
     messagingSenderId: '1003358302870',
     projectId: 'employee-management-9450e',
+    databaseURL: 'https://employee-management-9450e-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'employee-management-9450e.appspot.com',
     iosBundleId: 'com.example.CompanyDatabase',
   );

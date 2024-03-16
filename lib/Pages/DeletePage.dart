@@ -42,6 +42,8 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+
       appBar: AppBar(
         // Use your desired background color
         iconTheme: IconThemeData(color: fontColor), // Set icon color

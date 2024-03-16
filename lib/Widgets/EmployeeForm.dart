@@ -51,8 +51,8 @@ class EmployeeFormState extends State<EmployeeForm> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _currentUser = prefs.getString('currentUser');
-      selectedPerson = _currentUser;
-      _managerController.text = _currentUser as String;
+      selectedPerson = _currentUser ?? "";
+      _managerController.text = _currentUser ?? "" as String;
     });
     log(selectedPerson.toString());
   }
@@ -157,12 +157,18 @@ class EmployeeFormState extends State<EmployeeForm> {
                     SizedBox(height: 20.sp),
                     ElevatedButton(
                       onPressed: _takePicture,
-                      child: Text('Take Picture',
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            color: fontColor,
-                            fontFamily: fontFamily,
-                          )),
+                      child: Text(
+                        'Take Picture',
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          color: fontColor,
+                          fontFamily: fontFamily,
+                        ),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            themeColor), // Set your desired color
+                      ),
                     ),
                     SizedBox(height: 20.sp),
                     Column(
@@ -940,6 +946,10 @@ class EmployeeFormState extends State<EmployeeForm> {
                           color: fontColor,
                           fontFamily: fontFamily,
                         ),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            themeColor), // Set your desired color
                       ),
                     ),
                   ],
