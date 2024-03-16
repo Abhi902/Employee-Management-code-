@@ -382,6 +382,14 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                         child: TextFormField(
                           enabled: _isRateEditing,
                           controller: _rateController,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18.sp,
+                            fontFamily: fontFamily,
+                            color: _rateController.text.startsWith('-')
+                                ? Colors.red
+                                : Colors.green,
+                          ),
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
@@ -411,6 +419,15 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                 width: 2.0,
                               ),
                               borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            prefix: Text(
+                              '₹',
+                              style: TextStyle(
+                                color: _rateController.text.startsWith('-')
+                                    ? Colors.red
+                                    : Colors.green,
+                                fontSize: 18.sp,
+                              ),
                             ),
                           ),
                           onChanged: (value) {
@@ -679,12 +696,21 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18.sp,
+                            fontFamily: fontFamily,
+                            color: _advanceController.text.startsWith('-')
+                                ? Colors.red
+                                : Colors.green,
+                          ),
                           decoration: InputDecoration(
                             prefix: Text(
                               '₹',
                               style: TextStyle(
-                                color:
-                                    Colors.black, // Adjust the color as needed
+                                color: _advanceController.text.startsWith('-')
+                                    ? Colors.red
+                                    : Colors.green,
                                 fontSize: 18.sp,
                               ),
                             ),
@@ -795,12 +821,21 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18.sp,
+                            fontFamily: fontFamily,
+                            color: _kharchaController.text.startsWith('-')
+                                ? Colors.red
+                                : Colors.green,
+                          ),
                           decoration: InputDecoration(
                             prefix: Text(
                               '₹',
                               style: TextStyle(
-                                color:
-                                    Colors.black, // Adjust the color as needed
+                                color: _kharchaController.text.startsWith('-')
+                                    ? Colors.red
+                                    : Colors.green,
                                 fontSize: 18.sp,
                               ),
                             ),
@@ -911,12 +946,21 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18.sp,
+                            fontFamily: fontFamily,
+                            color: _autoRentController.text.startsWith('-')
+                                ? Colors.red
+                                : Colors.green,
+                          ),
                           decoration: InputDecoration(
                             prefix: Text(
                               '₹',
                               style: TextStyle(
-                                color:
-                                    Colors.black, // Adjust the color as needed
+                                color: _autoRentController.text.startsWith('-')
+                                    ? Colors.red
+                                    : Colors.green,
                                 fontSize: 18.sp,
                               ),
                             ),
