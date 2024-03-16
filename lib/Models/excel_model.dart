@@ -65,7 +65,7 @@ class ExcelModel {
 
     List<ExcelModel> reports = [];
 
-    int i = 1;
+    int i = 0;
 
     for (CommonFormModel item in list) {
       ExcelModel item1 = ExcelModel(
@@ -137,7 +137,7 @@ class ExcelModel {
       sheet.getRangeByName('J4').setText('Amount');
       sheet.getRangeByName('G4').setText('Advance');
       sheet.getRangeByName('A4').setText('JSI_No');
-      sheet.getRangeByName('H4').setText('kharcha');
+      sheet.getRangeByName('H4').setText('Kharcha');
       sheet.getRangeByName('F4').setText('Attendance');
       sheet.getRangeByName('C4').setText('Category');
       sheet.getRangeByName('E4').setText('Rate');
