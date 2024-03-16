@@ -430,13 +430,14 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                 _kharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
                               _amountController.text = ((double.parse(
-                                              _attendanceController.text) *
-                                          double.parse(_rateController.text)) -
+                                                  _attendanceController.text) *
+                                              double.parse(
+                                                  _rateController.text) +
+                                          double.parse(
+                                              _autoRentController.text)) -
                                       (double.parse(_advanceController.text) +
                                           double.parse(
-                                              _kharchaController.text) +
-                                          double.parse(
-                                              _autoRentController.text)))
+                                              _kharchaController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
@@ -544,13 +545,14 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                 _kharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
                               _amountController.text = ((double.parse(
-                                              _attendanceController.text) *
-                                          double.parse(_rateController.text)) -
+                                                  _attendanceController.text) *
+                                              double.parse(
+                                                  _rateController.text) +
+                                          double.parse(
+                                              _autoRentController.text)) -
                                       (double.parse(_advanceController.text) +
                                           double.parse(
-                                              _kharchaController.text) +
-                                          double.parse(
-                                              _autoRentController.text)))
+                                              _kharchaController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
@@ -725,13 +727,14 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                 _kharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
                               _amountController.text = ((double.parse(
-                                              _attendanceController.text) *
-                                          double.parse(_rateController.text)) -
+                                                  _attendanceController.text) *
+                                              double.parse(
+                                                  _rateController.text) +
+                                          double.parse(
+                                              _autoRentController.text)) -
                                       (double.parse(_advanceController.text) +
                                           double.parse(
-                                              _kharchaController.text) +
-                                          double.parse(
-                                              _autoRentController.text)))
+                                              _kharchaController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
@@ -846,13 +849,14 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                 _kharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
                               _amountController.text = ((double.parse(
-                                              _attendanceController.text) *
-                                          double.parse(_rateController.text)) -
+                                                  _attendanceController.text) *
+                                              double.parse(
+                                                  _rateController.text) +
+                                          double.parse(
+                                              _autoRentController.text)) -
                                       (double.parse(_advanceController.text) +
                                           double.parse(
-                                              _kharchaController.text) +
-                                          double.parse(
-                                              _autoRentController.text)))
+                                              _kharchaController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
@@ -955,13 +959,14 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                 _kharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
                               _amountController.text = ((double.parse(
-                                              _attendanceController.text) *
-                                          double.parse(_rateController.text)) -
+                                                  _attendanceController.text) *
+                                              double.parse(
+                                                  _rateController.text) +
+                                          double.parse(
+                                              _autoRentController.text)) -
                                       (double.parse(_advanceController.text) +
                                           double.parse(
-                                              _kharchaController.text) +
-                                          double.parse(
-                                              _autoRentController.text)))
+                                              _kharchaController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
