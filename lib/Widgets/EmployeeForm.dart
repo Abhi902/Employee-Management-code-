@@ -112,13 +112,14 @@ class EmployeeFormState extends State<EmployeeForm> {
       child: _isLoading
           ? CircularProgressIndicator()
           : Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.only(left: 20.w, right: 20.w),
               child: Form(
                 key: _formKey,
                 child: ListView(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(18.0),
+                      padding: EdgeInsets.only(
+                          left: 20.w, right: 20.w, bottom: 18.h, top: 10.h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -148,13 +149,9 @@ class EmployeeFormState extends State<EmployeeForm> {
                                         .grey) // Display an icon when no image is selected
                                 : null,
                           ),
-                          SizedBox(
-                            height: 20.sp,
-                          ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 20.sp),
                     ElevatedButton(
                       onPressed: _takePicture,
                       child: Text(

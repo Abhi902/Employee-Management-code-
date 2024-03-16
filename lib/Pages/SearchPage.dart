@@ -120,7 +120,7 @@ class AllEmployeeState extends State<AllEmployee> {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                    borderSide: BorderSide(color: themeColor, width: 2.0),
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
