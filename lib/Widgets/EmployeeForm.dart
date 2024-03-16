@@ -1075,7 +1075,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             ),
                           );
                         }
-                        // Navigator.pop(context);
+                        Navigator.pop(context);
                       },
                       child: Text(
                         'Submit',
