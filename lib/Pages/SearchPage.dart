@@ -146,7 +146,7 @@ class AllEmployeeState extends State<AllEmployee> {
                     ),
                   ),
                   Container(
-                    height: 200.h,
+                    height: 150.h,
                     width: 340.w,
                     color: Colors.white,
                     child: ListView.builder(
@@ -154,8 +154,8 @@ class AllEmployeeState extends State<AllEmployee> {
                       itemCount: filteredEmployees.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
-                          height: 100.h,
-                          width: 150.w,
+                          height: 50.h,
+                          width: 100.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15.0),
                             color: Colors.black,
@@ -195,19 +195,11 @@ class AllEmployeeState extends State<AllEmployee> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      filteredEmployees[index].category,
+                                      filteredEmployees[index].name,
                                       style: TextStyle(
                                         fontSize: 18.sp,
                                         fontWeight: FontWeight.bold,
-                                        color: fontColorBlack,
-                                      ),
-                                    ),
-                                    Text(
-                                      filteredEmployees[index].name,
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: fontColorBlack,
+                                        color: fontColor,
                                       ),
                                     ),
                                   ],
@@ -270,7 +262,7 @@ class AllEmployeeState extends State<AllEmployee> {
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(2.0),
                           child: ServiceContainer(
                             text: employees[index].name,
                             service: employees[index].category,

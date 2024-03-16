@@ -26,7 +26,7 @@ class ServiceContainer extends StatelessWidget {
     return GestureDetector(
       onTap: ontap,
       child: Container(
-        height: 120.h,
+        height: 90.h,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(26.0),
@@ -36,7 +36,7 @@ class ServiceContainer extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 100.w,
+                width: 90.w,
                 height: 120.h,
                 decoration: BoxDecoration(
                   color: Colors.blue,
@@ -72,6 +72,7 @@ class ServiceContainer extends StatelessWidget {
                     style: TextStyle(
                       color: fontColorBlack,
                       fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
                       fontFamily: fontFamily,
                     ),
                   ),
@@ -79,8 +80,7 @@ class ServiceContainer extends StatelessWidget {
                     service,
                     style: TextStyle(
                       color: fontColorBlack,
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 14.sp,
                       fontFamily: fontFamily,
                     ),
                   ),
@@ -88,7 +88,7 @@ class ServiceContainer extends StatelessWidget {
                     "₹ $amount",
                     style: TextStyle(
                       color: amount.startsWith('-') ? Colors.red : Colors.green,
-                      fontSize: 18.sp,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
                       fontFamily: fontFamily,
                     ),
