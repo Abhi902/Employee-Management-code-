@@ -196,10 +196,34 @@ class EmployeeFormState extends State<EmployeeForm> {
                               color: hintColor,
                               fontFamily: fontFamily,
                             ),
+                            // Define the border style when the TextFormField is enabled but not focused
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    borderColorTextField, // Change this to your preferred border color
+                                width: 1.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            // Define the border style when the TextFormField is focused
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    themeColor, // Change this for focused border color
+                                width: 2.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            labelStyle: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18.sp,
+                              color: fontColor,
+                              fontFamily: fontFamily,
+                            ),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             border: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: borderColorTextField,
+                                color: Colors.black,
                                 width: 2.0.w,
                               ),
                               borderRadius: BorderRadius.circular(10.0),
@@ -278,6 +302,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                               fontSize: 16.sp,
                               color: hintColor,
                               fontFamily: fontFamily,
+                            ),
+                            // Define the border style when the TextFormField is enabled but not focused
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    borderColorTextField, // Change this to your preferred border color
+                                width: 1.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            // Define the border style when the TextFormField is focused
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    themeColor, // Change this for focused border color
+                                width: 2.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                             labelStyle: TextStyle(
                               fontWeight: FontWeight.w900,
@@ -360,6 +402,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                               color: hintColor,
                               fontFamily: fontFamily,
                             ),
+                            // Define the border style when the TextFormField is enabled but not focused
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    borderColorTextField, // Change this to your preferred border color
+                                width: 1.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            // Define the border style when the TextFormField is focused
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    themeColor, // Change this for focused border color
+                                width: 2.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             labelStyle: TextStyle(
                               fontWeight: FontWeight.w900,
                               fontSize: 18.sp,
@@ -430,6 +490,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                                     : Colors.green,
                                 fontSize: 18.sp,
                               ),
+                            ),
+                            // Define the border style when the TextFormField is enabled but not focused
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    borderColorTextField, // Change this to your preferred border color
+                                width: 1.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            // Define the border style when the TextFormField is focused
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    themeColor, // Change this for focused border color
+                                width: 2.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                             labelStyle: TextStyle(
                               fontWeight: FontWeight.w900,
@@ -508,6 +586,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                               fontSize: 16.sp,
                               color: hintColor,
                               fontFamily: fontFamily,
+                            ),
+                            // Define the border style when the TextFormField is enabled but not focused
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    borderColorTextField, // Change this to your preferred border color
+                                width: 1.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            // Define the border style when the TextFormField is focused
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    themeColor, // Change this for focused border color
+                                width: 2.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                             labelStyle: TextStyle(
                               fontWeight: FontWeight.w900,
@@ -593,6 +689,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                               color: hintColor,
                               fontFamily: fontFamily,
                             ),
+                            // Define the border style when the TextFormField is enabled but not focused
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    borderColorTextField, // Change this to your preferred border color
+                                width: 1.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            // Define the border style when the TextFormField is focused
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    themeColor, // Change this for focused border color
+                                width: 2.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             prefix: Text(
                               '₹',
                               style: TextStyle(
@@ -663,6 +777,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                               fontSize: 16.sp,
                               color: hintColor,
                               fontFamily: fontFamily,
+                            ),
+                            // Define the border style when the TextFormField is enabled but not focused
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    borderColorTextField, // Change this to your preferred border color
+                                width: 1.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            // Define the border style when the TextFormField is focused
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    themeColor, // Change this for focused border color
+                                width: 2.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                             prefix: Text(
                               '₹',
@@ -756,6 +888,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                               color: hintColor,
                               fontFamily: fontFamily,
                             ),
+                            // Define the border style when the TextFormField is enabled but not focused
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    borderColorTextField, // Change this to your preferred border color
+                                width: 1.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            // Define the border style when the TextFormField is focused
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    themeColor, // Change this for focused border color
+                                width: 2.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             prefix: Text(
                               '₹',
                               style: TextStyle(
@@ -847,6 +997,24 @@ class EmployeeFormState extends State<EmployeeForm> {
                               fontSize: 16.sp,
                               color: hintColor,
                               fontFamily: fontFamily,
+                            ),
+                            // Define the border style when the TextFormField is enabled but not focused
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    borderColorTextField, // Change this to your preferred border color
+                                width: 1.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            // Define the border style when the TextFormField is focused
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color:
+                                    themeColor, // Change this for focused border color
+                                width: 2.0.w,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                             prefix: Text(
                               '₹',
