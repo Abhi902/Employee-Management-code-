@@ -111,6 +111,8 @@ class FirebaseService {
         log(photoFileName);
       }
 
+      log("working");
+
       DatabaseReference employeeDataReference =
           FirebaseDatabase.instance.ref().child('EmployeeData');
 

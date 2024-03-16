@@ -102,10 +102,10 @@ class AllEmployeeState extends State<AllEmployee> {
         child: Column(
           children: [
             SizedBox(
-              height: 20,
+              height: 20.h,
             ),
             SizedBox(
-              width: 320,
+              width: 320.w,
               child: TextField(
                 controller: searchController,
                 onChanged: (query) => searchEmployees(query),
@@ -127,7 +127,7 @@ class AllEmployeeState extends State<AllEmployee> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 20.h,
             ),
             if (filteredEmployees.isNotEmpty)
               Column(
@@ -232,7 +232,7 @@ class AllEmployeeState extends State<AllEmployee> {
                     style: TextStyle(
                       color: fontColorBlack,
                       fontWeight: FontWeight.w700,
-                      fontSize: 18,
+                      fontSize: 18.sp,
                       fontFamily: fontFamily,
                     ),
                   ),
@@ -253,7 +253,7 @@ class AllEmployeeState extends State<AllEmployee> {
                         style: TextStyle(
                           color: fontColorBlack,
                           fontWeight: FontWeight.w700,
-                          fontSize: 18,
+                          fontSize: 18.sp,
                           fontFamily: fontFamily,
                         ),
                       ));

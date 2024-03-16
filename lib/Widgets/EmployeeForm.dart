@@ -335,12 +335,6 @@ class EmployeeFormState extends State<EmployeeForm> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a Reference';
-                            }
-                            return null;
-                          },
                         ),
                       ],
                     ),
@@ -1071,7 +1065,9 @@ class EmployeeFormState extends State<EmployeeForm> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
+                        log("i am pressed");
                         if (_formKey.currentState!.validate()) {
+                          log("i am validated");
                           String name = _nameController.text;
                           XFile? photo = _imageFile;
                           String category = selectedCategory as String;
@@ -1110,7 +1106,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             ),
                           );
                         }
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
                       },
                       child: Text(
                         'Submit',
