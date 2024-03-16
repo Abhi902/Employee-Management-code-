@@ -516,6 +516,12 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'^(\d+)?\.?\d{0,2}'))
                           ],
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18.sp,
+                            fontFamily: fontFamily,
+                            color: Colors.grey,
+                          ),
                           decoration: InputDecoration(
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: 'Attendence',
