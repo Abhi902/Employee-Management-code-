@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          canvasColor: Colors.white,
           colorScheme: ColorScheme.fromSwatch().copyWith(
             primary: themeColor,
             secondary: const Color(0xFFFFC107),

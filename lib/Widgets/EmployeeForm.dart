@@ -40,6 +40,8 @@ class EmployeeFormState extends State<EmployeeForm> {
   TextEditingController _amountController = TextEditingController(text: '0');
   TextEditingController _autoRentController = TextEditingController(text: "0");
   TextEditingController _managerController = TextEditingController();
+  TextEditingController _totalkharchaController =
+      TextEditingController(text: "0");
 
   bool _isLoading = false;
   Future<void> indicatorToggle() async {
@@ -56,7 +58,6 @@ class EmployeeFormState extends State<EmployeeForm> {
       _managerController.text = _currentUser ?? "" as String;
     });
     log(selectedPerson.toString());
-    _currentUser = null;
   }
 
   XFile? _imageFile;
@@ -927,274 +928,120 @@ class EmployeeFormState extends State<EmployeeForm> {
                         SizedBox(
                           height: 90.h,
                           width: 360.w,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Total Kharcha",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w200,
-                                      fontSize: 14.sp,
-                                      color: Color.fromRGBO(106, 107, 112, 1),
-                                      fontFamily: fontFamily,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5.h,
-                                  ),
-                                  SizedBox(
-                                    width: 100.w,
-                                    child: Expanded(
-                                      child: TextFormField(
-                                        controller: _kharchaController,
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter
-                                              .digitsOnly,
-                                        ],
-                                        enabled: false,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 18.sp,
-                                          fontFamily: fontFamily,
-                                          color: _kharchaController.text
-                                                  .startsWith('-')
-                                              ? Colors.red
-                                              : Colors.green,
-                                        ),
-                                        decoration: InputDecoration(
-                                          floatingLabelBehavior:
-                                              FloatingLabelBehavior.always,
-                                          hintText: 'Kharcha',
-                                          hintStyle: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16.sp,
-                                            color: hintColor,
-                                            fontFamily: fontFamily,
-                                          ),
-                                          // Define the border style when the TextFormField is enabled but not focused
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  borderColorTextField, // Change this to your preferred border color
-                                              width: 1.0.w,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          // Define the border style when the TextFormField is focused
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  themeColor, // Change this for focused border color
-                                              width: 2.0.w,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          prefix: Text(
-                                            '₹',
-                                            style: TextStyle(
-                                              color: _kharchaController.text
-                                                      .startsWith('-')
-                                                  ? Colors.red
-                                                  : Colors.green,
-                                              fontSize: 18.sp,
-                                            ),
-                                          ),
-                                          labelStyle: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: 18.sp,
-                                            color: fontColor,
-                                            fontFamily: fontFamily,
-                                          ),
-                                          border: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: fontColor,
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                        ),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Please enter a Kharcha';
-                                          }
-                                          return null;
-                                        },
-                                        onChanged: (value) {
-                                          if (_advanceController.text.isNotEmpty &&
-                                              _amountController
-                                                  .text.isNotEmpty &&
-                                              _rateController.text.isNotEmpty &&
-                                              _kharchaController
-                                                  .text.isNotEmpty &&
-                                              _autoRentController
-                                                  .text.isNotEmpty) {
-                                            _amountController
-                                                .text = ((double.parse(
-                                                                _attendanceController
-                                                                    .text) *
-                                                            double.parse(
-                                                                _rateController
-                                                                    .text) +
-                                                        double.parse(
-                                                            _autoRentController
-                                                                .text)) -
-                                                    (double.parse(
-                                                            _advanceController
-                                                                .text) +
-                                                        double.parse(
-                                                            _kharchaController
-                                                                .text)))
-                                                .toString();
-                                          } else {
-                                            _amountController.text = "0";
-                                          }
-                                          setState(() {});
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              Text(
+                                "Add Kharcha",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w200,
+                                  fontSize: 14.sp,
+                                  color: Color.fromRGBO(106, 107, 112, 1),
+                                  fontFamily: fontFamily,
+                                ),
                               ),
                               SizedBox(
-                                width: 20.w,
+                                height: 5.h,
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Add Kharcha",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w200,
-                                      fontSize: 14.sp,
-                                      color: Color.fromRGBO(106, 107, 112, 1),
-                                      fontFamily: fontFamily,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5.h,
-                                  ),
-                                  SizedBox(
-                                    width: 150.w,
-                                    child: Expanded(
-                                      child: TextFormField(
-                                        controller: _kharchaController,
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter
-                                              .digitsOnly,
-                                        ],
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 18.sp,
-                                          fontFamily: fontFamily,
-                                          color: _kharchaController.text
-                                                  .startsWith('-')
-                                              ? Colors.red
-                                              : Colors.green,
-                                        ),
-                                        decoration: InputDecoration(
-                                          floatingLabelBehavior:
-                                              FloatingLabelBehavior.always,
-                                          hintText: 'Kharcha',
-                                          hintStyle: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16.sp,
-                                            color: hintColor,
-                                            fontFamily: fontFamily,
-                                          ),
-                                          // Define the border style when the TextFormField is enabled but not focused
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  borderColorTextField, // Change this to your preferred border color
-                                              width: 1.0.w,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          // Define the border style when the TextFormField is focused
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  themeColor, // Change this for focused border color
-                                              width: 2.0.w,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          prefix: Text(
-                                            '₹',
-                                            style: TextStyle(
-                                              color: _kharchaController.text
-                                                      .startsWith('-')
-                                                  ? Colors.red
-                                                  : Colors.green,
-                                              fontSize: 18.sp,
-                                            ),
-                                          ),
-                                          labelStyle: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: 18.sp,
-                                            color: fontColor,
-                                            fontFamily: fontFamily,
-                                          ),
-                                          border: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: fontColor,
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                        ),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Please enter a Kharcha';
-                                          }
-                                          return null;
-                                        },
-                                        onChanged: (value) {
-                                          if (_advanceController.text.isNotEmpty &&
-                                              _amountController
-                                                  .text.isNotEmpty &&
-                                              _rateController.text.isNotEmpty &&
-                                              _kharchaController
-                                                  .text.isNotEmpty &&
-                                              _autoRentController
-                                                  .text.isNotEmpty) {
-                                            _amountController
-                                                .text = ((double.parse(
-                                                                _attendanceController
-                                                                    .text) *
-                                                            double.parse(
-                                                                _rateController
-                                                                    .text) +
-                                                        double.parse(
-                                                            _autoRentController
-                                                                .text)) -
-                                                    (double.parse(
-                                                            _advanceController
-                                                                .text) +
-                                                        double.parse(
-                                                            _kharchaController
-                                                                .text)))
-                                                .toString();
-                                          } else {
-                                            _amountController.text = "0";
-                                          }
-                                          setState(() {});
-                                        },
-                                      ),
-                                    ),
-                                  ),
+                              TextFormField(
+                                controller: _kharchaController,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
                                 ],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 18.sp,
+                                  fontFamily: fontFamily,
+                                  color: _kharchaController.text.startsWith('-')
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                                decoration: InputDecoration(
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  hintText: 'Kharcha',
+                                  hintStyle: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.sp,
+                                    color: hintColor,
+                                    fontFamily: fontFamily,
+                                  ),
+                                  // Define the border style when the TextFormField is enabled but not focused
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color:
+                                          borderColorTextField, // Change this to your preferred border color
+                                      width: 1.0.w,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  // Define the border style when the TextFormField is focused
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color:
+                                          themeColor, // Change this for focused border color
+                                      width: 2.0.w,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  prefix: Text(
+                                    '₹',
+                                    style: TextStyle(
+                                      color: _kharchaController.text
+                                              .startsWith('-')
+                                          ? Colors.red
+                                          : Colors.green,
+                                      fontSize: 18.sp,
+                                    ),
+                                  ),
+                                  labelStyle: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 18.sp,
+                                    color: fontColor,
+                                    fontFamily: fontFamily,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: fontColor,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter a Kharcha';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (value) {
+                                  if (_advanceController.text.isNotEmpty &&
+                                      _amountController.text.isNotEmpty &&
+                                      _rateController.text.isNotEmpty &&
+                                      _kharchaController.text.isNotEmpty &&
+                                      _autoRentController.text.isNotEmpty) {
+                                    _totalkharchaController.text = (int.parse(
+                                                _totalkharchaController.text) +
+                                            int.parse(_kharchaController.text))
+                                        .toString();
+                                    _amountController.text = ((double.parse(
+                                                        _attendanceController
+                                                            .text) *
+                                                    double.parse(
+                                                        _rateController.text) +
+                                                double.parse(
+                                                    _autoRentController.text)) -
+                                            (double.parse(
+                                                    _advanceController.text) +
+                                                double.parse(
+                                                    _kharchaController.text)))
+                                        .toString();
+                                  } else {
+                                    _amountController.text = "0";
+                                  }
+                                  setState(() {});
+                                },
                               ),
                             ],
                           ),
@@ -1262,7 +1109,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                               autoRent: autoRent,
                               createdAt: DateTime.now(),
                               lastUpdatedPerson: selectedPerson,
-                              manager: [managerMap],
+                              manager: managerMap,
                             );
                             indicatorToggle();
                             FirebaseService firebaseService = FirebaseService();

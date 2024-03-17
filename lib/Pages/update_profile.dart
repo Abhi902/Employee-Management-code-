@@ -14,6 +14,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -41,6 +42,8 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
   TextEditingController _selectedCategory = TextEditingController();
   TextEditingController _autoRentController = TextEditingController();
   TextEditingController _managerController = TextEditingController();
+  TextEditingController _totalKharchaController = TextEditingController();
+
   String? _imageFile;
 
   bool _isAdvanceEditing = false;
@@ -88,7 +91,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
     _attendanceController.text = widget.employeeDetails.attendance;
     _rateController.text = widget.employeeDetails.rate;
     _advanceController.text = widget.employeeDetails.advance;
-    _kharchaController.text = widget.employeeDetails.kharcha;
+    _totalKharchaController.text = widget.employeeDetails.kharcha;
     _amountController.text = widget.employeeDetails.amount;
     _autoRentController.text = widget.employeeDetails.autoRent;
     _selectedCategory.text = widget.employeeDetails.category;
@@ -446,7 +449,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                               _autoRentController.text)) -
                                       (double.parse(_advanceController.text) +
                                           double.parse(
-                                              _kharchaController.text)))
+                                              _totalKharchaController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
@@ -567,7 +570,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                               _autoRentController.text)) -
                                       (double.parse(_advanceController.text) +
                                           double.parse(
-                                              _kharchaController.text)))
+                                              _totalKharchaController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
@@ -758,7 +761,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                               _autoRentController.text)) -
                                       (double.parse(_advanceController.text) +
                                           double.parse(
-                                              _kharchaController.text)))
+                                              _totalKharchaController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
@@ -795,131 +798,6 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                         message: widget.employeeDetails.lastUpdateAdvance !=
                                 null
                             ? "${_managerController.text} , ${formatDateTime(widget.employeeDetails.lastUpdateAdvance!)}"
-                            : 'Never Updated',
-                        child: Icon(Icons.info_outline, size: 30),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Kharcha",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w200,
-                      fontSize: 14.sp,
-                      color: Color.fromRGBO(106, 107, 112, 1),
-                      fontFamily: fontFamily,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 200.w,
-                        child: TextFormField(
-                          enabled: _isKharchaEditing,
-                          controller: _kharchaController,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 18.sp,
-                            fontFamily: fontFamily,
-                            color: _kharchaController.text.startsWith('-')
-                                ? Colors.red
-                                : Colors.green,
-                          ),
-                          decoration: InputDecoration(
-                            prefix: Text(
-                              '₹',
-                              style: TextStyle(
-                                color: _kharchaController.text.startsWith('-')
-                                    ? Colors.red
-                                    : Colors.green,
-                                fontSize: 18.sp,
-                              ),
-                            ),
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            hintText: 'Kharcha',
-                            hintStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.sp,
-                              color: hintColor,
-                              fontFamily: fontFamily,
-                            ),
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 18.sp,
-                              color: fontColor,
-                              fontFamily: fontFamily,
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: fontColor,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a Kharcha';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            if (_advanceController.text.isNotEmpty &&
-                                _amountController.text.isNotEmpty &&
-                                _rateController.text.isNotEmpty &&
-                                _kharchaController.text.isNotEmpty &&
-                                _autoRentController.text.isNotEmpty) {
-                              _amountController.text = ((double.parse(
-                                                  _attendanceController.text) *
-                                              double.parse(
-                                                  _rateController.text) +
-                                          double.parse(
-                                              _autoRentController.text)) -
-                                      (double.parse(_advanceController.text) +
-                                          double.parse(
-                                              _kharchaController.text)))
-                                  .toString();
-                            } else {
-                              _amountController.text = "0";
-                            }
-                            setState(() {});
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      GestureDetector(
-                        child: Icon(
-                          Icons.edit,
-                          size: 30,
-                          color: fontColorBlack,
-                        ),
-                        onTap: () {
-                          setState(() {
-                            _isKharchaEditing = !_isKharchaEditing;
-                          });
-                        },
-                      ),
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      TapTooltip(
-                        message: widget.employeeDetails.lastUpdateKharcha !=
-                                null
-                            ? "${_managerController.text} , ${formatDateTime(widget.employeeDetails.lastUpdateKharcha!)}"
                             : 'Never Updated',
                         child: Icon(Icons.info_outline, size: 30),
                       ),
@@ -1008,7 +886,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                               _autoRentController.text)) -
                                       (double.parse(_advanceController.text) +
                                           double.parse(
-                                              _kharchaController.text)))
+                                              _totalKharchaController.text)))
                                   .toString();
                             } else {
                               _amountController.text = "0";
@@ -1052,6 +930,254 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                   ),
                 ],
               ),
+              SizedBox(height: 20),
+              SizedBox(
+                height: 90.h,
+                width: 200.w,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Add Kharcha",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w200,
+                        fontSize: 14.sp,
+                        color: Color.fromRGBO(106, 107, 112, 1),
+                        fontFamily: fontFamily,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 200.w,
+                          child: TextFormField(
+                            controller: _kharchaController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18.sp,
+                              fontFamily: fontFamily,
+                              color: _kharchaController.text.startsWith('-')
+                                  ? Colors.red
+                                  : Colors.green,
+                            ),
+                            decoration: InputDecoration(
+                              prefix: Text(
+                                '₹',
+                                style: TextStyle(
+                                  color: _kharchaController.text.startsWith('-')
+                                      ? Colors.red
+                                      : Colors.green,
+                                  fontSize: 18.sp,
+                                ),
+                              ),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: 'Kharcha',
+                              hintStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.sp,
+                                color: hintColor,
+                                fontFamily: fontFamily,
+                              ),
+                              labelStyle: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 18.sp,
+                                color: fontColor,
+                                fontFamily: fontFamily,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: fontColor,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: fontColor,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: fontColor,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter a Kharcha';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              log(_totalKharchaController.text);
+                              log(value);
+
+                              setState(() {});
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        GestureDetector(
+                          child: Icon(
+                            Icons.add,
+                            size: 30,
+                            color: fontColorBlack,
+                          ),
+                          onTap: () {
+                            setState(() {
+                              _totalKharchaController.text =
+                                  (double.parse(_totalKharchaController.text) +
+                                          double.parse(
+                                              _kharchaController.text ?? "0"))
+                                      .toString();
+
+                              if (_advanceController.text.isNotEmpty &&
+                                  _amountController.text.isNotEmpty &&
+                                  _rateController.text.isNotEmpty &&
+                                  _kharchaController.text.isNotEmpty &&
+                                  _autoRentController.text.isNotEmpty) {
+                                _amountController.text = ((double.parse(
+                                                    _attendanceController
+                                                        .text) *
+                                                double.parse(
+                                                    _rateController.text) +
+                                            double.parse(
+                                                _autoRentController.text)) -
+                                        (double.parse(_advanceController.text) +
+                                            double.parse(
+                                                _totalKharchaController.text)))
+                                    .toString();
+                              } else {
+                                _amountController.text = "0";
+                              }
+                            });
+                            _kharchaController.text = '0';
+
+                            log(_kharchaController.text);
+                          },
+                        ),
+                        SizedBox(
+                          width: 20.w,
+                        ),
+                        TapTooltip(
+                          message: widget.employeeDetails.lastUpdateKharcha !=
+                                  null
+                              ? "${_managerController.text} , ${formatDateTime(widget.employeeDetails.lastUpdateKharcha!)}"
+                              : 'Never Updated',
+                          child: Icon(Icons.info_outline, size: 30),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Total Kharcha",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w200,
+                      fontSize: 14.sp,
+                      color: Color.fromRGBO(106, 107, 112, 1),
+                      fontFamily: fontFamily,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  TextFormField(
+                    enabled: false,
+                    controller: _totalKharchaController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 18.sp,
+                      fontFamily: fontFamily,
+                      color: _kharchaController.text.startsWith('-')
+                          ? Colors.red
+                          : Colors.green,
+                    ),
+                    decoration: InputDecoration(
+                      prefix: Text(
+                        '₹',
+                        style: TextStyle(
+                          color: _kharchaController.text.startsWith('-')
+                              ? Colors.red
+                              : Colors.green,
+                          fontSize: 18.sp,
+                        ),
+                      ),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      hintText: 'Total Kharcha',
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.sp,
+                        color: hintColor,
+                        fontFamily: fontFamily,
+                      ),
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 18.sp,
+                        color: fontColor,
+                        fontFamily: fontFamily,
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: fontColor,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a Kharcha';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      if (_advanceController.text.isNotEmpty &&
+                          _amountController.text.isNotEmpty &&
+                          _rateController.text.isNotEmpty &&
+                          _kharchaController.text.isNotEmpty &&
+                          _autoRentController.text.isNotEmpty) {
+                        _amountController
+                            .text = ((double.parse(_attendanceController.text) *
+                                        double.parse(_rateController.text) +
+                                    double.parse(_autoRentController.text)) -
+                                (double.parse(_advanceController.text) +
+                                    double.parse(_kharchaController.text)))
+                            .toString();
+                      } else {
+                        _amountController.text = "0";
+                      }
+                      setState(() {});
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
               ElevatedButton(
                 onPressed: () async {
                   if (_currentUser == null) {
@@ -1078,15 +1204,29 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                     log('working');
                     if (_formKey.currentState?.validate() ?? false) {
                       //Call the update function with the edited values
+
+                      if (widget.employeeDetails.manager!
+                          .containsKey(_currentUser)) {
+                        widget.employeeDetails.manager![_currentUser]!
+                            .add(_kharchaController.text);
+                      } else {
+                        widget.employeeDetails
+                            .manager![_currentUser as String] = [
+                          _kharchaController.text
+                        ];
+                      }
+
+                      print(widget.employeeDetails.manager.toString());
+
                       await FirebaseService.updateEmployee(
                           documentId: widget.employeeDetails.uid!,
                           advance: _advanceController.text !=
                                   widget.employeeDetails.advance
                               ? _advanceController.text
                               : null,
-                          kharcha: _kharchaController.text !=
+                          kharcha: _totalKharchaController.text !=
                                   widget.employeeDetails.kharcha
-                              ? _kharchaController.text
+                              ? _totalKharchaController.text
                               : null,
                           autoRent: _autoRentController.text !=
                                   widget.employeeDetails.autoRent
@@ -1105,6 +1245,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                               ? _attendanceController.text
                               : null,
                           lastUpdatedPerson: _currentUser,
+                          managerMap: widget.employeeDetails.manager,
                           presentEmployee: widget.employeeDetails);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

@@ -123,9 +123,7 @@ class FirebaseService {
       String currentMonth = DateFormat('MMMM').format(DateTime.now());
       DatabaseReference subcollectionReference =
           newEmployeeReference.child('Monthly').child(currentMonth);
-      var managerData = employee.manager
-          ?.map((m) => m.map((key, value) => MapEntry(key, value)))
-          .toList();
+      var managerData = employee.manager;
 
       // Add data to the new subcollection
       await subcollectionReference.set(
@@ -178,6 +176,7 @@ class FirebaseService {
       String? rate,
       String? attendance,
       String? lastUpdatedPerson,
+      Map<String, List<String>>? managerMap,
       CommonFormModel? presentEmployee // New field
       }) async {
     try {
@@ -241,6 +240,8 @@ class FirebaseService {
       final DatabaseEvent currentMonthSnapshot =
           await currentMonthReference.once();
 
+      updateFields["manager"] = managerMap;
+
       log("current month snapshot ${currentMonthSnapshot.snapshot.exists.toString()}");
       if (currentMonthSnapshot.snapshot.exists) {
         // Update the existing fields under the current month
@@ -253,7 +254,7 @@ class FirebaseService {
         updateFields['photo_location'] = presentEmployee?.photoLocation;
         updateFields['category'] = presentEmployee!.category;
         updateFields['name'] = presentEmployee.name;
-        // updateFields['photo'] = presentEmployee.photo;
+        updateFields["manager"] = managerMap;
         presentEmployee.reference.isNotEmpty
             ? updateFields['reference'] = presentEmployee.reference
             // ignore: unnecessary_statements

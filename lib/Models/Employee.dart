@@ -20,7 +20,8 @@ class CommonFormModel {
   DateTime? lastUpdateAutoRent;
   DateTime? lastUpdateRate;
   DateTime? lastUpdateAttendance;
-  List<Map<String, List<String>>>? manager;
+  Map<String, List<String>>?
+      manager; // Changed from List<Map<String, List<String>>> to Map<String, List<String>>
 
   CommonFormModel({
     required this.name,
@@ -82,9 +83,8 @@ class CommonFormModel {
             : null,
         uid = json['uid'] ?? '',
         manager = json['manager'] != null
-            ? List<Map<String, List<String>>>.from(json['manager'].map(
-                (managerItem) => Map<String, List<String>>.from(managerItem.map(
-                    (key, value) => MapEntry(key, List<String>.from(value))))))
+            ? Map<String, List<String>>.from(json['manager']
+                .map((key, value) => MapEntry(key, List<String>.from(value))))
             : null;
 
   Map<String, dynamic> toJson() {
@@ -107,12 +107,8 @@ class CommonFormModel {
       'lastUpdateRate': lastUpdateRate?.millisecondsSinceEpoch,
       'uid': uid,
       "lastUpdatedPerson": lastUpdatedPerson,
-      'lastUpdateAttendance': lastUpdateAttendance?.microsecondsSinceEpoch,
-      'manager': manager
-          ?.map((item) => item.map(
-                (key, value) => MapEntry(key, value),
-              ))
-          .toList(),
+      'lastUpdateAttendance': lastUpdateAttendance?.millisecondsSinceEpoch,
+      'manager': manager?.map((key, value) => MapEntry(key, value.toList())),
     };
   }
 }
