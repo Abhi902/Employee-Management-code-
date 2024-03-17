@@ -19,6 +19,11 @@ class ExcelModel {
   String kharcha;
   String autoRent;
   Map<String, List<String>>? manager;
+  String? Pankaj;
+  String? ShivKumar;
+  String? Deep;
+  String? Umesh;
+  String? Krishanpal;
 
   ExcelModel(
       {required this.name,
@@ -31,7 +36,12 @@ class ExcelModel {
       required this.kharcha,
       required this.autoRent,
       this.uid,
-      this.manager});
+      this.manager,
+      this.Pankaj,
+      this.ShivKumar,
+      this.Deep,
+      this.Umesh,
+      this.Krishanpal});
 
   ExcelModel.fromJson(Map<String, dynamic> json)
       : name = json['name'] ?? '',
@@ -73,19 +83,66 @@ class ExcelModel {
 
     int i = 0;
 
+    double pankajSum = 0;
+    double shivSum = 0;
+    double DeepSum = 0;
+    double umeshSum = 0;
+    double krishnaSum = 0;
+
+// Iterating over each key-value pair in the map
+
     for (CommonFormModel item in list) {
+      item.manager?.forEach((key, valueList) {
+        // Parsing list of strings to integers and summing them
+        double sum = valueList.map(double.parse).reduce((a, b) => a + b);
+
+        // Storing the sum in the respective variable based on the key
+        switch (key) {
+          case 'Pankaj':
+            pankajSum = sum;
+            break;
+          case 'Shivkumar':
+            shivSum = sum;
+            break;
+          case 'Deep':
+            DeepSum = sum;
+            break;
+          case 'Umesh':
+            umeshSum = sum;
+            break;
+          case 'Krishanpal':
+            krishnaSum = sum;
+            break;
+          default:
+            // Handle unexpected keys if necessary
+            break;
+        }
+      });
+
+      log(pankajSum.toString());
+      log(shivSum.toString());
+      log(DeepSum.toString());
+      log(umeshSum.toString());
+      log(krishnaSum.toString());
+
       ExcelModel item1 = ExcelModel(
-          name: item.name,
-          uid: (i + 1).toString(),
-          category: item.category,
-          reference: item.reference,
-          advance: item.advance,
-          amount: item.amount,
-          attendance: item.attendance,
-          autoRent: item.autoRent,
-          rate: item.rate,
-          kharcha: item.kharcha,
-          manager: item.manager);
+        name: item.name,
+        uid: (i + 1).toString(),
+        category: item.category,
+        reference: item.reference,
+        advance: item.advance,
+        amount: item.amount,
+        attendance: item.attendance,
+        autoRent: item.autoRent,
+        rate: item.rate,
+        kharcha: item.kharcha,
+        manager: item.manager,
+        Pankaj: pankajSum.toString(),
+        ShivKumar: shivSum.toString(),
+        Deep: DeepSum.toString(),
+        Umesh: umeshSum.toString(),
+        Krishanpal: krishnaSum.toString(),
+      );
       reports.add(item1);
       i++;
     }
@@ -104,6 +161,11 @@ class ExcelModel {
           ExcelDataCell(columnHeader: '', value: dataRow.autoRent),
           ExcelDataCell(columnHeader: '', value: dataRow.amount),
           ExcelDataCell(columnHeader: '', value: dataRow.manager),
+          ExcelDataCell(columnHeader: '', value: dataRow.Pankaj),
+          ExcelDataCell(columnHeader: '', value: dataRow.ShivKumar),
+          ExcelDataCell(columnHeader: '', value: dataRow.Deep),
+          ExcelDataCell(columnHeader: '', value: dataRow.Umesh),
+          ExcelDataCell(columnHeader: '', value: dataRow.Krishanpal),
         ]);
       }).toList();
 
@@ -151,7 +213,13 @@ class ExcelModel {
       sheet.getRangeByName('I4').setText('AutoRent');
       sheet.getRangeByName('D4').setText('Reference');
       sheet.getRangeByName('K4').setText('Manager Kharcha ');
-      sheet.getRangeByName('K4:P4').merge();
+      sheet.getRangeByName('L4').setText('Pankaj');
+      sheet.getRangeByName('M4').setText('ShivKumar');
+      sheet.getRangeByName('N4').setText('Deep');
+      sheet.getRangeByName('O4').setText('Umesh');
+      sheet.getRangeByName('P4').setText('Krishanpal');
+
+      // sheet.getRangeByName('K4:P4').merge();
 
       // sheet.getRangeByName('A2:C2').merge();
       // sheet.getRangeByName('A2').setText('Occupied Room Checking List');
@@ -162,9 +230,9 @@ class ExcelModel {
 
       // sheet.getRangeByName('J1').setText(
       //     '${DateTime.now().day.toString().padLeft(2, '0')}/${DateTime.now().month.toString().padLeft(2, '0')}/${DateTime.now().year.toString().padLeft(2, '0')}');
-      sheet.getRangeByName('J1').cellStyle = borderStyle;
+      sheet.getRangeByName('p1').cellStyle = borderStyle;
 
-      sheet.getRangeByName('A4:J${employee.length + 4}').cellStyle =
+      sheet.getRangeByName('A4:p${employee.length + 4}').cellStyle =
           borderStyle;
 
       // sheet.getRangeByName('A${employee.length + 6}').setText('Remark :');
@@ -173,7 +241,7 @@ class ExcelModel {
       final List<int> bytes = workbook.saveAsStream();
       // workbook.dispose();
 
-      saveAndLaunchFile(bytes, 'Occupied Day ${idGenerator()}.xlsx');
+      saveAndLaunchFile(bytes, 'Employee ${idGenerator()}.xlsx');
     }
   }
 
