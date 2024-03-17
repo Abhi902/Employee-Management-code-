@@ -18,19 +18,20 @@ class ExcelModel {
   String advance;
   String kharcha;
   String autoRent;
+  Map<String, List<String>>? manager;
 
-  ExcelModel({
-    required this.name,
-    required this.category,
-    required this.reference,
-    required this.rate,
-    required this.attendance,
-    required this.amount,
-    required this.advance,
-    required this.kharcha,
-    required this.autoRent,
-    this.uid,
-  });
+  ExcelModel(
+      {required this.name,
+      required this.category,
+      required this.reference,
+      required this.rate,
+      required this.attendance,
+      required this.amount,
+      required this.advance,
+      required this.kharcha,
+      required this.autoRent,
+      this.uid,
+      this.manager});
 
   ExcelModel.fromJson(Map<String, dynamic> json)
       : name = json['name'] ?? '',
@@ -42,7 +43,11 @@ class ExcelModel {
         advance = json['advance'] ?? '',
         kharcha = json['kharcha'] ?? '',
         autoRent = json['autoRent'] ?? '',
-        uid = json['uid'] ?? '';
+        uid = json['uid'] ?? '',
+        manager = json['manager'] != null
+            ? Map<String, List<String>>.from(json['manager']
+                .map((key, value) => MapEntry(key, List<String>.from(value))))
+            : null;
 
   Map<String, dynamic> toJson() {
     return {
@@ -56,6 +61,7 @@ class ExcelModel {
       'kharcha': kharcha,
       'autoRent': autoRent,
       'uid': uid,
+      "manager": manager,
     };
   }
 
@@ -69,17 +75,17 @@ class ExcelModel {
 
     for (CommonFormModel item in list) {
       ExcelModel item1 = ExcelModel(
-        name: item.name,
-        uid: (i + 1).toString(),
-        category: item.category,
-        reference: item.reference,
-        advance: item.advance,
-        amount: item.amount,
-        attendance: item.attendance,
-        autoRent: item.autoRent,
-        rate: item.rate,
-        kharcha: item.kharcha,
-      );
+          name: item.name,
+          uid: (i + 1).toString(),
+          category: item.category,
+          reference: item.reference,
+          advance: item.advance,
+          amount: item.amount,
+          attendance: item.attendance,
+          autoRent: item.autoRent,
+          rate: item.rate,
+          kharcha: item.kharcha,
+          manager: item.manager);
       reports.add(item1);
       i++;
     }
@@ -97,6 +103,7 @@ class ExcelModel {
           ExcelDataCell(columnHeader: '', value: dataRow.kharcha),
           ExcelDataCell(columnHeader: '', value: dataRow.autoRent),
           ExcelDataCell(columnHeader: '', value: dataRow.amount),
+          ExcelDataCell(columnHeader: '', value: dataRow.manager),
         ]);
       }).toList();
 
@@ -143,6 +150,8 @@ class ExcelModel {
       sheet.getRangeByName('E4').setText('Rate');
       sheet.getRangeByName('I4').setText('AutoRent');
       sheet.getRangeByName('D4').setText('Reference');
+      sheet.getRangeByName('K4').setText('Manager Kharcha ');
+      sheet.getRangeByName('K4:P4').merge();
 
       // sheet.getRangeByName('A2:C2').merge();
       // sheet.getRangeByName('A2').setText('Occupied Room Checking List');
