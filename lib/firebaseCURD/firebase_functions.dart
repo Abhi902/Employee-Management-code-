@@ -123,6 +123,9 @@ class FirebaseService {
       String currentMonth = DateFormat('MMMM').format(DateTime.now());
       DatabaseReference subcollectionReference =
           newEmployeeReference.child('Monthly').child(currentMonth);
+      var managerData = employee.manager
+          ?.map((m) => m.map((key, value) => MapEntry(key, value)))
+          .toList();
 
       // Add data to the new subcollection
       await subcollectionReference.set(
@@ -140,6 +143,7 @@ class FirebaseService {
           'createdAt': ServerValue.timestamp,
           'lastUpdatedPerson': employee.lastUpdatedPerson,
           'photo_location': photoFileName,
+          'manager': managerData,
         },
       );
 

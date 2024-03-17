@@ -48,7 +48,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
   bool _isAutoRentEditing = false;
   bool _isRateEditing = false;
   bool _isAttendanceEditing = false;
-  String? _currentUser;
+
   String formatDateTime(DateTime dateTime) {
     // Format DateTime object into desired format
     String formattedDateTime =
@@ -56,6 +56,8 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
 
     return formattedDateTime;
   }
+
+  String? _currentUser;
 
   void _fetchCurrentUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -1052,44 +1054,66 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  log('working');
-                  if (_formKey.currentState?.validate() ?? false) {
-                    //Call the update function with the edited values
-                    await FirebaseService.updateEmployee(
-                        documentId: widget.employeeDetails.uid!,
-                        advance: _advanceController.text !=
-                                widget.employeeDetails.advance
-                            ? _advanceController.text
-                            : null,
-                        kharcha: _kharchaController.text !=
-                                widget.employeeDetails.kharcha
-                            ? _kharchaController.text
-                            : null,
-                        autoRent: _autoRentController.text !=
-                                widget.employeeDetails.autoRent
-                            ? _autoRentController.text
-                            : null,
-                        rate:
-                            _rateController.text != widget.employeeDetails.rate
-                                ? _rateController.text
-                                : null,
-                        amount: _amountController.text !=
-                                widget.employeeDetails.amount
-                            ? _amountController.text
-                            : null,
-                        attendance: _attendanceController.text !=
-                                widget.employeeDetails.attendance
-                            ? _attendanceController.text
-                            : null,
-                        lastUpdatedPerson: _currentUser,
-                        presentEmployee: widget.employeeDetails);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Updated Sucessfully'),
-                        duration: Duration(seconds: 2),
-                      ),
+                  if (_currentUser == null) {
+                    // Show a dialog if no user is selected
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Empty User"),
+                          content: Text(
+                              "No User Selected ! Select a user from profile"),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text("OK"),
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                            ),
+                          ],
+                        );
+                      },
                     );
-                    Navigator.pop(context);
+                  } else {
+                    log('working');
+                    if (_formKey.currentState?.validate() ?? false) {
+                      //Call the update function with the edited values
+                      await FirebaseService.updateEmployee(
+                          documentId: widget.employeeDetails.uid!,
+                          advance: _advanceController.text !=
+                                  widget.employeeDetails.advance
+                              ? _advanceController.text
+                              : null,
+                          kharcha: _kharchaController.text !=
+                                  widget.employeeDetails.kharcha
+                              ? _kharchaController.text
+                              : null,
+                          autoRent: _autoRentController.text !=
+                                  widget.employeeDetails.autoRent
+                              ? _autoRentController.text
+                              : null,
+                          rate: _rateController.text !=
+                                  widget.employeeDetails.rate
+                              ? _rateController.text
+                              : null,
+                          amount: _amountController.text !=
+                                  widget.employeeDetails.amount
+                              ? _amountController.text
+                              : null,
+                          attendance: _attendanceController.text !=
+                                  widget.employeeDetails.attendance
+                              ? _attendanceController.text
+                              : null,
+                          lastUpdatedPerson: _currentUser,
+                          presentEmployee: widget.employeeDetails);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Updated Sucessfully'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                      Navigator.pop(context);
+                    }
                   }
                 },
                 child: Text(

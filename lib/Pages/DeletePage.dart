@@ -10,6 +10,7 @@ import 'package:CompanyDatabase/utils/contants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'CreatePage.dart';
 
 class DeleteEmployee extends StatefulWidget {
@@ -31,6 +32,14 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
             builder: (context) => EmployeeFormUpdate(
                   employeeDetails: commonFormModel,
                 )));
+  }
+
+  String? _currentUser;
+  void _fetchCurrentUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _currentUser = prefs.getString('currentUser');
+    });
   }
 
   @override
@@ -115,43 +124,67 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
                         image: employees[index].photo?.path ?? "",
                         ontap: () async {
                           // Show confirmation dialog
-                          final confirmDelete = await showDialog<bool>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('Confirm Deletion'),
-                                content: const Text(
-                                    'Are you sure you want to delete this employee?'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(false),
-                                    child: const Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(true),
-                                    child: const Text('Delete'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
 
-                          // If deletion is confirmed
-                          if (confirmDelete == true) {
-                            log(employees[index].uid.toString());
-                            await FirebaseService.deleteEmployee(
-                                employees[index].uid.toString());
-
-                            // Optionally, refresh the list of employees or show a success message
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Employee deleted'),
-                                duration: Duration(seconds: 2),
-                              ),
+                          if (_currentUser == null) {
+                            // Show a dialog if no user is selected
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Empty User"),
+                                  content: Text(
+                                      "No User Selected ! Select a user from profile"),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text("OK"),
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pop(); // Close the dialog
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
                             );
+                          } else {
+                            final confirmDelete = await showDialog<bool>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Confirm Deletion'),
+                                  content: const Text(
+                                      'Are you sure you want to delete this employee?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(false),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(true),
+                                      child: const Text('Delete'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+
+                            // If deletion is confirmed
+                            if (confirmDelete == true) {
+                              log(employees[index].uid.toString());
+                              await FirebaseService.deleteEmployee(
+                                  employees[index].uid.toString());
+
+                              // Optionally, refresh the list of employees or show a success message
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Employee deleted'),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                            }
                           }
                         },
                       ),

@@ -20,27 +20,30 @@ class CommonFormModel {
   DateTime? lastUpdateAutoRent;
   DateTime? lastUpdateRate;
   DateTime? lastUpdateAttendance;
+  List<Map<String, List<String>>>? manager;
 
-  CommonFormModel(
-      {required this.name,
-      this.photo,
-      required this.category,
-      required this.reference,
-      required this.rate,
-      required this.attendance,
-      required this.amount,
-      required this.advance,
-      required this.kharcha,
-      required this.autoRent,
-      this.createdAt,
-      this.lastUpdateAdvance,
-      this.lastUpdateKharcha,
-      this.lastUpdateAutoRent,
-      this.lastUpdateRate,
-      this.lastUpdateAttendance,
-      this.uid,
-      this.lastUpdatedPerson,
-      this.photoLocation});
+  CommonFormModel({
+    required this.name,
+    this.photo,
+    required this.category,
+    required this.reference,
+    required this.rate,
+    required this.attendance,
+    required this.amount,
+    required this.advance,
+    required this.kharcha,
+    required this.autoRent,
+    this.createdAt,
+    this.lastUpdateAdvance,
+    this.lastUpdateKharcha,
+    this.lastUpdateAutoRent,
+    this.lastUpdateRate,
+    this.lastUpdateAttendance,
+    this.uid,
+    this.lastUpdatedPerson,
+    this.photoLocation,
+    this.manager,
+  });
 
   CommonFormModel.fromJson(Map<String, dynamic> json)
       : name = json['name'] ?? '',
@@ -77,7 +80,12 @@ class CommonFormModel {
         lastUpdateRate = (json['lastUpdateRate'] != null)
             ? DateTime.fromMillisecondsSinceEpoch(json['lastUpdateRate'] as int)
             : null,
-        uid = json['uid'] ?? '';
+        uid = json['uid'] ?? '',
+        manager = json['manager'] != null
+            ? List<Map<String, List<String>>>.from(json['manager'].map(
+                (managerItem) => Map<String, List<String>>.from(managerItem.map(
+                    (key, value) => MapEntry(key, List<String>.from(value))))))
+            : null;
 
   Map<String, dynamic> toJson() {
     return {
@@ -99,7 +107,12 @@ class CommonFormModel {
       'lastUpdateRate': lastUpdateRate?.millisecondsSinceEpoch,
       'uid': uid,
       "lastUpdatedPerson": lastUpdatedPerson,
-      'lastUpdateAttendance': lastUpdateAttendance?.microsecondsSinceEpoch
+      'lastUpdateAttendance': lastUpdateAttendance?.microsecondsSinceEpoch,
+      'manager': manager
+          ?.map((item) => item.map(
+                (key, value) => MapEntry(key, value),
+              ))
+          .toList(),
     };
   }
 }
