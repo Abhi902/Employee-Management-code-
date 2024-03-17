@@ -133,6 +133,7 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
+                                  backgroundColor: Colors.white,
                                   title: Text("Empty User"),
                                   content: Text(
                                       "No User Selected ! Select a user from profile"),

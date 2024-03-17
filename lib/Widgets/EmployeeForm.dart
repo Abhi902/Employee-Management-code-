@@ -1059,6 +1059,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
+                                backgroundColor: Colors.white,
                                 title: Text("Empty User"),
                                 content: Text(
                                     "No User Selected ! Select a user from profile"),

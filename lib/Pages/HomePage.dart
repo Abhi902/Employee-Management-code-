@@ -744,6 +744,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Colors.white,
       title: Text('Enter Password'),
       content: TextFormField(
         controller: _passwordController,
@@ -765,10 +766,6 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
             Navigator.pop(context, password);
           },
           child: Text('Submit'),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(
-                themeColor), // Set your desired color
-          ),
         ),
       ],
     );
