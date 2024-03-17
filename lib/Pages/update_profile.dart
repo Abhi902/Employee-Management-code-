@@ -932,140 +932,159 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                 ],
               ),
               SizedBox(height: 20),
-              SizedBox(
-                height: 90.h,
-                width: 200.w,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Add Kharcha",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w200,
-                        fontSize: 14.sp,
-                        color: Color.fromRGBO(106, 107, 112, 1),
-                        fontFamily: fontFamily,
-                      ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Add Kharcha",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w200,
+                      fontSize: 14.sp,
+                      color: Color.fromRGBO(106, 107, 112, 1),
+                      fontFamily: fontFamily,
                     ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 200.w,
-                          child: TextFormField(
-                            controller: _kharchaController,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            style: TextStyle(
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 200.w,
+                        height: 85.h,
+                        child: TextFormField(
+                          controller: _kharchaController,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18.sp,
+                            fontFamily: fontFamily,
+                            color: _kharchaController.text.startsWith('-')
+                                ? Colors.red
+                                : Colors.green,
+                          ),
+                          decoration: InputDecoration(
+                            prefix: Text(
+                              '₹',
+                              style: TextStyle(
+                                color: _kharchaController.text.startsWith('-')
+                                    ? Colors.red
+                                    : Colors.green,
+                                fontSize: 18.sp,
+                              ),
+                            ),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: 'Kharcha',
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.sp,
+                              color: hintColor,
+                              fontFamily: fontFamily,
+                            ),
+                            labelStyle: TextStyle(
                               fontWeight: FontWeight.w900,
                               fontSize: 18.sp,
+                              color: fontColor,
                               fontFamily: fontFamily,
-                              color: _kharchaController.text.startsWith('-')
-                                  ? Colors.red
-                                  : Colors.green,
                             ),
-                            decoration: InputDecoration(
-                              prefix: Text(
-                                '₹',
-                                style: TextStyle(
-                                  color: _kharchaController.text.startsWith('-')
-                                      ? Colors.red
-                                      : Colors.green,
-                                  fontSize: 18.sp,
-                                ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: borderColorTextField,
+                                width: 2.0,
                               ),
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              hintText: 'Kharcha',
-                              hintStyle: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.sp,
-                                color: hintColor,
-                                fontFamily: fontFamily,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: borderColorTextField,
+                                width: 2.0,
                               ),
-                              labelStyle: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                fontSize: 18.sp,
-                                color: fontColor,
-                                fontFamily: fontFamily,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: borderColorTextField,
+                                width: 2.0,
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: fontColor,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: fontColor,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: fontColor,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        GestureDetector(
-                          child: Icon(
-                            Icons.add,
-                            size: 30,
-                            color: fontColorBlack,
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      GestureDetector(
+                        child: Container(
+                          width: 40.w, // Adjust the size as needed
+                          height: 40.h, // Adjust the size as needed
+                          decoration: BoxDecoration(
+                            color:
+                                themeColor, // Background color of the container
+                            shape:
+                                BoxShape.circle, // Makes the container circular
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 7,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
                           ),
-                          onTap: () {
-                            setState(() {
-                              _totalKharchaController.text =
-                                  (double.parse(_totalKharchaController.text) +
-                                          double.parse(
-                                              _kharchaController.text ?? "0"))
-                                      .toString();
-
-                              kharchaUpdate.add(_kharchaController.text);
-                              _kharchaController.text = '0';
-
-                              _amountController.text = ((double.parse(
-                                                  _attendanceController.text) *
-                                              double.parse(
-                                                  _rateController.text) +
-                                          double.parse(
-                                              _autoRentController.text)) -
-                                      (double.parse(_advanceController.text) +
-                                          double.parse(
-                                              _totalKharchaController.text)))
-                                  .toString();
-                            });
-
-                            log(_kharchaController.text);
-                          },
+                          child: Center(
+                            child: Icon(
+                              Icons.add,
+                              size: 30,
+                              color: Colors
+                                  .white, // Assuming fontColorBlack is defined elsewhere as Colors.black
+                            ),
+                          ),
                         ),
-                        SizedBox(
-                          width: 20.w,
-                        ),
-                        TapTooltip(
-                          message: widget.employeeDetails.lastUpdateKharcha !=
-                                  null
-                              ? "${_managerController.text} , ${formatDateTime(widget.employeeDetails.lastUpdateKharcha!)}"
-                              : 'Never Updated',
-                          child: Icon(Icons.info_outline, size: 30),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                        onTap: () {
+                          setState(() {
+                            _totalKharchaController.text =
+                                (double.parse(_totalKharchaController.text) +
+                                        double.parse(
+                                            _kharchaController.text ?? "0"))
+                                    .toString();
+
+                            kharchaUpdate.add(_kharchaController.text);
+                            _kharchaController.text = '0';
+
+                            _amountController.text = ((double.parse(
+                                                _attendanceController.text) *
+                                            double.parse(_rateController.text) +
+                                        double.parse(
+                                            _autoRentController.text)) -
+                                    (double.parse(_advanceController.text) +
+                                        double.parse(
+                                            _totalKharchaController.text)))
+                                .toString();
+                          });
+
+                          log(_kharchaController.text);
+                        },
+                      ),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      TapTooltip(
+                        message: widget.employeeDetails.lastUpdateKharcha !=
+                                null
+                            ? "${_managerController.text} , ${formatDateTime(widget.employeeDetails.lastUpdateKharcha!)}"
+                            : 'Never Updated',
+                        child: Icon(Icons.info_outline, size: 30),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               SizedBox(height: 20),
               Column(
