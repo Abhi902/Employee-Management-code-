@@ -496,7 +496,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             if (_advanceController.text.isNotEmpty &&
                                 _amountController.text.isNotEmpty &&
                                 _rateController.text.isNotEmpty &&
-                                _kharchaController.text.isNotEmpty &&
+                                _totalkharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
                               _amountController.text = ((double.parse(
                                                   _attendanceController.text) *
@@ -586,7 +586,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             if (_advanceController.text.isNotEmpty &&
                                 _amountController.text.isNotEmpty &&
                                 _rateController.text.isNotEmpty &&
-                                _kharchaController.text.isNotEmpty &&
+                                _totalkharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
                               _amountController.text = ((double.parse(
                                                   _attendanceController.text) *
@@ -792,7 +792,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             if (_advanceController.text.isNotEmpty &&
                                 _amountController.text.isNotEmpty &&
                                 _rateController.text.isNotEmpty &&
-                                _kharchaController.text.isNotEmpty &&
+                                _totalkharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
                               _amountController.text = ((double.parse(
                                                   _attendanceController.text) *
@@ -902,7 +902,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             if (_advanceController.text.isNotEmpty &&
                                 _amountController.text.isNotEmpty &&
                                 _rateController.text.isNotEmpty &&
-                                _kharchaController.text.isNotEmpty &&
+                                _totalkharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
                               _amountController.text = ((double.parse(
                                                   _attendanceController.text) *

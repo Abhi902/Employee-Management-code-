@@ -45,6 +45,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
   TextEditingController _totalKharchaController = TextEditingController();
 
   String? _imageFile;
+  List<String> kharchaUpdate = [];
 
   bool _isAdvanceEditing = false;
   bool _isKharchaEditing = false;
@@ -1032,6 +1033,10 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                           double.parse(
                                               _kharchaController.text ?? "0"))
                                       .toString();
+
+                              kharchaUpdate.add(_kharchaController.text);
+                              _kharchaController.text = '0';
+
                               _amountController.text = ((double.parse(
                                                   _attendanceController.text) *
                                               double.parse(
@@ -1043,7 +1048,6 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                               _totalKharchaController.text)))
                                   .toString();
                             });
-                            _kharchaController.text = '0';
 
                             log(_kharchaController.text);
                           },
@@ -1187,12 +1191,10 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                           widget.employeeDetails.manager!
                               .containsKey(_currentUser)) {
                         widget.employeeDetails.manager![_currentUser]!
-                            .add(_kharchaController.text);
+                            .addAll(kharchaUpdate);
                       } else {
                         widget.employeeDetails
-                            .manager?[_currentUser as String] = [
-                          _kharchaController.text
-                        ];
+                            .manager?[_currentUser as String] = kharchaUpdate;
                       }
 
                       print(widget.employeeDetails.manager.toString());

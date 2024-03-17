@@ -40,6 +40,7 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
     setState(() {
       _currentUser = prefs.getString('currentUser');
     });
+    log(_currentUser.toString());
   }
 
   @override
@@ -47,6 +48,7 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
     super.initState();
     activeIndex = 0;
     setState(() {});
+    _fetchCurrentUser();
   }
 
   Widget build(BuildContext context) {
@@ -124,7 +126,7 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
                         image: employees[index].photo?.path ?? "",
                         ontap: () async {
                           // Show confirmation dialog
-
+                          log(_currentUser.toString());
                           if (_currentUser == null) {
                             // Show a dialog if no user is selected
                             showDialog(
