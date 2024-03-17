@@ -949,10 +949,10 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: 200.w,
+                        width: 150.w,
                         height: 85.h,
                         child: TextFormField(
                           controller: _kharchaController,
