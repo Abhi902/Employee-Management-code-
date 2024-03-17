@@ -1014,18 +1014,6 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a Kharcha';
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              log(_totalKharchaController.text);
-                              log(value);
-
-                              setState(() {});
-                            },
                           ),
                         ),
                         SizedBox(
@@ -1044,26 +1032,16 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                                           double.parse(
                                               _kharchaController.text ?? "0"))
                                       .toString();
-
-                              if (_advanceController.text.isNotEmpty &&
-                                  _amountController.text.isNotEmpty &&
-                                  _rateController.text.isNotEmpty &&
-                                  _kharchaController.text.isNotEmpty &&
-                                  _autoRentController.text.isNotEmpty) {
-                                _amountController.text = ((double.parse(
-                                                    _attendanceController
-                                                        .text) *
-                                                double.parse(
-                                                    _rateController.text) +
-                                            double.parse(
-                                                _autoRentController.text)) -
-                                        (double.parse(_advanceController.text) +
-                                            double.parse(
-                                                _totalKharchaController.text)))
-                                    .toString();
-                              } else {
-                                _amountController.text = "0";
-                              }
+                              _amountController.text = ((double.parse(
+                                                  _attendanceController.text) *
+                                              double.parse(
+                                                  _rateController.text) +
+                                          double.parse(
+                                              _autoRentController.text)) -
+                                      (double.parse(_advanceController.text) +
+                                          double.parse(
+                                              _totalKharchaController.text)))
+                                  .toString();
                             });
                             _kharchaController.text = '0';
 
@@ -1205,13 +1183,14 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                     if (_formKey.currentState?.validate() ?? false) {
                       //Call the update function with the edited values
 
-                      if (widget.employeeDetails.manager!
-                          .containsKey(_currentUser)) {
+                      if (widget.employeeDetails.manager != null &&
+                          widget.employeeDetails.manager!
+                              .containsKey(_currentUser)) {
                         widget.employeeDetails.manager![_currentUser]!
                             .add(_kharchaController.text);
                       } else {
                         widget.employeeDetails
-                            .manager![_currentUser as String] = [
+                            .manager?[_currentUser as String] = [
                           _kharchaController.text
                         ];
                       }
