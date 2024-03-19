@@ -32,7 +32,7 @@ class ServiceContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(26.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(5.0),
           child: Row(
             children: [
               Container(

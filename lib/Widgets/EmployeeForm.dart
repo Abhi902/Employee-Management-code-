@@ -926,7 +926,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                     Column(
                       children: [
                         SizedBox(
-                          height: 90.h,
+                          height: 110.h,
                           width: 360.w,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
