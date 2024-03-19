@@ -440,7 +440,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             if (_advanceController.text.isNotEmpty &&
                                 _amountController.text.isNotEmpty &&
                                 _rateController.text.isNotEmpty &&
-                                _kharchaController.text.isNotEmpty &&
+                                _totalKharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
                               _amountController.text = ((double.parse(
                                                   _attendanceController.text) *
@@ -558,11 +558,19 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             return null;
                           },
                           onChanged: (value) {
+                            log("working");
+                            log(_advanceController.text.isNotEmpty.toString());
+                            log(_amountController.text.isNotEmpty.toString());
+                            log(_rateController.text.isNotEmpty.toString());
+                            log(_kharchaController.text.isNotEmpty.toString());
+                            log(_autoRentController.text.isNotEmpty.toString());
+
                             if (_advanceController.text.isNotEmpty &&
                                 _amountController.text.isNotEmpty &&
                                 _rateController.text.isNotEmpty &&
-                                _kharchaController.text.isNotEmpty &&
+                                _totalKharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
+                              log("i am inside");
                               _amountController.text = ((double.parse(
                                                   _attendanceController.text) *
                                               double.parse(
@@ -752,7 +760,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             if (_advanceController.text.isNotEmpty &&
                                 _amountController.text.isNotEmpty &&
                                 _rateController.text.isNotEmpty &&
-                                _kharchaController.text.isNotEmpty &&
+                                _totalKharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
                               _amountController.text = ((double.parse(
                                                   _attendanceController.text) *
@@ -877,7 +885,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                             if (_advanceController.text.isNotEmpty &&
                                 _amountController.text.isNotEmpty &&
                                 _rateController.text.isNotEmpty &&
-                                _kharchaController.text.isNotEmpty &&
+                                _totalKharchaController.text.isNotEmpty &&
                                 _autoRentController.text.isNotEmpty) {
                               _amountController.text = ((double.parse(
                                                   _attendanceController.text) *
