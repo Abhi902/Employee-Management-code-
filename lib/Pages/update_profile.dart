@@ -1215,6 +1215,22 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                     if (_formKey.currentState?.validate() ?? false) {
                       //Call the update function with the edited values
 
+                        if (_advanceController.text.isNotEmpty &&
+                          _amountController.text.isNotEmpty &&
+                          _rateController.text.isNotEmpty &&
+                          _totalKharchaController.text.isNotEmpty &&
+                          _autoRentController.text.isNotEmpty) {
+                        _amountController
+                            .text = ((double.parse(_attendanceController.text) *
+                                        double.parse(_rateController.text) +
+                                    double.parse(_autoRentController.text)) -
+                                (double.parse(_advanceController.text) +
+                                    double.parse(_totalKharchaController.text)))
+                            .toString();
+                      } else {
+                        _amountController.text = "0";
+                      }
+
                       if (widget.employeeDetails.manager != null &&
                           widget.employeeDetails.manager!
                               .containsKey(_currentUser)) {
