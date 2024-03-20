@@ -8,6 +8,7 @@ import 'package:CompanyDatabase/firebaseCURD/firebase_functions.dart';
 import 'package:CompanyDatabase/utils/contants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'CreatePage.dart';
 
 class ExportToExcelEmployee extends StatefulWidget {
@@ -22,6 +23,19 @@ class ExportToExcelEmployeeState extends State<ExportToExcelEmployee> {
   List<CommonFormModel> filteredEmployees = [];
   List<CommonFormModel> employees = [];
   int activeIndex = 0;
+
+  String? _currentUser;
+  List<Map<String, dynamic>> userIdentity = [];
+
+  void _fetchCurrentUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _currentUser = prefs.getString('currentUser');
+    });
+    userIdentity = await FirebaseService.fetchAllUsers();
+
+    print(userIdentity.toString());
+  }
 
   void searchEmployees(String query) {
     // Implement your logic to filter employees based on the search query
@@ -74,6 +88,7 @@ class ExportToExcelEmployeeState extends State<ExportToExcelEmployee> {
     super.initState();
     activeIndex = 0;
     setState(() {});
+    _fetchCurrentUser();
     getData();
   }
 
@@ -171,14 +186,37 @@ class ExportToExcelEmployeeState extends State<ExportToExcelEmployee> {
       // bottomNavigationBar: YourBottomNavBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          if (employees.isNotEmpty) {
-            setState(() {
-              isLoading = true;
-            });
-            ExcelModel.EmployeeExcel(employees);
-            setState(() {
-              isLoading = false;
-            });
+          if (_currentUser == null) {
+            // Show a dialog if no user is selected
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Colors.white,
+                  title: Text("Empty User"),
+                  content:
+                      Text("No User Selected ! Select a user from profile"),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text("OK"),
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          } else {
+            if (employees.isNotEmpty) {
+              setState(() {
+                isLoading = true;
+              });
+              ExcelModel.EmployeeExcel(employees);
+              setState(() {
+                isLoading = false;
+              });
+            }
           }
         },
         child: Icon(Icons.download),
