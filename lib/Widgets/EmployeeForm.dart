@@ -599,7 +599,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                                               _kharchaController.text)))
                                   .toString();
                             } else {
-                              _amountController.text = "0";
+                              _amountController.text = "0.0";
                             }
                             setState(() {});
                           },
@@ -807,6 +807,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             } else {
                               _amountController.text = "0";
                             }
+
                             setState(() {});
                           },
                         ),

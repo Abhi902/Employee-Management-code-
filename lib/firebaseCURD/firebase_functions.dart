@@ -70,6 +70,7 @@ class FirebaseService {
               }
             }
           });
+          employees.sort((a, b) => a.name!.compareTo(b.name!));
         }
 
         return employees;
