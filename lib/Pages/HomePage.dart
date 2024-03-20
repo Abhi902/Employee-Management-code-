@@ -585,91 +585,115 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
                             onTap: () async {
-                              final confirmDelete = await showDialog<bool>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text(
-                                      'Confirm Deletion',
-                                      style: TextStyle(
-                                        color: fontColorBlack,
-                                        fontFamily: fontFamily,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                    content: Text(
-                                      'Are you sure you want to Update all employee data?',
-                                      style: TextStyle(
-                                        color: fontColorBlack,
-                                        fontFamily: fontFamily,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(false),
-                                        child: Text(
-                                          'Cancel',
-                                          style: TextStyle(
-                                            color: fontColorBlack,
-                                            fontFamily: fontFamily,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16.sp,
-                                          ),
+                              if (_currentUser == null) {
+                                // Show a dialog if no user is selected
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: Colors.white,
+                                      title: Text("Empty User"),
+                                      content: Text(
+                                          "No User Selected ! Select a user from profile"),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text("OK"),
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .pop(); // Close the dialog
+                                          },
                                         ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(true),
-                                        child: Text(
-                                          'Update',
-                                          style: TextStyle(
-                                            color: fontColorBlack,
-                                            fontFamily: fontFamily,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16.sp,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-
-                              // If deletion is confirmed
-                              if (confirmDelete == true) {
-                                for (var employee in employees) {
-                                  await FirebaseService.updateEmployee(
-                                    documentId: employee.uid
-                                        as String, // Assuming `documentId` is a field in your model
-                                    advance: "0",
-                                    kharcha: "0",
-                                    autoRent: "0",
-                                    amount: "0",
-                                    rate: employee.rate,
-                                    attendance: "0",
-                                    lastUpdatedPerson: _currentUser,
-                                    presentEmployee:
-                                        employee, // Pass the current employee model if needed
-                                  );
-                                }
-
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Employee  Updated'),
-                                    duration: Duration(seconds: 2),
-                                  ),
+                                      ],
+                                    );
+                                  },
                                 );
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Employee Not Updated'),
-                                    duration: Duration(seconds: 2),
-                                  ),
+                                final confirmDelete = await showDialog<bool>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        'Confirm Deletion',
+                                        style: TextStyle(
+                                          color: fontColorBlack,
+                                          fontFamily: fontFamily,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16.sp,
+                                        ),
+                                      ),
+                                      content: Text(
+                                        'Are you sure you want to Update all employee data?',
+                                        style: TextStyle(
+                                          color: fontColorBlack,
+                                          fontFamily: fontFamily,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16.sp,
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(false),
+                                          child: Text(
+                                            'Cancel',
+                                            style: TextStyle(
+                                              color: fontColorBlack,
+                                              fontFamily: fontFamily,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16.sp,
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(true),
+                                          child: Text(
+                                            'Update',
+                                            style: TextStyle(
+                                              color: fontColorBlack,
+                                              fontFamily: fontFamily,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16.sp,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 );
+
+                                // If deletion is confirmed
+                                if (confirmDelete == true) {
+                                  for (var employee in employees) {
+                                    await FirebaseService.updateEmployee(
+                                      documentId: employee.uid
+                                          as String, // Assuming `documentId` is a field in your model
+                                      advance: "0",
+                                      kharcha: "0",
+                                      autoRent: "0",
+                                      amount: "0",
+                                      rate: employee.rate,
+                                      attendance: "0",
+                                      lastUpdatedPerson: _currentUser,
+                                      presentEmployee:
+                                          employee, // Pass the current employee model if needed
+                                    );
+                                  }
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Employee  Updated'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Employee Not Updated'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
                               }
                             },
                             child: Container(
