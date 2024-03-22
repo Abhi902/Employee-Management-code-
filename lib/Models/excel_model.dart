@@ -92,6 +92,12 @@ class ExcelModel {
 // Iterating over each key-value pair in the map
 
     for (CommonFormModel item in list) {
+      pankajSum = 0;
+      DeepSum = 0;
+      krishnaSum = 0;
+      shivSum = 0;
+      umeshSum = 0;
+
       item.manager?.forEach((key, valueList) {
         // Parsing list of strings to integers and summing them
         double sum = valueList.map(double.parse).reduce((a, b) => a + b);
