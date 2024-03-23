@@ -25,6 +25,7 @@ dependencies:
   firebase_storage: ^11.6.0
   flutter:
     sdk: flutter
+  flutter_otp_text_field: ^1.1.2+1
   flutter_screenutil: ^5.9.0
   google_fonts: null
   google_nav_bar: ^5.0.6

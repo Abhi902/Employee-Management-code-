@@ -1,3 +1,4 @@
+import 'package:CompanyDatabase/Pages/password.dart';
 import 'package:CompanyDatabase/Provider/employee_provider.dart';
 import 'package:CompanyDatabase/Provider/selected_page.dart';
 import 'package:CompanyDatabase/firebase_options.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
             secondary: const Color(0xFFFFC107),
           ),
         ),
-        home: HomePage(),
+        home: PasswordVerifier(),
       ),
     );
   }
