@@ -3,9 +3,11 @@ import 'dart:io';
 
 import 'package:CompanyDatabase/Models/Employee.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:open_file/open_file.dart' as open_file;
+
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
+import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 
 class ExcelModel {
   String? uid;
@@ -253,18 +255,44 @@ class ExcelModel {
 
   static Future<void> saveAndLaunchFile(
       List<int> bytes, String fileName) async {
-    if (Platform.isAndroid) {
-      Directory? directory = await getExternalStorageDirectory();
-      if (directory != null) {
-        final File file = File('${directory.path}/$fileName');
-        log(directory.path.toString());
-        await file.writeAsBytes(bytes, flush: true);
-        try {
-          OpenFile.open(file.path);
-        } catch (e) {
-          throw Exception(e);
-        }
-      }
+    // if (Platform.isAndroid) {
+    //   Directory? directory = await getExternalStorageDirectory();
+    //   if (directory != null) {
+    //     final File file = File('${directory.path}/$fileName');
+    //     log(directory.path.toString());
+    //     await file.writeAsBytes(bytes, flush: true);
+    //     try {
+    //       OpenFile.open(file.path);
+    //     } catch (e) {
+    //       throw Exception(e);
+    //     }
+    //   }
+    // }
+    String? path;
+    if (Platform.isAndroid ||
+        Platform.isIOS ||
+        Platform.isLinux ||
+        Platform.isWindows) {
+      final Directory directory =
+          await path_provider.getApplicationSupportDirectory();
+      path = directory.path;
+    } else {
+      path = await PathProviderPlatform.instance.getApplicationSupportPath();
+    }
+    final File file =
+        File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
+    await file.writeAsBytes(bytes, flush: true);
+    if (Platform.isAndroid || Platform.isIOS) {
+      //Launch the file (used open_file package)
+      await open_file.OpenFile.open('$path/$fileName');
+    } else if (Platform.isWindows) {
+      await Process.run('start', <String>['$path\\$fileName'],
+          runInShell: true);
+    } else if (Platform.isMacOS) {
+      await Process.run('open', <String>['$path/$fileName'], runInShell: true);
+    } else if (Platform.isLinux) {
+      await Process.run('xdg-open', <String>['$path/$fileName'],
+          runInShell: true);
     }
   }
 
