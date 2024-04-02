@@ -594,6 +594,7 @@ class _HomePageState extends State<HomePage> {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       backgroundColor: Colors.white,
+                                      surfaceTintColor: Colors.white,
                                       title: Text("Empty User"),
                                       content: Text(
                                           "No User Selected ! Select a user from profile"),
@@ -614,6 +615,8 @@ class _HomePageState extends State<HomePage> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
+                                      backgroundColor: Colors.white,
+                                      surfaceTintColor: Colors.white,
                                       title: Text(
                                         'Confirm Deletion',
                                         style: TextStyle(
@@ -771,6 +774,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
       title: Text('Enter Password'),
       content: TextFormField(
         controller: _passwordController,

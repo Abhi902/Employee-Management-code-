@@ -190,9 +190,11 @@ class ExportToExcelEmployeeState extends State<ExportToExcelEmployee> {
             // Show a dialog if no user is selected
             showDialog(
               context: context,
+              //  barrierColor: Colors.amber,
               builder: (BuildContext context) {
                 return AlertDialog(
                   backgroundColor: Colors.white,
+                  surfaceTintColor: Colors.white,
                   title: Text("Empty User"),
                   content:
                       Text("No User Selected ! Select a user from profile"),

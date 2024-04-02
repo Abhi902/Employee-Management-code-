@@ -133,6 +133,7 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
+                                  surfaceTintColor: Colors.white,
                                   backgroundColor: Colors.white,
                                   title: Text("Empty User"),
                                   content: Text(
@@ -154,6 +155,8 @@ class DeleteEmployeeState extends State<DeleteEmployee> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
+                                  surfaceTintColor: Colors.white,
+                                  backgroundColor: Colors.white,
                                   title: const Text('Confirm Deletion'),
                                   content: const Text(
                                       'Are you sure you want to delete this employee?'),

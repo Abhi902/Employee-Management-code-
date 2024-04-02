@@ -112,6 +112,8 @@ class _VerificationScreen1State extends State<VerificationScreen1> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
+                          backgroundColor: Colors.white,
+                          surfaceTintColor: Colors.white,
                           title: Text('Wrong Password'),
                           content: Text('Please enter the correct password.'),
                           actions: [

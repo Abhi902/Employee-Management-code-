@@ -19,6 +19,8 @@ class ResultsWidget extends StatelessWidget {
     Function f = await showDialog(
       context: context,
       builder: (_) => AlertDialog(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         title: Text('Delete Confirmtion'),
         content: Text('Do you wish to delete the following profile?'),
         actions: <Widget>[

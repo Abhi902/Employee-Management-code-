@@ -956,8 +956,9 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                     height: 5.h,
                   ),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: 150.w,
@@ -1196,6 +1197,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           backgroundColor: Colors.white,
+                          surfaceTintColor: Colors.white,
                           title: Text("Empty User"),
                           content: Text(
                               "No User Selected ! Select a user from profile"),
@@ -1215,7 +1217,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                     if (_formKey.currentState?.validate() ?? false) {
                       //Call the update function with the edited values
 
-                        if (_advanceController.text.isNotEmpty &&
+                      if (_advanceController.text.isNotEmpty &&
                           _amountController.text.isNotEmpty &&
                           _rateController.text.isNotEmpty &&
                           _totalKharchaController.text.isNotEmpty &&
