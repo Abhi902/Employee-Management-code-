@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>CompanyDatabase</string>
+	<string>JSI</string>
 	<key>NSCameraUsageDescription</key>
     <string>Your app needs access to the camera to capture pictures of Employees.</string>
 	<key>CFBundlePackageType</key>

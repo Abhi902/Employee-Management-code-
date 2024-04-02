@@ -39,26 +39,15 @@ class ServiceContainer extends StatelessWidget {
                 width: 90.w,
                 height: 120.h,
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: themeColor,
                   borderRadius: BorderRadius.circular(22.0),
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
-                  child: CachedNetworkImage(
-                    imageUrl: image,
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Icon(
-                      Icons.person,
-                      size: 50,
-                      color: Colors.black,
-                    ),
-                    errorWidget: (context, url, error) => Icon(
-                      Icons.error,
-                      size: 50,
-                      color: Colors.black,
-                    ),
+                  child: Icon(
+                    Icons.person,
+                    size: 50,
+                    color: Colors.white,
                   ),
                 ),
               ),

@@ -1,6 +1,5 @@
 import 'package:CompanyDatabase/Pages/password.dart';
 import 'package:CompanyDatabase/Provider/employee_provider.dart';
-import 'package:CompanyDatabase/Provider/selected_page.dart';
 import 'package:CompanyDatabase/firebase_options.dart';
 import 'package:CompanyDatabase/utils/contants.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,10 +19,6 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => SelectedPageIndexProvider(),
-          child: MyApp(), // Your app's root widget
-        ),
         ChangeNotifierProvider(
           create: (context) => CommonFormProvider(),
           child: MyApp(), // Your app's root widget

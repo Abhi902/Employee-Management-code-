@@ -8,6 +8,7 @@ import 'package:CompanyDatabase/Widgets/service_container.dart';
 import 'package:CompanyDatabase/firebaseCURD/firebase_functions.dart';
 import 'package:CompanyDatabase/utils/contants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -109,7 +110,7 @@ class AllEmployeeState extends State<AllEmployee> {
               child: TextField(
                 controller: searchController,
                 onChanged: (query) => searchEmployees(query),
-                style: TextStyle(color: fontColor),
+                style: TextStyle(color: fontColorBlack),
                 decoration: InputDecoration(
                   hintText: "Search by name...",
                   hintStyle: TextStyle(color: Colors.grey),
@@ -153,61 +154,75 @@ class AllEmployeeState extends State<AllEmployee> {
                       scrollDirection: Axis.horizontal,
                       itemCount: filteredEmployees.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          height: 50.h,
-                          width: 100.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.0),
-                            color: Colors.black,
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                top: 0,
-                                left: 0,
-                                right: 0,
-                                bottom: 0,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  child: CachedNetworkImage(
-                                    imageUrl:
-                                        filteredEmployees[index].photo?.path ??
-                                            "",
-                                    width: 50.w,
-                                    height: 50.h,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) => Icon(
-                                      Icons.person,
-                                      size: 50,
-                                      color: Colors.black,
-                                    ),
-                                    errorWidget: (context, url, error) => Icon(
-                                      Icons.error,
-                                      size: 50,
-                                      color: Colors.black,
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EmployeeFormUpdate(
+                                  employeeDetails: filteredEmployees[index],
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 50.h,
+                            width: 100.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              color: Colors.black,
+                            ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  top: 0,
+                                  left: 0,
+                                  right: 0,
+                                  bottom: 0,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: CachedNetworkImage(
+                                      imageUrl: filteredEmployees[index]
+                                              .photo
+                                              ?.path ??
+                                          "",
+                                      width: 50.w,
+                                      height: 50.h,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => Icon(
+                                        Icons.person,
+                                        size: 50,
+                                        color: Colors.black,
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(
+                                        Icons.error,
+                                        size: 50,
+                                        color: Colors.black,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      filteredEmployees[index].name,
-                                      style: TextStyle(
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: fontColor,
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        filteredEmployees[index].name,
+                                        style: TextStyle(
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: fontColor,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                            margin: EdgeInsets.all(8.0),
                           ),
-                          margin: EdgeInsets.all(8.0),
                         );
                       },
                     ),
@@ -229,6 +244,56 @@ class AllEmployeeState extends State<AllEmployee> {
                     ),
                   ),
                 ),
+                // FutureBuilder<List<CommonFormModel>>(
+                //   future: FirebaseService.getAllEmployees(),
+                //   builder:
+                //       (context, AsyncSnapshot<List<CommonFormModel>> snapshot) {
+                //     if (snapshot.connectionState == ConnectionState.waiting) {
+                //       return Center(child: CircularProgressIndicator());
+                //     } else if (snapshot.hasError) {
+                //       log(snapshot.error.toString());
+                //       return Center(child: Text('Error: ${snapshot.error}'));
+                //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                //       return Center(
+                //         child: Text(
+                //           'No data available',
+                //           style: TextStyle(
+                //             color: fontColorBlack,
+                //             fontWeight: FontWeight.w700,
+                //             fontSize: 18.sp,
+                //             fontFamily: fontFamily,
+                //           ),
+                //         ),
+                //       );
+                //     }
+
+                //     employees = snapshot.data!;
+
+                //     return ListView.separated(
+                //       padding: EdgeInsets.all(0),
+                //       itemCount: snapshot.data!.length,
+                //       shrinkWrap: true,
+                //       physics: NeverScrollableScrollPhysics(),
+                //       separatorBuilder: (BuildContext context, int index) =>
+                //           Divider(), // Change the separator as needed
+                //       itemBuilder: (BuildContext context, int index) {
+                //         return Padding(
+                //           padding: const EdgeInsets.all(2.0),
+                //           child: ServiceContainer(
+                //             text: snapshot.data![index].name,
+                //             service: snapshot.data![index].category,
+                //             amount: snapshot.data![index].amount,
+                //             image: snapshot.data![index].photo?.path ?? "",
+                //             ontap: () {
+                //               edit(snapshot.data![index]);
+                //             },
+                //           ),
+                //         );
+                //       },
+                //     );
+                //   },
+                // ),
+
                 StreamBuilder<List<CommonFormModel>>(
                   stream: FirebaseService.getAllEmployeesStream(),
                   builder:
