@@ -26,7 +26,7 @@ class ServiceContainer extends StatelessWidget {
     return GestureDetector(
       onTap: ontap,
       child: Container(
-        height: 90.h,
+        height: 110.h,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(26.0),

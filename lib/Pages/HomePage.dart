@@ -724,7 +724,7 @@ class _HomePageState extends State<HomePage> {
                                       color: fontColorBlack,
                                       size: 40.sp,
                                     ),
-                                    SizedBox(height: 10.h),
+                                    SizedBox(height: 4.h),
                                     Text(
                                       'Update All Entries',
                                       style: TextStyle(
@@ -741,6 +741,9 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                     ),
+                    SizedBox(
+                      height: 20.h,
+                    )
                   ],
                 )),
           ],

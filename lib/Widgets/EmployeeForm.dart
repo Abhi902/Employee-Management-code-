@@ -139,7 +139,7 @@ class EmployeeFormState extends State<EmployeeForm> {
                             height: 10.sp,
                           ),
                           CircleAvatar(
-                            radius: 80, // Adjust the radius as needed
+                            radius: 180, // Adjust the radius as needed
                             backgroundColor:
                                 Colors.white, // Set a transparent background
                             backgroundImage: _imageFile != null

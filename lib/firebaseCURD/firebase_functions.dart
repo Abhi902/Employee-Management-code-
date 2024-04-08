@@ -9,13 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class _IsolateArgs {
-  final SendPort sendPort;
-  final RootIsolateToken rootToken;
-
-  _IsolateArgs(this.sendPort, this.rootToken);
-}
-
 class FirebaseService {
   static Future<void> deleteEmployee(String documentId) async {
     log(documentId);
@@ -43,8 +36,6 @@ class FirebaseService {
               (event.snapshot.value as Map<Object?, Object?>)
                   .cast<String, dynamic>();
 
-          log("pringing");
-
           employeesData.forEach((key, value) {
             // Assuming 'Monthly' is another Map inside each employee
             Map<String, dynamic>? monthlyData =
@@ -61,16 +52,13 @@ class FirebaseService {
 
               // Fetch the data for the current running month
               String currentMonth = DateFormat('MMMM').format(DateTime.now());
-              if (entryMonths.isNotEmpty && entryMonths.first == currentMonth) {
+
+              log("here is the current month ${currentMonth}");
+              log("entry mmonth . first is ${entryMonths}");
+
+              if (entryMonths.isNotEmpty && entryMonths.last == currentMonth) {
                 CommonFormModel employee = CommonFormModel.fromJson(
                   Map<String, dynamic>.from(monthlyData[currentMonth]),
-                );
-                employee.uid = key;
-                print('Employee UID: ${employee.uid}');
-                employees.add(employee);
-              } else {
-                CommonFormModel employee = CommonFormModel.fromJson(
-                  Map<String, dynamic>.from(monthlyData[entryMonths.first]),
                 );
                 employee.uid = key;
                 print('Employee UID: ${employee.uid}');
@@ -215,6 +203,8 @@ class FirebaseService {
           monthlyReference.child(currentMonth);
 
       final Map<String, dynamic> updateFields = {};
+
+      log(advance ?? "");
 
       if (advance != null) {
         updateFields['advance'] = advance;

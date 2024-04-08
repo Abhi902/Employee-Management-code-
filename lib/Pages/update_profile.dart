@@ -100,6 +100,12 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
 
     _managerController.text =
         widget.employeeDetails.lastUpdatedPerson as String;
+
+    log("advance received from network ${_advanceController.text}");
+    log("amount received from network ${_amountController.text}");
+
+    log("kharcha received from network ${_totalKharchaController.text}");
+
     setState(() {});
     _fetchCurrentUser();
   }
@@ -1244,6 +1250,7 @@ class EmployeeFormUpdateState extends State<EmployeeFormUpdate> {
                       }
 
                       print(widget.employeeDetails.manager.toString());
+                      log(_advanceController.text);
 
                       await FirebaseService.updateEmployee(
                           documentId: widget.employeeDetails.uid!,
