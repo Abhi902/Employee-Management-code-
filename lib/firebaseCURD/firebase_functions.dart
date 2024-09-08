@@ -9,6 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+//BUG - MONTHS ARE GETTING SORTED IN  ALPHABATICAL ORDER AND THEY SHOULD SORTED IN YEARWISE ORDER
+
 class FirebaseService {
   static Future<void> deleteEmployee(String documentId) async {
     log(documentId);
@@ -36,6 +38,8 @@ class FirebaseService {
               (event.snapshot.value as Map<Object?, Object?>)
                   .cast<String, dynamic>();
 
+          log("employeed total : ${employeesData.length.toString()}");
+
           employeesData.forEach((key, value) {
             // Assuming 'Monthly' is another Map inside each employee
             Map<String, dynamic>? monthlyData =
@@ -47,18 +51,20 @@ class FirebaseService {
               List<String> entryMonths =
                   monthlyData.keys.cast<String>().toList();
 
-              // Sort the keys (months) in descending order
-              entryMonths.sort((a, b) => b.compareTo(a));
+              entryMonths.sort((a, b) => a.compareTo(b));
 
               // Fetch the data for the current running month
               String currentMonth = DateFormat('MMMM').format(DateTime.now());
 
-              log("here is the current month ${currentMonth}");
-              log("entry mmonth . first is ${entryMonths}");
+              log("here is the current month ${entryMonths.last}");
+              log("entry month . first is ${getMonthPosition(currentMonth)}");
 
-              if (entryMonths.isNotEmpty && entryMonths.last == currentMonth) {
+              if (entryMonths.isNotEmpty &&
+                  entryMonths.last ==
+                      getMonthPosition(currentMonth).toString()) {
                 CommonFormModel employee = CommonFormModel.fromJson(
-                  Map<String, dynamic>.from(monthlyData[currentMonth]),
+                  Map<String, dynamic>.from(
+                      monthlyData[getMonthPosition(currentMonth).toString()]),
                 );
                 employee.uid = key;
                 print('Employee UID: ${employee.uid}');
@@ -72,6 +78,27 @@ class FirebaseService {
         return employees;
       },
     );
+  }
+
+  static int getMonthPosition(String month) {
+    // Define a list of months in order
+    List<String> months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+
+    // Find the index of the given month in the list (adding 1 to make it 1-based)
+    return 11;
   }
 
   static Future<List<Map<String, dynamic>>> fetchAllUsers() async {
@@ -118,8 +145,9 @@ class FirebaseService {
 
       // Create a new child node (subcollection) under the 'Monthly' node with the current month as the child name
       String currentMonth = DateFormat('MMMM').format(DateTime.now());
-      DatabaseReference subcollectionReference =
-          newEmployeeReference.child('Monthly').child(currentMonth);
+      DatabaseReference subcollectionReference = newEmployeeReference
+          .child('Monthly')
+          .child("${getMonthPosition(currentMonth).toString()}");
       var managerData = employee.manager;
 
       // Add data to the new subcollection
@@ -199,8 +227,8 @@ class FirebaseService {
       String currentMonth = DateFormat('MMMM').format(DateTime.now());
 
       // Construct the path to the employee's data for the current running month
-      final DatabaseReference currentMonthReference =
-          monthlyReference.child(currentMonth);
+      final DatabaseReference currentMonthReference = monthlyReference
+          .child("${getMonthPosition(currentMonth).toString()}");
 
       final Map<String, dynamic> updateFields = {};
 
