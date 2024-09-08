@@ -726,12 +726,13 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     SizedBox(height: 4.h),
                                     Text(
-                                      'Update All Entries',
+                                      'Update All Entries On the last day \n of the month to reset.',
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color: fontColorBlack,
-                                          fontSize: 22.sp,
+                                          fontSize: 14.sp,
                                           fontFamily: fontFamily,
-                                          fontWeight: FontWeight.w400),
+                                          fontWeight: FontWeight.w800),
                                     ),
                                   ],
                                 ),
