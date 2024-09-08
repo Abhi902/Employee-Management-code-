@@ -56,19 +56,19 @@ class FirebaseService {
               // Fetch the data for the current running month
               String currentMonth = DateFormat('MMMM').format(DateTime.now());
 
-              log("here is the current month ${entryMonths.last}");
-              log("entry month . first is ${getMonthPosition(currentMonth)}");
+              log("entry month  is ${getMonthPosition(currentMonth)}");
 
-              if (entryMonths.isNotEmpty &&
-                  entryMonths.last ==
-                      getMonthPosition(currentMonth).toString()) {
-                CommonFormModel employee = CommonFormModel.fromJson(
-                  Map<String, dynamic>.from(
-                      monthlyData[getMonthPosition(currentMonth).toString()]),
-                );
-                employee.uid = key;
-                print('Employee UID: ${employee.uid}');
-                employees.add(employee);
+              for (int i = 0; i < entryMonths.length; i++) {
+                if (entryMonths[i] ==
+                    getMonthPosition(currentMonth).toString()) {
+                  CommonFormModel employee = CommonFormModel.fromJson(
+                    Map<String, dynamic>.from(
+                        monthlyData[getMonthPosition(currentMonth).toString()]),
+                  );
+                  employee.uid = key;
+                  print('Employee UID: ${employee.uid}');
+                  employees.add(employee);
+                }
               }
             }
           });
@@ -98,7 +98,7 @@ class FirebaseService {
     ];
 
     // Find the index of the given month in the list (adding 1 to make it 1-based)
-    return 11;
+    return months.indexOf(month) + 1;
   }
 
   static Future<List<Map<String, dynamic>>> fetchAllUsers() async {
