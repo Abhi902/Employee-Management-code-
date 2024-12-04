@@ -80,6 +80,71 @@ class FirebaseService {
     );
   }
 
+  static Stream<List<CommonFormModel>> getAllEmployeesStreamLastMonth() {
+    DatabaseReference employeeDataReference =
+        FirebaseDatabase.instance.ref().child('EmployeeData');
+
+    return employeeDataReference.onValue.map(
+      (event) {
+        final employees = <CommonFormModel>[];
+
+        if (event.snapshot.value != null) {
+          Map<String, dynamic>? employeesData =
+              (event.snapshot.value as Map<Object?, Object?>)
+                  .cast<String, dynamic>();
+
+          log("employeed total : ${employeesData.length.toString()}");
+
+          employeesData.forEach((key, value) {
+            // Assuming 'Monthly' is another Map inside each employee
+            Map<String, dynamic>? monthlyData =
+                (value['Monthly'] as Map<Object?, Object?>)
+                    ?.cast<String, dynamic>();
+
+            if (monthlyData != null) {
+              // Get the keys (months) of monthly entries
+              List<String> entryMonths =
+                  monthlyData.keys.cast<String>().toList();
+
+              entryMonths.sort((a, b) => a.compareTo(b));
+
+              // Fetch the data for the current running month
+              // String currentMonth = DateFormat('MMMM').format(DateTime.now());
+
+              DateTime now = DateTime.now();
+
+              // Calculate the previous month
+              DateTime previousMonthDate =
+                  DateTime(now.year, now.month - 1, now.day);
+
+              // Format the date to get the name of the previous month
+              String currentMonth =
+                  DateFormat('MMMM').format(previousMonthDate);
+
+              log("entry month  is ${getMonthPosition(currentMonth)}");
+
+              for (int i = 0; i < entryMonths.length; i++) {
+                if (entryMonths[i] ==
+                    getMonthPosition(currentMonth).toString()) {
+                  CommonFormModel employee = CommonFormModel.fromJson(
+                    Map<String, dynamic>.from(
+                        monthlyData[getMonthPosition(currentMonth).toString()]),
+                  );
+                  employee.uid = key;
+                  print('Employee UID: ${employee.uid}');
+                  employees.add(employee);
+                }
+              }
+            }
+          });
+          employees.sort((a, b) => a.name!.compareTo(b.name!));
+        }
+
+        return employees;
+      },
+    );
+  }
+
   static int getMonthPosition(String month) {
     // Define a list of months in order
     List<String> months = [

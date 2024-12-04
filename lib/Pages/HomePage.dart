@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<CommonFormModel> employees = [];
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -555,7 +556,7 @@ class _HomePageState extends State<HomePage> {
                       height: 20.h,
                     ),
                     StreamBuilder<List<CommonFormModel>>(
-                      stream: FirebaseService.getAllEmployeesStream(),
+                      stream: FirebaseService.getAllEmployeesStreamLastMonth(),
                       builder: (context,
                           AsyncSnapshot<List<CommonFormModel>> snapshot) {
                         if (snapshot.connectionState ==
@@ -583,64 +584,45 @@ class _HomePageState extends State<HomePage> {
 
                         employees = snapshot.data!;
 
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () async {
-                              if (_currentUser == null) {
-                                // Show a dialog if no user is selected
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      backgroundColor: Colors.white,
-                                      surfaceTintColor: Colors.white,
-                                      title: Text("Empty User"),
-                                      content: Text(
-                                          "No User Selected ! Select a user from profile"),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: Text("OK"),
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .pop(); // Close the dialog
-                                          },
-                                        ),
-                                      ],
+                        return Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  if (_currentUser == null) {
+                                    // Show a dialog if no user is selected
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          surfaceTintColor: Colors.white,
+                                          title: Text("Empty User"),
+                                          content: Text(
+                                              "No User Selected ! Select a user from profile"),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: Text("OK"),
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .pop(); // Close the dialog
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
-                                  },
-                                );
-                              } else {
-                                final confirmDelete = await showDialog<bool>(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      backgroundColor: Colors.white,
-                                      surfaceTintColor: Colors.white,
-                                      title: Text(
-                                        'Confirm Deletion',
-                                        style: TextStyle(
-                                          color: fontColorBlack,
-                                          fontFamily: fontFamily,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16.sp,
-                                        ),
-                                      ),
-                                      content: Text(
-                                        'Are you sure you want to Update all employee data?',
-                                        style: TextStyle(
-                                          color: fontColorBlack,
-                                          fontFamily: fontFamily,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16.sp,
-                                        ),
-                                      ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(false),
-                                          child: Text(
-                                            'Cancel',
+                                  } else {
+                                    final confirmDelete =
+                                        await showDialog<bool>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          surfaceTintColor: Colors.white,
+                                          title: Text(
+                                            'Confirm Deletion',
                                             style: TextStyle(
                                               color: fontColorBlack,
                                               fontFamily: fontFamily,
@@ -648,12 +630,8 @@ class _HomePageState extends State<HomePage> {
                                               fontSize: 16.sp,
                                             ),
                                           ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(true),
-                                          child: Text(
-                                            'Update',
+                                          content: Text(
+                                            'Are you sure you want to Update all employee data?',
                                             style: TextStyle(
                                               color: fontColorBlack,
                                               fontFamily: fontFamily,
@@ -661,84 +639,140 @@ class _HomePageState extends State<HomePage> {
                                               fontSize: 16.sp,
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context)
+                                                      .pop(false),
+                                              child: Text(
+                                                'Cancel',
+                                                style: TextStyle(
+                                                  color: fontColorBlack,
+                                                  fontFamily: fontFamily,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 16.sp,
+                                                ),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context)
+                                                      .pop(true),
+                                              child: Text(
+                                                'Update',
+                                                style: TextStyle(
+                                                  color: fontColorBlack,
+                                                  fontFamily: fontFamily,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 16.sp,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
-                                  },
-                                );
 
-                                // If deletion is confirmed
-                                if (confirmDelete == true) {
-                                  for (var employee in employees) {
-                                    await FirebaseService.updateEmployee(
-                                      documentId: employee.uid
-                                          as String, // Assuming `documentId` is a field in your model
-                                      advance: "0",
-                                      kharcha: "0",
-                                      autoRent: "0",
-                                      amount: "0",
-                                      rate: employee.rate,
-                                      attendance: "0",
-                                      lastUpdatedPerson: _currentUser,
-                                      presentEmployee:
-                                          employee, // Pass the current employee model if needed
-                                    );
+                                    // If deletion is confirmed
+
+                                    if (confirmDelete == true) {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+
+                                      try {
+                                        for (var employee in employees) {
+                                          await FirebaseService.updateEmployee(
+                                            documentId: employee.uid as String,
+                                            advance: "0",
+                                            kharcha: "0",
+                                            autoRent: "0",
+                                            amount: "0",
+                                            rate: employee.rate,
+                                            attendance: "0",
+                                            lastUpdatedPerson: _currentUser,
+                                            presentEmployee: employee,
+                                          );
+                                        }
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text('Employee Updated'),
+                                            duration: Duration(seconds: 5),
+                                          ),
+                                        );
+                                      } catch (e) {
+                                        log(e.toString());
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                'Update failed. Try again.'),
+                                            duration: Duration(seconds: 5),
+                                          ),
+                                        );
+                                      } finally {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                      }
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text('Employee Not Updated'),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    }
                                   }
-
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Employee  Updated'),
-                                      duration: Duration(seconds: 2),
+                                },
+                                child: Container(
+                                  height: 120.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(26.0),
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xffe5e1fc),
+                                        Color(0xffe5e1fc)
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
                                     ),
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Employee Not Updated'),
-                                      duration: Duration(seconds: 2),
-                                    ),
-                                  );
-                                }
-                              }
-                            },
-                            child: Container(
-                              height: 120.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(26.0),
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Color(0xffe5e1fc),
-                                    Color(0xffe5e1fc)
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                              ),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(height: 10.h),
-                                    Icon(
-                                      Icons.update,
-                                      color: fontColorBlack,
-                                      size: 40.sp,
-                                    ),
-                                    SizedBox(height: 4.h),
-                                    Text(
-                                      'Update All Entries On the last day \n of the month to reset.',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: fontColorBlack,
-                                          fontSize: 14.sp,
-                                          fontFamily: fontFamily,
-                                          fontWeight: FontWeight.w800),
-                                    ),
-                                  ],
+                                  ),
+                                  child: isLoading
+                                      ? Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : Center(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(height: 10.h),
+                                              Icon(
+                                                Icons.update,
+                                                color: fontColorBlack,
+                                                size: 40.sp,
+                                              ),
+                                              SizedBox(height: 4.h),
+                                              Text(
+                                                'Update All Entries On the last day \n of the month to reset.',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: fontColorBlack,
+                                                    fontSize: 14.sp,
+                                                    fontFamily: fontFamily,
+                                                    fontWeight:
+                                                        FontWeight.w800),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                 ),
                               ),
                             ),
-                          ),
+                          ],
                         );
                       },
                     ),
